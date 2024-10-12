@@ -29,6 +29,13 @@ using OnlineQuiz.BLL.AutoMapper.StudentMapper;
 using OnlineQuiz.DAL.Repositoryies.AttemptRepository;
 using OnlineQuiz.BLL.AutoMapper.Attempt;
 using OnlineQuiz.BLL.Managers.Attempt;
+using AutoMapper.Internal.Mappers;
+using OnlineQuiz.BLL.Managers.Admin;
+using OnlineQuiz.BLL.Managers.Instructor;
+using OnlineQuiz.DAL.Repositoryies.AdminRepositroy;
+using OnlineQuiz.DAL.Repositoryies.InstructorRepository;
+using OnlineQuiz.BLL.AutoMapper.AdminAutoMapper;
+using OnlineQuiz.BLL.AutoMapper.InstructorMapper;
 
 
 
@@ -67,6 +74,8 @@ namespace OnlineQuiz.Api
             builder.Services.AddAutoMapper(map => map.AddProfile(new OptionMapper()));
             builder.Services.AddAutoMapper(map => map.AddProfile(new StudentMapper()));
             builder.Services.AddAutoMapper(map => map.AddProfile(new AttemptMapping()));
+            builder.Services.AddAutoMapper(map => map.AddProfile(new AdminMapper()));
+            builder.Services.AddAutoMapper(map => map.AddProfile(new InstructorMapper()));
 
 
             //Repositories
@@ -75,7 +84,9 @@ namespace OnlineQuiz.Api
             builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
             builder.Services.AddScoped<IStudentRepo, StudentRepo>();
             builder.Services.AddScoped<IAttemptRepository, AttemptRepository>();
-         
+            builder.Services.AddScoped<IAdminRepositroy, AdminRepositroy>();
+            builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
+
 
 
             //Managers
@@ -86,7 +97,9 @@ namespace OnlineQuiz.Api
             builder.Services.AddScoped<IAccountManager, AccountManager>();
             builder.Services.AddScoped<IEmailService, EmailService>();
             builder.Services.AddScoped<IAttemptManager, AttemptManager>();
-  
+            builder.Services.AddScoped<IAdminManger, AdminManger>();
+            builder.Services.AddScoped<IInstructorManger, InstructorManger>();
+           
 
 
             //Identity

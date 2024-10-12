@@ -16,8 +16,8 @@ namespace OnlineQuiz.DAL.Data.Models
             public Instructor Instructor { get; set; }
 
 
-     //   public DateTime
-        
+            public DateTime TimeNow { get; set; } = DateTime.Now;
+
 
     }
 }
