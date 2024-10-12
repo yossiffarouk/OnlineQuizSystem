@@ -36,6 +36,9 @@ using OnlineQuiz.DAL.Repositoryies.AdminRepositroy;
 using OnlineQuiz.DAL.Repositoryies.InstructorRepository;
 using OnlineQuiz.BLL.AutoMapper.AdminAutoMapper;
 using OnlineQuiz.BLL.AutoMapper.InstructorMapper;
+using OnlineQuiz.BLL.Managers.Answer;
+using OnlineQuiz.DAL.Repositoryies.AnswerRepository;
+using OnlineQuiz.BLL.AutoMapper.AnswerMapper;
 
 
 
@@ -76,6 +79,7 @@ namespace OnlineQuiz.Api
             builder.Services.AddAutoMapper(map => map.AddProfile(new AttemptMapping()));
             builder.Services.AddAutoMapper(map => map.AddProfile(new AdminMapper()));
             builder.Services.AddAutoMapper(map => map.AddProfile(new InstructorMapper()));
+            builder.Services.AddAutoMapper(map => map.AddProfile(new AnswerMapper()));
 
 
             //Repositories
@@ -87,6 +91,7 @@ namespace OnlineQuiz.Api
             builder.Services.AddScoped<IAdminRepositroy, AdminRepositroy>();
             builder.Services.AddScoped<IInstructorRepository, InstructorRepository>();
 
+            builder.Services.AddScoped<IAnswerRepository, AnswerRepository>();
 
 
             //Managers
@@ -100,6 +105,7 @@ namespace OnlineQuiz.Api
             builder.Services.AddScoped<IAdminManger, AdminManger>();
             builder.Services.AddScoped<IInstructorManger, InstructorManger>();
            
+            builder.Services.AddScoped<IAnswersManager, AnswersManager>();
 
 
             //Identity
