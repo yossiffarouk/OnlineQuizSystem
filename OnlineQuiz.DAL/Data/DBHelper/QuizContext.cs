@@ -69,16 +69,16 @@ namespace OnlineQuiz.DAL.Data.DBHelper
          
         }
 
-        public DbSet<Users> users { get; set; }
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Instructor> Instructors { get; set; }
-        public DbSet<Quizzes> quizzes { get; set; }
-        public DbSet<Questions> questions { get; set; }
-        public DbSet<Answers> answers { get; set; }
-        public DbSet<Attempts> attempts { get; set; }
-        public DbSet<Tracks> tracks { get; set; }
-        public DbSet<Option> Options { get; set; }
-        public DbSet<StudentInstructor> StudentInstructors { get; set; }
+        public virtual DbSet<Users> users { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<Instructor> Instructors { get; set; }
+        public virtual DbSet<Quizzes> quizzes { get; set; }
+        public virtual DbSet<Questions> questions { get; set; }
+        public virtual DbSet<Answers> answers { get; set; }
+        public virtual DbSet<Attempts> attempts { get; set; }
+        public virtual DbSet<Tracks> tracks { get; set; }
+        public virtual DbSet<Option> Options { get; set; }
+        public virtual DbSet<StudentInstructor> StudentInstructors { get; set; }
 
 
 
