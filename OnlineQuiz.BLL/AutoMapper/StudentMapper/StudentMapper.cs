@@ -16,22 +16,26 @@ namespace OnlineQuiz.BLL.AutoMapper.StudentMapper
     {
         public StudentMapper()
         {
-            CreateMap<Student, StudentReadDto>();
+           
 
             CreateMap<Student, StudentReadDto>().ReverseMap();
             CreateMap<Student, StudentAddDto>().ReverseMap();
             CreateMap<Student, StudentUpdateDto>().ReverseMap();
+            CreateMap<Student, StudentReadPaginatedDto>().ReverseMap();
+
             // Map Student to StudentDto
+            CreateMap<Quizzes, QuizDetailsForStudentDto>().ReverseMap();
+            CreateMap<Instructor, InstructorToStudentDto>().ReverseMap();
+
             CreateMap<Student, StudentDetailesDto>()
-                    .ForMember(dest => dest.Quizzes, opt => opt
-                    .MapFrom(src => src.Attempts));
-            // Map Attempts to QuizDetailsDto
-            CreateMap<Attempts, QuizDetailsForStudentDto>()
-           .ForMember(dest => dest.QuizId, opt => opt.MapFrom(src => src.QuizId))
-           .ForMember(dest => dest.QuizTitle, opt => opt.MapFrom(src => src.Quiz.Tittle))
-           .ForMember(dest => dest.Score, opt => opt.MapFrom(src => src.Score))
-           .ForMember(dest => dest.StartTime, opt => opt.MapFrom(src => src.StartTime))
-           .ForMember(dest => dest.EndTime, opt => opt.MapFrom(src => src.EndTime));
+                .ForMember(dest => dest.InstructorToStudentDtos, opt => opt
+                .MapFrom(src => src.StudentInstructors))
+                .ForMember(dest => dest.AttemptDetailsDtos, opt => opt
+                .MapFrom(src => src.Attempts));
+
+            CreateMap<Attempts, AttemptDetailsDto>()
+                .ForMember(dest => dest.QuizDetailsForStudentdto, opt => opt
+                .MapFrom(src => src.Quiz));
         }
     }
 }

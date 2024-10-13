@@ -10,7 +10,7 @@ namespace OnlineQuiz.DAL.Repositoryies.StudentReposatory
 {
     public interface IStudentRepo :IRepository<Student,string>
     {
-        IEnumerable<Student> GetStudentsByGrade(string grade);
+        IQueryable<Student> GetStudentsByGrade(string grade);
         public Student GetByIdWithDetails(string studentId);
     }
 }

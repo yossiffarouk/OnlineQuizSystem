@@ -52,7 +52,7 @@ namespace OnlineQuiz.DAL.Data.Models
 
         public UserTypeEnum UserType { get; set; }
 
-
+        public bool IsBanned { get; set; }
 
 
     }
@@ -60,7 +60,7 @@ namespace OnlineQuiz.DAL.Data.Models
     public class Student : Users
     {
         public string? Grade { get; set; }
-        public ICollection<Instructor> Instructors { get; set; } = new HashSet<Instructor>();
+        public ICollection<StudentInstructor> StudentInstructors { get; set; }  // Navigation property
 
         //Student With Attempts
         public ICollection<Attempts> Attempts { get; set; } = new HashSet<Attempts>();
@@ -72,8 +72,8 @@ namespace OnlineQuiz.DAL.Data.Models
     public class Instructor : Users
     {
 
-       // public ApprovalStatus? Status { get; set; } = ApprovalStatus.Pending;
-        public ICollection<Student> Students { get; set; } = new HashSet<Student>();
+        public ApprovalStatus? Status { get; set; } = ApprovalStatus.Pending;
+        public ICollection<StudentInstructor> StudentInstructors { get; set; }  // Navigation property
 
         //  Instructor with Quizzes
         public ICollection<Quizzes> quizzes { get; set; } = new HashSet<Quizzes>();

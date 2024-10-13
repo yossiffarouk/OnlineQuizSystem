@@ -34,7 +34,7 @@ namespace OnlineQuiz.DAL.Migrations
 
                     b.HasIndex("StudentsId");
 
-                    b.ToTable("InstructorStudent");
+                    b.ToTable("InstructorStudent", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -200,7 +200,7 @@ namespace OnlineQuiz.DAL.Migrations
 
                     b.HasIndex("QuestionId");
 
-                    b.ToTable("answers");
+                    b.ToTable("answers", (string)null);
                 });
 
             modelBuilder.Entity("OnlineQuiz.DAL.Data.Models.Attempts", b =>
@@ -237,7 +237,7 @@ namespace OnlineQuiz.DAL.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("attempts");
+                    b.ToTable("attempts", (string)null);
                 });
 
             modelBuilder.Entity("OnlineQuiz.DAL.Data.Models.Option", b =>
@@ -260,7 +260,7 @@ namespace OnlineQuiz.DAL.Migrations
 
                     b.HasIndex("QuestionsId");
 
-                    b.ToTable("Options");
+                    b.ToTable("Options", (string)null);
                 });
 
             modelBuilder.Entity("OnlineQuiz.DAL.Data.Models.Questions", b =>
@@ -287,7 +287,7 @@ namespace OnlineQuiz.DAL.Migrations
 
                     b.HasIndex("QuizId");
 
-                    b.ToTable("questions");
+                    b.ToTable("questions", (string)null);
                 });
 
             modelBuilder.Entity("OnlineQuiz.DAL.Data.Models.Quizzes", b =>
@@ -338,22 +338,7 @@ namespace OnlineQuiz.DAL.Migrations
 
                     b.HasIndex("TracksId");
 
-                    b.ToTable("quizzes");
-                });
-
-            modelBuilder.Entity("OnlineQuiz.DAL.Data.Models.StudentInstructor", b =>
-                {
-                    b.Property<string>("StudentId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("InstructorId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("StudentId", "InstructorId");
-
-                    b.HasIndex("InstructorId");
-
-                    b.ToTable("StudentInstructors");
+                    b.ToTable("quizzes", (string)null);
                 });
 
             modelBuilder.Entity("OnlineQuiz.DAL.Data.Models.Tracks", b =>
@@ -371,7 +356,7 @@ namespace OnlineQuiz.DAL.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("tracks");
+                    b.ToTable("tracks", (string)null);
                 });
 
             modelBuilder.Entity("OnlineQuiz.DAL.Data.Models.Users", b =>
@@ -414,9 +399,6 @@ namespace OnlineQuiz.DAL.Migrations
                     b.Property<string>("ImgUrl")
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
-
-                    b.Property<bool>("IsBanned")
-                        .HasColumnType("bit");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -471,35 +453,16 @@ namespace OnlineQuiz.DAL.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Users");
 
                     b.UseTphMappingStrategy();
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "50a88976-16d6-4632-9bbe-a9facbab78d8",
-                            AccessFailedCount = 0,
-                            Adress = "Mansoura",
-                            Age = 0,
-                            ConcurrencyStamp = "7ab9017b-4772-441f-9558-c3ec4ebce9f7",
-                            Email = "yossif155farouk@gmail.com",
-                            EmailConfirmed = false,
-                            Gender = 1,
-                            IsBanned = false,
-                            LockoutEnabled = false,
-                            PasswordHash = "WlgxMnp4MTIj",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "0aa707ba-16fe-43b9-a564-56c88bbdd79c",
-                            TwoFactorEnabled = false,
-                            UserName = "Yossif Farouk",
-                            UserType = 3
-                        });
                 });
 
             modelBuilder.Entity("OnlineQuiz.DAL.Data.Models.Instructor", b =>
                 {
                     b.HasBaseType("OnlineQuiz.DAL.Data.Models.Users");
 
-                    b.Property<int?>("Status")
-                        .HasColumnType("int");
+                    b.Property<bool>("InstructorIsApproved")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
                     b.HasDiscriminator().HasValue("Instructor");
                 });
@@ -657,25 +620,6 @@ namespace OnlineQuiz.DAL.Migrations
                     b.Navigation("Instructor");
 
                     b.Navigation("Tracks");
-                });
-
-            modelBuilder.Entity("OnlineQuiz.DAL.Data.Models.StudentInstructor", b =>
-                {
-                    b.HasOne("OnlineQuiz.DAL.Data.Models.Instructor", "Instructor")
-                        .WithMany()
-                        .HasForeignKey("InstructorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("OnlineQuiz.DAL.Data.Models.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Instructor");
-
-                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("OnlineQuiz.DAL.Data.Models.Attempts", b =>

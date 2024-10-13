@@ -1,6 +1,7 @@
 ﻿
 using AutoMapper;
 using OnlineQuiz.BLL.Dtos.StudentDtos;
+using OnlineQuiz.BLL.Wrapper;
 using OnlineQuiz.DAL.Data.Models;
 using OnlineQuiz.DAL.Repositoryies.Base;
 using OnlineQuiz.DAL.Repositoryies.StudentReposatory;
@@ -21,9 +22,9 @@ namespace OnlineQuiz.BLL.Managers.Student
             _studentRepo = studentRepo;
             _mapper = mapper;
         }
-        public IEnumerable<StudentReadDto> GetAll()
+        public IQueryable<StudentReadDto> GetAll()
         {
-          return  _mapper.Map<List<StudentReadDto>>(_studentRepo.GetAll());
+          return  _mapper.ProjectTo<StudentReadDto>(_studentRepo.GetAll());
         }
         public StudentReadDto GetById(string id)
         {
@@ -46,19 +47,23 @@ namespace OnlineQuiz.BLL.Managers.Student
         {
              _studentRepo.DeleteById(id);
         }
-        public IEnumerable<StudentReadDto> GetStudentsByGrade(string grade)
+        public IQueryable<StudentReadDto> GetStudentsByGrade(string grade)
         {
-            return _mapper.Map<List<StudentReadDto>>(_studentRepo.GetStudentsByGrade(grade));
+            return _mapper.ProjectTo<StudentReadDto>(_studentRepo.GetStudentsByGrade(grade));
         }
         public StudentDetailesDto GetByIdWithDetails(string studentId)
         {
-            var student =  _studentRepo.GetByIdWithDetails(studentId); 
-
+            var student = _studentRepo.GetByIdWithDetails(studentId);
             if (student == null)
                 return null;
-            // Map to DTO
             var studentDto = _mapper.Map<StudentDetailesDto>(student);
             return studentDto;
+
+        }
+        public async Task<PagintedResult<StudentReadPaginatedDto>> GetPaginatedStudentsAsync(int pageNumber, int pageSize)
+        {
+            var Query = _mapper.ProjectTo<StudentReadPaginatedDto>(_studentRepo.GetAll());
+            return await QuerableExtentions.ToPagintedListAsync(Query, pageNumber, pageSize);
         }
     }
 }

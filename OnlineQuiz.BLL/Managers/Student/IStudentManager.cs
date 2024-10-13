@@ -1,4 +1,5 @@
 ﻿using OnlineQuiz.BLL.Dtos.StudentDtos;
+using OnlineQuiz.BLL.Wrapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,14 @@ namespace OnlineQuiz.BLL.Managers.Student
 {
     public interface IStudentManager 
     {
-        IEnumerable<StudentReadDto> GetAll();
+        IQueryable<StudentReadDto> GetAll();
         StudentReadDto GetById(string id);
         void Add(StudentAddDto Studententity);
         void Update(StudentUpdateDto Studententity);
         void DeleteById(string id);
-        IEnumerable<StudentReadDto> GetStudentsByGrade(string grade);
+        IQueryable<StudentReadDto> GetStudentsByGrade(string grade);
         public StudentDetailesDto GetByIdWithDetails(string studentId);
+        public Task<PagintedResult<StudentReadPaginatedDto>> GetPaginatedStudentsAsync(int pageNumber, int pageSize);
 
     }
 }
