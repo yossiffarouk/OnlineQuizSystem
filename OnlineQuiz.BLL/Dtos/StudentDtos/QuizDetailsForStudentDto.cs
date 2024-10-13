@@ -8,10 +8,13 @@ namespace OnlineQuiz.BLL.Dtos.StudentDtos
 {
     public class QuizDetailsForStudentDto
     {
-        public int QuizId { get; set; }
-        public string QuizTitle { get; set; }
-        public double Score { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime ExpireDate { get; set; }
+        public int QuizDegree { get; set; }
+        public int ExamTime { get; set; }
+        public bool IsAvailable { get; set; }
     }
 }

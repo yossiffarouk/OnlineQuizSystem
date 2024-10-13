@@ -18,7 +18,7 @@ namespace OnlineQuiz.Api.Controllers
         }
         // GET: api/Student
         [HttpGet]
-        public ActionResult<IEnumerable<StudentReadDto>> GetAllStudents()
+        public ActionResult<IQueryable<StudentReadDto>> GetAllStudents()
         {
             var students = _studentManager.GetAll();
             return Ok(students);
@@ -52,7 +52,7 @@ namespace OnlineQuiz.Api.Controllers
 
         // GET: api/Student/Grade/{grade}
         [HttpGet("Grade/{grade}")]
-        public ActionResult<IEnumerable<StudentReadDto>> GetStudentsByGrade(string grade)
+        public ActionResult<IQueryable<StudentReadDto>> GetStudentsByGrade(string grade)
         {
             var students = _studentManager.GetStudentsByGrade(grade);
             if (students == null)
@@ -80,6 +80,18 @@ namespace OnlineQuiz.Api.Controllers
 
             _studentManager.Update(studentUpdateDto);
             return NoContent();
+        }
+        [HttpGet("students")]
+        public async Task<IActionResult> GetStudents(int pageNumber = 1, int pageSize = 10)
+        {
+            var paginatedStudents = await _studentManager.GetPaginatedStudentsAsync(pageNumber, pageSize);
+
+            if (paginatedStudents == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(paginatedStudents);
         }
         // DELETE: api/Student/{id}
         [HttpDelete("{id}")]

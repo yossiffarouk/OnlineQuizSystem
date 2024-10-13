@@ -19,20 +19,20 @@ namespace OnlineQuiz.DAL.Repositoryies.StudentReposatory
             _quizContext = quizContext;
         }
 
-        public  IEnumerable<Student> GetStudentsByGrade(string grade)
+        public  IQueryable<Student> GetStudentsByGrade(string grade)
         {
-            return  _quizContext.Students
+            return   _quizContext.Students
                                 .Where(s => s.Grade == grade)
-                                .AsNoTracking()
-                                .ToList();
+                                .AsQueryable();
         }
 
         public Student GetByIdWithDetails(string studentId)
         {
             return _quizContext.Students
-                .Include(s => s.Attempts)             // Include attempts
-                .ThenInclude(a => a.Quiz)         // Include quizzes for each attempt
-                .FirstOrDefault(s => s.Id == studentId);
+               .Include(s => s.Attempts)
+                   .ThenInclude(a => a.Quiz)
+                    .Include(s => s.StudentInstructors)
+                    .FirstOrDefault(s => s.Id == studentId);
         }
     }
 }
