@@ -83,5 +83,17 @@ namespace OnlineQuiz.Api.Controllers
             }
 
         }
+        public IActionResult GetTotalScoreByStudent(string studentId)
+        {
+            try
+            {
+                var quizScores = _attemptManager.GetTotalScoresByStudentId(studentId);
+                return Ok(quizScores);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
