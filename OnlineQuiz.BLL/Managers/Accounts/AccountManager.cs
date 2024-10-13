@@ -211,7 +211,7 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
 
             //  password reset link
-            var resetLink = urlHelper.Action("ResetPassword", "Accounts",
+            var resetLink = urlHelper.Action("ShowResetToken", "Accounts",
                 new { token, email = user.Email }, "https");
 
             // Send email

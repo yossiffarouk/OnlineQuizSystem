@@ -72,7 +72,7 @@ namespace OnlineQuiz.DAL.Data.Models
     public class Instructor : Users
     {
 
-        public ApprovalStatus? Status { get; set; } = ApprovalStatus.Pending;
+       // public ApprovalStatus? Status { get; set; } = ApprovalStatus.Pending;
         public ICollection<Student> Students { get; set; } = new HashSet<Student>();
 
         //  Instructor with Quizzes
