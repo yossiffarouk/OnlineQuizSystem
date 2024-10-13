@@ -49,7 +49,7 @@ namespace OnlineQuiz.Api.Controllers
             }
 
             _questionManager.AddQuestion(createquestionDto);
-            return Ok(createquestionDto);
+            return Ok("Question added successfully.");
         }
 
      
@@ -58,11 +58,18 @@ namespace OnlineQuiz.Api.Controllers
         {
             if (id != questionDto.Id || questionDto == null)
             {
-                return BadRequest();
+                return BadRequest("Invalid question data.");
             }
 
-            _questionManager.UpdateQuestion(questionDto);
-            return NoContent(); 
+            try
+            {
+                _questionManager.UpdateQuestion(questionDto);
+                return Ok("Question updated successfully.");
+            }
+            catch (InvalidOperationException)
+            {
+                return NotFound("Question not found.");
+            }
         }
 
  
@@ -76,7 +83,7 @@ namespace OnlineQuiz.Api.Controllers
             }
 
             _questionManager.DeleteQuestion(id);
-            return NoContent(); 
+            return Ok("Question deleted successfully.");
         }
 
     }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineQuiz.DAL.Data.DBHelper;
 
@@ -11,9 +12,11 @@ using OnlineQuiz.DAL.Data.DBHelper;
 namespace OnlineQuiz.DAL.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    partial class QuizContextModelSnapshot : ModelSnapshot
+    [Migration("20241013215425_addSoftDeleteToQuiz")]
+    partial class addSoftDeleteToQuiz
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -260,9 +263,6 @@ namespace OnlineQuiz.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<int>("QuizId")
                         .HasColumnType("int");
 
@@ -357,9 +357,6 @@ namespace OnlineQuiz.DAL.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -472,11 +469,11 @@ namespace OnlineQuiz.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a21dc925-ad6e-477f-ae1b-76570c85c0af",
+                            Id = "0acd4bf3-d930-48ae-aa75-89eb8b742259",
                             AccessFailedCount = 0,
                             Adress = "Mansura",
                             Age = 0,
-                            ConcurrencyStamp = "4b1f7694-95d2-4672-915c-12a43dc102a3",
+                            ConcurrencyStamp = "b7f181c3-e73c-42b7-92cd-6fb334c85ee2",
                             Email = "yossif155farouk@gmail.com",
                             EmailConfirmed = false,
                             Gender = 0,
@@ -484,7 +481,7 @@ namespace OnlineQuiz.DAL.Migrations
                             LockoutEnabled = false,
                             PasswordHash = "WlgxMnp4MTIj",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "549a897c-90a5-4a0f-a9df-35539d36a974",
+                            SecurityStamp = "5a823c38-0a0a-42c9-8ef2-6ecf7448efcb",
                             TwoFactorEnabled = false,
                             UserName = "Yossif Farouk",
                             UserType = 3

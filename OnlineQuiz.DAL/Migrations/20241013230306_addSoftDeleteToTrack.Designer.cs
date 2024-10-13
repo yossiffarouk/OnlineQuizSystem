@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineQuiz.DAL.Data.DBHelper;
 
@@ -11,9 +12,11 @@ using OnlineQuiz.DAL.Data.DBHelper;
 namespace OnlineQuiz.DAL.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    partial class QuizContextModelSnapshot : ModelSnapshot
+    [Migration("20241013230306_addSoftDeleteToTrack")]
+    partial class addSoftDeleteToTrack
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -260,9 +263,6 @@ namespace OnlineQuiz.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<int>("QuizId")
                         .HasColumnType("int");
 
@@ -472,11 +472,11 @@ namespace OnlineQuiz.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a21dc925-ad6e-477f-ae1b-76570c85c0af",
+                            Id = "0fa83110-1a3a-4663-8d14-8ab077cc5bbc",
                             AccessFailedCount = 0,
                             Adress = "Mansura",
                             Age = 0,
-                            ConcurrencyStamp = "4b1f7694-95d2-4672-915c-12a43dc102a3",
+                            ConcurrencyStamp = "b1357613-1e7b-4ce6-8f1c-ed08621bb93e",
                             Email = "yossif155farouk@gmail.com",
                             EmailConfirmed = false,
                             Gender = 0,
@@ -484,7 +484,7 @@ namespace OnlineQuiz.DAL.Migrations
                             LockoutEnabled = false,
                             PasswordHash = "WlgxMnp4MTIj",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "549a897c-90a5-4a0f-a9df-35539d36a974",
+                            SecurityStamp = "7b15de95-5dc5-43b1-9c8c-1e1fe0759c95",
                             TwoFactorEnabled = false,
                             UserName = "Yossif Farouk",
                             UserType = 3

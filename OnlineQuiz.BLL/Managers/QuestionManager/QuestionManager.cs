@@ -41,7 +41,7 @@ namespace OnlineQuiz.BLL.Managers.QuestionManager
 
         public void UpdateQuestion(QuestionDto questionDto)
         {
-            var question = _mapper.Map<Questions>(questionDto);
+         var question = _mapper.Map<Questions>(questionDto);
             _questionsRepository.Update(question);
         }
 

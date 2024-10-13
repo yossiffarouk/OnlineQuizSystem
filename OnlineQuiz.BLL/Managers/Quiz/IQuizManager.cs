@@ -12,6 +12,7 @@ namespace OnlineQuiz.BLL.Managers.Quiz
     public interface IQuizManager
     {
         IQueryable<QuizDto> GetAllQuizzes();
+        IQueryable<QuizDto> GetAvailableQuizzes();
         QuizDto GetQuizById(int id);
         CreatQuizDTO AddQuiz(CreatQuizDTO quizDto);
         void UpdateQuiz(QuizDto quizDto);

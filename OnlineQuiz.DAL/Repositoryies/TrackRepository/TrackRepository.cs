@@ -21,11 +21,11 @@ namespace OnlineQuiz.DAL.Repositoryies.TrackRepository
         }   
         public IQueryable<Tracks> GetAll()
         {
-            return _context.tracks.AsQueryable();
+            return _context.tracks.Where(t => !t.IsDeleted).AsQueryable();
         }
         public Tracks GetById(int id)
         {
-            return _context.tracks.Find(id);
+            return _context.tracks.FirstOrDefault(q => q.Id == id && !q.IsDeleted);
         }
         public void Add(Tracks track)
         {
@@ -46,7 +46,7 @@ namespace OnlineQuiz.DAL.Repositoryies.TrackRepository
             var track = _context.tracks.Find(id);
             if (track != null)
             {
-                _context.tracks.Remove(track);
+                track.IsDeleted = true; // Set the IsDeleted flag
                 _context.SaveChanges();
             }
         }
