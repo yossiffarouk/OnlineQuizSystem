@@ -35,7 +35,7 @@ OnlineQuizPlatform/
 ├── DTOs/                  # Data Transfer Objects for API requests/responses
 ├── Mappings/              # Automapper profiles for DTOs and Entities
 ├── Repositories/          # Repositories to access data models (Quiz, Question, Answer, etc.)
-├── Services/              # Business logic layer (AnswerService, QuizService, etc.)
+├── Managers/              # Business logic layer (AnswerManager, QuizManager, etc.)
 └── Program.cs             # Entry point of the application
 
 ```
@@ -94,4 +94,13 @@ dotnet run
 ```bash
 Feel free to adjust any part of it to better fit your style!
 ```
+## Team Members
+- **Fawzy Shaker**
+- **Karim Ayman**
+- **Ashraf Wael**
+- **Yosef Farouk**
+- **Zyad Gamal**
+- **Kirolos Isaac**
+
+Together, we bring a diverse set of skills and expertise to the table!
 
