@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using OnlineQuiz.BLL.Dtos.Options;
 using OnlineQuiz.BLL.Dtos.Question;
 using OnlineQuiz.DAL.Data.Models;
 using OnlineQuiz.DAL.Repositoryies.QuestionRepository;
@@ -48,6 +49,15 @@ namespace OnlineQuiz.BLL.Managers.QuestionManager
         public void DeleteQuestion(int id)
         {
             _questionsRepository.DeleteById(id);
+        }
+        public void DeleteOption(int optionId)
+        {
+            _questionsRepository.DeleteOptionById(optionId);
+        }
+        public OptionDto GetOptionById(int optionId)
+        {
+            var option = _questionsRepository.GetOptionById(optionId);
+            return option != null ? _mapper.Map<OptionDto>(option) : null; // Map to DTO if found
         }
     }
 }

@@ -11,5 +11,7 @@ namespace OnlineQuiz.DAL.Repositoryies.QuestionRepository
     public interface IQuestionsRepository : IRepository<Questions, int>
     {
         // Additional methods can be defined here if needed
+        void DeleteOptionById(int optionId);
+        Option GetOptionById(int optionId);
     }
 }
