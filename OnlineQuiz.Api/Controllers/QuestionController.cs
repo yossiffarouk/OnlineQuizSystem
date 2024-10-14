@@ -38,8 +38,18 @@ namespace OnlineQuiz.Api.Controllers
             }
             return Ok(question);
         }
+        [HttpGet("options/{optionId}")]
+        public IActionResult GetOptionById(int optionId)
+        {
+            var optionDto = _questionManager.GetOptionById(optionId);
+            if (optionDto == null)
+            {
+                return NotFound("Option not found.");
+            }
 
-   
+            return Ok(optionDto);
+        }
+
         [HttpPost]
         public IActionResult AddQuestion([FromBody] createQuestionDto createquestionDto)
         {
@@ -71,8 +81,19 @@ namespace OnlineQuiz.Api.Controllers
                 return NotFound("Question not found.");
             }
         }
+        [HttpDelete("options/{optionId}")]
+        public IActionResult DeleteOption(int optionId)
+        {
+            var existingOption = _questionManager.GetOptionById(optionId);
+            if (existingOption == null)
+            {
+                return NotFound("Option not found.");
+            }
 
- 
+            _questionManager.DeleteOption(optionId);
+            return Ok("Option deleted successfully.");
+        }
+
         [HttpDelete("{id}")]
         public IActionResult DeleteQuestion(int id)
         {
@@ -85,6 +106,7 @@ namespace OnlineQuiz.Api.Controllers
             _questionManager.DeleteQuestion(id);
             return Ok("Question deleted successfully.");
         }
+
 
     }
 }

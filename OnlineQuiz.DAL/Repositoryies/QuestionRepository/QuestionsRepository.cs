@@ -29,6 +29,11 @@ namespace OnlineQuiz.DAL.Repositoryies.QuestionRepository
                    .Include(q => q.Options)
                     .FirstOrDefault(q => q.Id == id && !q.IsDeleted);
         }
+        public Option GetOptionById(int optionId)
+        {
+            return _context.Set<Option>()
+                           .FirstOrDefault(o => o.OptionId == optionId); 
+        }
 
         public void Add(Questions entity)
         {
@@ -51,6 +56,15 @@ namespace OnlineQuiz.DAL.Repositoryies.QuestionRepository
             {
                 
                 question.IsDeleted = true; //soft delete
+                _context.SaveChanges();
+            }
+        }
+        public void DeleteOptionById(int optionId)
+        {
+            var option = _context.Set<Option>().Find(optionId);
+            if (option != null)
+            {
+                _context.Set<Option>().Remove(option); 
                 _context.SaveChanges();
             }
         }
