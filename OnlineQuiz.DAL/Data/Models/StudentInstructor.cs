@@ -10,10 +10,10 @@ namespace OnlineQuiz.DAL.Data.Models
     {
         
             public string StudentId { get; set; }
-            public Student Student { get; set; }
+            public virtual Student Student { get; set; }
 
             public string InstructorId { get; set; }
-            public Instructor Instructor { get; set; }
+            public virtual Instructor Instructor { get; set; }
 
 
             public DateTime TimeNow { get; set; } = DateTime.Now;

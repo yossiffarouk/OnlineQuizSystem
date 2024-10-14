@@ -17,15 +17,15 @@ namespace OnlineQuiz.DAL.Data.Models
 
         // For Quiz
         public int QuizId { get; set; }
-        public Quizzes Quiz { get; set; }
+        public virtual Quizzes Quiz { get; set; }
 
         //For Student
         public string  StudentId { get; set; }
-        public Student Student { get; set; }
+        public virtual Student Student { get; set; }
 
 
         //For Answers
-        public ICollection<Answers> Answers { get; set; } = new HashSet<Answers>();
+        public virtual ICollection<Answers> Answers { get; set; } = new HashSet<Answers>();
 
     }
 }

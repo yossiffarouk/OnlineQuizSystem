@@ -23,17 +23,17 @@ namespace OnlineQuiz.DAL.Data.Models
 
 
         public int TracksId { get; set; }
-        public Tracks Tracks { get; set; }
+        public virtual Tracks Tracks { get; set; }
 
         // for Instructor  (foreign Key)
         public string InstructorId { get; set; }
-        public Instructor Instructor { get; set; }
+        public virtual Instructor Instructor { get; set; }
 
         // for Attempt
-        public ICollection<Attempts> Attempts { get; set; } = new HashSet<Attempts>();
+        public virtual ICollection<Attempts> Attempts { get; set; } = new HashSet<Attempts>();
 
         //for Question
-        public ICollection<Questions> Questions { get; set; } = new HashSet<Questions>();
+        public virtual ICollection<Questions> Questions { get; set; } = new HashSet<Questions>();
 
 
     }

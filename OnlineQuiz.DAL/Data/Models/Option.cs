@@ -15,6 +15,6 @@ namespace OnlineQuiz.DAL.Data.Models
 
         // for Question
        public int QuestionsId { get; set; }
-      public Questions Questions { get; set; }
+      public virtual Questions Questions { get; set; }
     }
 }
