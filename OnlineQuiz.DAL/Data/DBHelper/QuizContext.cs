@@ -19,6 +19,7 @@ namespace OnlineQuiz.DAL.Data.DBHelper
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLazyLoadingProxies(true);
         }
         // this method hash pass for admin add by admin - note better use fazwy algrothim for hash password
         private string HashPassword(string password)
@@ -66,19 +67,20 @@ namespace OnlineQuiz.DAL.Data.DBHelper
             modelBuilder.ApplyConfiguration(new TracksEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new UsersEntityTypeConfiguration());
 
+            
          
         }
 
-        public DbSet<Users> users { get; set; }
-        public DbSet<Student> Students { get; set; }
-        public DbSet<Instructor> Instructors { get; set; }
-        public DbSet<Quizzes> quizzes { get; set; }
-        public DbSet<Questions> questions { get; set; }
-        public DbSet<Answers> answers { get; set; }
-        public DbSet<Attempts> attempts { get; set; }
-        public DbSet<Tracks> tracks { get; set; }
-        public DbSet<Option> Options { get; set; }
-        public DbSet<StudentInstructor> StudentInstructors { get; set; }
+        public virtual DbSet<Users> users { get; set; }
+        public virtual DbSet<Student> Students { get; set; }
+        public virtual DbSet<Instructor> Instructors { get; set; }
+        public virtual DbSet<Quizzes> quizzes { get; set; }
+        public virtual DbSet<Questions> questions { get; set; }
+        public virtual DbSet<Answers> answers { get; set; }
+        public virtual DbSet<Attempts> attempts { get; set; }
+        public virtual DbSet<Tracks> tracks { get; set; }
+        public virtual DbSet<Option> Options { get; set; }
+        public virtual DbSet<StudentInstructor> StudentInstructors { get; set; }
 
 
 

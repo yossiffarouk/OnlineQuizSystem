@@ -14,11 +14,11 @@ namespace OnlineQuiz.DAL.Data.Models
 
         // for Attempt
         public int AttemptId { get; set; }
-        public Attempts Attempt { get; set; }
+        public virtual Attempts Attempt { get; set; }
 
 
         // for Question
         public int  QuestionId { get; set; }    
-        public Questions Question { get; set; }
+        public virtual Questions Question { get; set; }
     }
 }
