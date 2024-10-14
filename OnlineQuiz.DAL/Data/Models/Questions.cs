@@ -12,6 +12,8 @@ namespace OnlineQuiz.DAL.Data.Models
         public int Id { get; set; }
         public string Tittle { get; set; }
         public  string CorrectAnswer { get; set; }
+        public bool IsDeleted { get; set; } = false;
+
 
 
         // For Quiz

@@ -22,12 +22,12 @@ namespace OnlineQuiz.DAL.Repositoryies.QuizRepository
 
         public IQueryable<Quizzes> GetAll()
         {
-            return _context.Set<Quizzes>().AsQueryable();
+            return _context.Set<Quizzes>().Where(q => !q.IsDeleted).AsQueryable();
         }
 
         public Quizzes GetById(int id)
         {
-            return _context.Set<Quizzes>().Find(id);
+            return _context.Set<Quizzes>().FirstOrDefault(q => q.Id == id && !q.IsDeleted);
         }
 
         public void Add(Quizzes entity)
@@ -48,26 +48,27 @@ namespace OnlineQuiz.DAL.Repositoryies.QuizRepository
 
             public void DeleteById(int id)
         {
-            var quiz = _context.Set<Quizzes>().Find(id);
+            var quiz = _context.Set<Quizzes>().FirstOrDefault(q => q.Id == id);
             if (quiz != null)
             {
-                _context.Set<Quizzes>().Remove(quiz);
+                quiz.IsDeleted = true; // Mark as soft-deleted
                 _context.SaveChanges();
             }
         }
 
         public IQueryable<Quizzes> GetByTrackId(int trackId)
         {
-            return _context.Set<Quizzes>().Where(q => q.TracksId == trackId);
+            return _context.Set<Quizzes>().Where(q => q.TracksId == trackId && !q.IsDeleted);
         }
 
         public IQueryable<Quizzes> GetAvailableQuizzes()
         {
-            return _context.Set<Quizzes>().Where(q => q.IsAvailable);
+            return _context.Set<Quizzes>().Where(q => q.IsAvailable && !q.IsDeleted);
         }
         public IQueryable<Quizzes> GetQuizzesWithQuestions()
         {
             return _context.Set<Quizzes>()
+                 .Where(q => !q.IsDeleted)
                 .Include(q => q.Questions) 
                     .ThenInclude(q => q.Options) 
                 .AsQueryable();
@@ -77,7 +78,7 @@ namespace OnlineQuiz.DAL.Repositoryies.QuizRepository
             return _context.quizzes
                 .Include(q => q.Questions) 
                 .ThenInclude(q => q.Options)
-                .FirstOrDefault(q => q.Id == quizId); // Get the quiz by ID
+                 .FirstOrDefault(q => q.Id == quizId && !q.IsDeleted);
         }
     }
 }

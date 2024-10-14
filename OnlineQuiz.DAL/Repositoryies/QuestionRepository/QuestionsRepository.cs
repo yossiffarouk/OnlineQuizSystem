@@ -20,14 +20,14 @@ namespace OnlineQuiz.DAL.Repositoryies.QuestionRepository
 
         public IQueryable<Questions> GetAll()
         {
-            return _context.Set<Questions>().AsQueryable();
+            return _context.Set<Questions>().Where(q => !q.IsDeleted).AsQueryable();
         }
 
         public Questions GetById(int id)
         {
             return _context.Set<Questions>()
-                   .Include(q => q.Options)  
-                   .FirstOrDefault(q => q.Id == id);
+                   .Include(q => q.Options)
+                    .FirstOrDefault(q => q.Id == id && !q.IsDeleted);
         }
 
         public void Add(Questions entity)
@@ -38,8 +38,10 @@ namespace OnlineQuiz.DAL.Repositoryies.QuestionRepository
 
         public void Update(Questions entity)
         {
-            _context.Set<Questions>().Update(entity);
-            _context.SaveChanges();
+           
+                _context.Set<Questions>().Update(entity);
+                _context.SaveChanges();
+            
         }
 
         public void DeleteById(int id)
@@ -47,7 +49,8 @@ namespace OnlineQuiz.DAL.Repositoryies.QuestionRepository
             var question = GetById(id);
             if (question != null)
             {
-                _context.Set<Questions>().Remove(question);
+                
+                question.IsDeleted = true; //soft delete
                 _context.SaveChanges();
             }
         }

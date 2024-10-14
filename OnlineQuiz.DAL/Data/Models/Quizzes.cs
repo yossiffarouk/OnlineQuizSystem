@@ -18,6 +18,9 @@ namespace OnlineQuiz.DAL.Data.Models
         public int ExamTime { get; set; }                        // quiz time
         public bool IsAvailable { get; set; } = true;
 
+        // Soft delete
+        public bool IsDeleted { get; set; } = false;
+
 
         public int TracksId { get; set; }
         public Tracks Tracks { get; set; }
