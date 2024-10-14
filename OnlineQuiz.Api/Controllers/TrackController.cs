@@ -48,7 +48,7 @@ namespace OnlineQuiz.Api.Controllers
             }
 
             _trackManager.Add(trackDto);
-            return Ok(trackDto);
+            return Ok("Track added successfully.");
         }
 
         // PUT: api/track/{id}
@@ -61,7 +61,7 @@ namespace OnlineQuiz.Api.Controllers
             }
 
             _trackManager.Update(trackDto);
-            return NoContent();
+            return Ok("Track updated successfully.");
         }
 
         // DELETE: api/track/{id}
@@ -69,7 +69,7 @@ namespace OnlineQuiz.Api.Controllers
         public IActionResult Delete(int id)
         {
             _trackManager.DeleteById(id);
-            return NoContent();
+            return Ok("Track deleted successfully.");
         }
     }
 }

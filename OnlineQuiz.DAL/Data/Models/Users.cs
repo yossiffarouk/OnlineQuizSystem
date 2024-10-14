@@ -52,7 +52,7 @@ namespace OnlineQuiz.DAL.Data.Models
 
         public UserTypeEnum UserType { get; set; }
 
-        public bool IsBanned { get; set; }
+        public bool IsBanned { get; set; } = false;
 
 
     }

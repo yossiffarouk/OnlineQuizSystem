@@ -118,6 +118,19 @@ namespace OnlineQuiz.Api.Controllers
             }
             return BadRequest(result.Errors);
         }
+        [HttpGet("ShowResetToken")]
+        public IActionResult ShowResetToken(string token, string email)
+        {
+
+            return Ok(new
+            {
+
+                Token = token,
+
+
+                Email = email
+            });
+        }
 
         [HttpPost("AddRole")]
         public async Task<IActionResult> AddRole( string RoleName)

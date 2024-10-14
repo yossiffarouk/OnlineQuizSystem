@@ -44,7 +44,7 @@ namespace OnlineQuiz.Api.Controllers
             }
 
             var createdQuiz = _quizManager.AddQuiz(quizDto);
-            return Ok(quizDto); ;
+            return Ok("Quiz added successfully.");
         }
 
         [HttpPut("{id}")]
@@ -56,14 +56,14 @@ namespace OnlineQuiz.Api.Controllers
             }
 
             _quizManager.UpdateQuiz(quizDto);
-            return NoContent();
+            return Ok("Quiz updated successfully.");
         }
 
         [HttpDelete("{id}")]
         public IActionResult DeleteQuiz(int id)
         {
             _quizManager.DeleteQuiz(id);
-            return NoContent();
+            return Ok("Quiz deleted successfully.");
         }
 
         [HttpGet("track/{trackId}")]
@@ -99,6 +99,12 @@ namespace OnlineQuiz.Api.Controllers
             }
 
             return Ok(finalQuizDto);
+        }
+        [HttpGet("available")]
+        public ActionResult<IEnumerable<QuizDto>> GetAvailableQuizzes()
+        {
+            var availableQuizzes = _quizManager.GetAvailableQuizzes();
+            return Ok(availableQuizzes.ToList());
         }
 
     }

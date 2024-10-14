@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineQuiz.DAL.Data.DBHelper;
 
@@ -11,9 +12,11 @@ using OnlineQuiz.DAL.Data.DBHelper;
 namespace OnlineQuiz.DAL.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    partial class QuizContextModelSnapshot : ModelSnapshot
+    [Migration("20241013190051_YoussefUpdateAdmin")]
+    partial class YoussefUpdateAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -260,9 +263,6 @@ namespace OnlineQuiz.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
                     b.Property<int>("QuizId")
                         .HasColumnType("int");
 
@@ -307,9 +307,6 @@ namespace OnlineQuiz.DAL.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsAvailable")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<int>("QuizDegree")
@@ -357,9 +354,6 @@ namespace OnlineQuiz.DAL.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -472,11 +466,11 @@ namespace OnlineQuiz.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a21dc925-ad6e-477f-ae1b-76570c85c0af",
+                            Id = "e01f6155-5d4a-4269-b382-8272777b7d28",
                             AccessFailedCount = 0,
                             Adress = "Mansura",
                             Age = 0,
-                            ConcurrencyStamp = "4b1f7694-95d2-4672-915c-12a43dc102a3",
+                            ConcurrencyStamp = "a4278a69-829a-4623-b0d9-b018102326be",
                             Email = "yossif155farouk@gmail.com",
                             EmailConfirmed = false,
                             Gender = 0,
@@ -484,7 +478,7 @@ namespace OnlineQuiz.DAL.Migrations
                             LockoutEnabled = false,
                             PasswordHash = "WlgxMnp4MTIj",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "549a897c-90a5-4a0f-a9df-35539d36a974",
+                            SecurityStamp = "efaba414-18f8-4147-9976-8d9c676e8c84",
                             TwoFactorEnabled = false,
                             UserName = "Yossif Farouk",
                             UserType = 3

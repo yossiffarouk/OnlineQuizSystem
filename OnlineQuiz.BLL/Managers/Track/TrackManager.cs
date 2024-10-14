@@ -39,10 +39,19 @@ namespace OnlineQuiz.BLL.Managers.Track
         public void Update(TrackDto trackDto)
         {
             var track = _mapper.Map<Tracks>(trackDto);
+            if (track == null || track.IsDeleted) // Check if track exists and is not deleted
+            {
+                throw new Exception("Track not found or has been deleted.");
+            }
             _trackRepository.Update(track);
         }
         public void DeleteById(int id)
         {
+            var existingTrack = _trackRepository.GetById(id);
+            if (existingTrack == null || existingTrack.IsDeleted)
+            {
+                throw new Exception("Track not found or already deleted."); 
+            }
             _trackRepository.DeleteById(id);
         }
 

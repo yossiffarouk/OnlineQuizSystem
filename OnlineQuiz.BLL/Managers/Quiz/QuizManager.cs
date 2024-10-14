@@ -27,7 +27,13 @@ namespace OnlineQuiz.BLL.Managers.Quiz
 
         public IQueryable<QuizDto> GetAllQuizzes()
         {
-            return _quizRepository.GetAll().Select(quiz => _mapper.Map<QuizDto>(quiz));
+            return _quizRepository.GetAll().Where(q => !q.IsDeleted).Select(quiz => _mapper.Map<QuizDto>(quiz));
+        }
+        public IQueryable<QuizDto> GetAvailableQuizzes()
+        {
+            return quizRepository1.GetAvailableQuizzes()
+                                                      .Select(quiz => _mapper.Map<QuizDto>(quiz));
+
         }
 
         public QuizDto GetQuizById(int id)
@@ -45,13 +51,22 @@ namespace OnlineQuiz.BLL.Managers.Quiz
 
         public void UpdateQuiz(QuizDto quizDto)
         {
+      
+
             var quiz = _mapper.Map<Quizzes>(quizDto);
+
+
             _quizRepository.Update(quiz); 
         }
 
         public void DeleteQuiz(int id)
         {
-            _quizRepository.DeleteById(id);
+            var quiz = _quizRepository.GetById(id);
+            if (quiz != null)
+            {
+                quiz.IsDeleted = true;  // Mark as soft-deleted
+                _quizRepository.Update(quiz); // Save changes
+            }
         }
 
         public IQueryable<QuizDto> GetQuizzesByTrackId(int trackId)
@@ -85,5 +100,7 @@ namespace OnlineQuiz.BLL.Managers.Quiz
             var finalQuizDto = _mapper.Map<FinalQuizDTO>(quiz);
             return finalQuizDto;
         }
+
+     
     }
 }

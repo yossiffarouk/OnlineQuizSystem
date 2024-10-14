@@ -14,6 +14,7 @@ namespace OnlineQuiz.DAL.Data.Models
         public double Score { get; set; }
         public string StateForExam { get; set; } = "Not Joined";
 
+
         // For Quiz
         public int QuizId { get; set; }
         public Quizzes Quiz { get; set; }

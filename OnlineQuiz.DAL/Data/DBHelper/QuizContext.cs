@@ -19,6 +19,7 @@ namespace OnlineQuiz.DAL.Data.DBHelper
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseLazyLoadingProxies(true);
         }
         // this method hash pass for admin add by admin - note better use fazwy algrothim for hash password
         private string HashPassword(string password)
@@ -66,6 +67,7 @@ namespace OnlineQuiz.DAL.Data.DBHelper
             modelBuilder.ApplyConfiguration(new TracksEntityTypeConfiguration());
             modelBuilder.ApplyConfiguration(new UsersEntityTypeConfiguration());
 
+            
          
         }
 

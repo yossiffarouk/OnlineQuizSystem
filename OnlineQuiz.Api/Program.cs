@@ -53,10 +53,13 @@ namespace OnlineQuiz.Api
             // Add services to the container.
 
             builder.Services.AddControllers();
+
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            builder.Services.AddControllers()
+           .AddNewtonsoftJson(options =>
+            options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented); // Add this line for formatted JSON output
             //QuicContext
             builder.Services.AddDbContext<QuizContext>(options =>
             {
