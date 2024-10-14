@@ -27,8 +27,8 @@ namespace OnlineQuiz.Api.Controllers
         {
             try
             {
-                _attemptManager.StartQuizAttempt(attemptDto);
-                return Ok(new { message = "Quiz attempt started successfully" });
+                
+                return Ok(_attemptManager.StartQuizAttempt(attemptDto));
             }
             catch (Exception ex)
             {
@@ -83,6 +83,7 @@ namespace OnlineQuiz.Api.Controllers
             }
 
         }
+        [HttpGet("GetTotalScoreByStudent")]
         public IActionResult GetTotalScoreByStudent(string studentId)
         {
             try
