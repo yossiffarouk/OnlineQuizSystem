@@ -67,7 +67,7 @@ namespace OnlineQuiz.Api.Controllers
         public ActionResult AddStudent(StudentAddDto studentAddDto)
         {
             _studentManager.Add(studentAddDto);
-            return NoContent();
+            return Ok("Student Added Successfuly");
         }
         // PUT: api/Student/{id}
         [HttpPut("{id}")]
@@ -79,7 +79,7 @@ namespace OnlineQuiz.Api.Controllers
             }
 
             _studentManager.Update(studentUpdateDto);
-            return NoContent();
+            return Ok("Student Updated");
         }
         [HttpGet("students")]
         public async Task<IActionResult> GetStudents(int pageNumber = 1, int pageSize = 10)
