@@ -83,6 +83,7 @@ namespace OnlineQuiz.Api.Controllers
             }
 
         }
+        [HttpGet("GetTotalScoreByStudent")]
         public IActionResult GetTotalScoreByStudent(string studentId)
         {
             try

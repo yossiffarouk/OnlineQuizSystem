@@ -14,7 +14,7 @@ namespace OnlineQuiz.BLL.Dtos.StudentDtos
         public string Email { get; set; }
         public int Age { get; set; }
         public string Gender { get; set; }
-        public string Address { get; set; }
+        public string Adress { get; set; }
         public string ImgUrl { get; set; }
         public string Grade { get; set; }
         public List<AttemptDetailsDto> AttemptDetailsDtos { get; set; } = new List<AttemptDetailsDto>();

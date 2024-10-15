@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineQuiz.BLL.Dtos.Accounts;
+using OnlineQuiz.DAL.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,12 @@ namespace OnlineQuiz.BLL.Managers.Accounts
         Task<GeneralRespnose> ForgotPassword(ForgotPasswordDto forgotPasswordDto, IUrlHelper urlHelper);
         Task<GeneralRespnose> ResetPassword(ResetPasswordDto resetPasswordDto);
         Task<GeneralRespnose> AddRole(string RoleName);
-        Task<GeneralRespnose> DeleteRole(string RoleName);
-        Task<GeneralRespnose> AddRoleToUser(string UserId, string RoleName);
-        Task<GeneralRespnose> RemoveRoleFromUser(string UserId, string RoleName);
-        Task<RoleResponce<IEnumerable<string>>> GetAllRoles();
-        Task<RoleResponce<UserRoleInfo>> GetUsersInRole(string RoleName);
+        Task<GeneralRespnose> DeleteRole(string  RoleId);
+        Task<GeneralRespnose> AddRoleToUser(string UserId,  string RoleId);
+        Task<GeneralRespnose> RemoveRoleFromUser(string UserId, string RoleId);
+        Task<RoleResponce<IQueryable<string>>> GetAllRoles();
+        Task<RoleResponce<IQueryable<string>>> GetAllRolesIsDeleted();
+        Task<RoleResponce<UserRoleInfo>> GetUsersInRole(string RoleId);
 
 
 

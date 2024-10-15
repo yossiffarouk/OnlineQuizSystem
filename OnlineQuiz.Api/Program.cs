@@ -112,7 +112,7 @@ namespace OnlineQuiz.Api
 
 
             //Identity
-            builder.Services.AddIdentity<Users, Microsoft.AspNetCore.Identity.IdentityRole>(options =>
+            builder.Services.AddIdentity<Users, CustomRole>(options =>
             {
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireLowercase = true;
@@ -155,7 +155,7 @@ namespace OnlineQuiz.Api
             // Call the SeedRoles method
             using (var scope = app.Services.CreateScope())
             {
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<CustomRole>>();
                 await SeedRolesDtocs.SeedRoles(roleManager);
             }
 

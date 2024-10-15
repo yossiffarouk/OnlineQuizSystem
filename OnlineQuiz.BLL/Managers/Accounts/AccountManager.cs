@@ -19,16 +19,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
+
 namespace OnlineQuiz.BLL.Managers.Accounts
 {
     public class AccountManager : IAccountManager
     {
         private readonly UserManager<Users> _userManager;
         private readonly IConfiguration _configuration;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<CustomRole> _roleManager;
         private readonly IEmailService _emailService;
 
-        public AccountManager(UserManager<Users> userManager, IConfiguration configuration, RoleManager<IdentityRole> roleManager
+        public AccountManager(UserManager<Users> userManager, IConfiguration configuration, RoleManager<CustomRole> roleManager
             ,IEmailService emailService )
         {
             _userManager = userManager;
@@ -263,7 +264,10 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             return response;
         }
 
-        public async Task<GeneralRespnose> AddRole(string RoleName)
+
+
+
+        public async Task<GeneralRespnose> AddRole(string RoleName )
         {
             var response = new GeneralRespnose();
 
@@ -274,7 +278,7 @@ namespace OnlineQuiz.BLL.Managers.Accounts
                 return response;
             }
 
-            var roleResult = await _roleManager.CreateAsync(new IdentityRole(RoleName));
+            var roleResult = await _roleManager.CreateAsync(new CustomRole { Name = RoleName});
             if (roleResult.Succeeded)
             {
                 response.successed = true;
@@ -285,21 +289,23 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             return response;
         }
 
-        public async Task<GeneralRespnose> DeleteRole(string RoleName)
+        public async Task<GeneralRespnose> DeleteRole(string RoleId)
         {
             var response = new GeneralRespnose();
 
-            var role = await _roleManager.FindByNameAsync(RoleName);
+            var role = await _roleManager.FindByIdAsync(RoleId);
             if (role == null)
             {
                 response.Errors.Add("Role not found.");
                 return response;
             }
 
-
-            var roleResult = await _roleManager.DeleteAsync(role);
+            role.IsDeleted = true;
+            var roleResult = await _roleManager.UpdateAsync(role);
+      
             if (roleResult.Succeeded)
             {
+             
                 response.successed = true;
                 return response;
             }
@@ -307,7 +313,7 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             return response;
         }
         
-        public async Task<GeneralRespnose> AddRoleToUser(string UserId, string RoleName)
+        public async Task<GeneralRespnose> AddRoleToUser(string UserId, string RoleId)
         {
             var response = new GeneralRespnose();
 
@@ -317,15 +323,15 @@ namespace OnlineQuiz.BLL.Managers.Accounts
                 response.Errors.Add("User not found.");
                 return response;
             }
-     
-            var roleExists = await _roleManager.RoleExistsAsync(RoleName);
-            if (!roleExists)
+            var role = await _roleManager.FindByIdAsync(RoleId);
+            if (role == null || role.IsDeleted)
             {
-                response.Errors.Add("Role does not exist.");
+                response.Errors.Add("Role does not exist or is deleted.");
                 return response;
             }
 
-            var result = await _userManager.AddToRoleAsync(user, RoleName);
+
+            var result = await _userManager.AddToRoleAsync(user, role.Name);
             if (result.Succeeded)
             {
                 response.successed = true;
@@ -335,7 +341,7 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             return response;
         }
 
-        public async Task<GeneralRespnose> RemoveRoleFromUser(string UserId, string RoleName)
+        public async Task<GeneralRespnose> RemoveRoleFromUser(string UserId, string RoleId)
         {
             var response = new GeneralRespnose();
 
@@ -345,9 +351,14 @@ namespace OnlineQuiz.BLL.Managers.Accounts
                 response.Errors.Add("User not found.");
                 return response;
             }
+            var role = await _roleManager.FindByIdAsync(RoleId);
+            if (role == null || role.IsDeleted)
+            {
+                response.Errors.Add("Role does not exist or is deleted.");
+                return response;
+            }
 
-          
-            var isInRole = await _userManager.IsInRoleAsync(user, RoleName);
+            var isInRole = await _userManager.IsInRoleAsync(user, role.Name);
             if (!isInRole)
             {
                 response.Errors.Add("User is not in this role.");
@@ -355,7 +366,7 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             }
 
            
-            var result = await _userManager.RemoveFromRoleAsync(user, RoleName);
+            var result = await _userManager.RemoveFromRoleAsync(user, role.Name);
             if (result.Succeeded)
             {
                 response.successed = true;
@@ -365,36 +376,53 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             return response;
         }
 
-        public async Task<RoleResponce<IEnumerable<string>>> GetAllRoles()
+        public async Task<RoleResponce<IQueryable<string>>> GetAllRoles()
         {
-            var response = new RoleResponce<IEnumerable<string>>();
-            var roles = _roleManager.Roles.ToList();
-            response.Data = roles.Select(s => s.Name).ToList(); 
+            var response = new RoleResponce<IQueryable<string>>();
+            var roles = _roleManager.Roles
+                .Where(r => !r.IsDeleted)
+                .Select(r => r.Name);
 
+            response.Data = roles;
             response.successed = true;
+
             return response;
         }
 
-        public async Task<RoleResponce<UserRoleInfo>> GetUsersInRole(string RoleName)
+        public async Task<RoleResponce<IQueryable<string>>> GetAllRolesIsDeleted()
+        {
+            var response = new RoleResponce<IQueryable<string>>();
+            var roles = _roleManager.Roles
+                .Where(r => r.IsDeleted)
+                .Select(r => r.Name);
+
+            response.Data = roles;
+            response.successed = true;
+
+            return response;
+        }
+       
+        
+
+        public async Task<RoleResponce<UserRoleInfo>> GetUsersInRole(string RoleId)
         {
             var response = new RoleResponce<UserRoleInfo>();
 
-    
-            var roleExists = await _roleManager.RoleExistsAsync(RoleName);
-            if (!roleExists)
+            var role = await _roleManager.FindByIdAsync(RoleId);
+            if (role == null)
             {
                 response.Errors.Add("Role does not exist.");
                 return response;
             }
 
             // Get users in the specified role
-            var users = await _userManager.GetUsersInRoleAsync(RoleName);
+            var users = await _userManager.GetUsersInRoleAsync(role.Name);
             var userCount = users.Count();
 
             // Prepare the response data
             response.Data = new UserRoleInfo
             {
-                RoleName = RoleName,
+                RoleName = role.Name,
                 UsersCount = userCount,
                 Users = users.Select(u => new UserInfo
                 {

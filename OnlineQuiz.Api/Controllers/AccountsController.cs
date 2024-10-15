@@ -135,7 +135,7 @@ namespace OnlineQuiz.Api.Controllers
         [HttpPost("AddRole")]
         public async Task<IActionResult> AddRole( string RoleName)
         {
-            var result = await _accountManager.AddRole(RoleName);
+            var result = await _accountManager.AddRole(RoleName );
             if (!result.successed)
             {
                 return BadRequest(result.Errors);
@@ -145,9 +145,9 @@ namespace OnlineQuiz.Api.Controllers
 
         // Delete an existing role
         [HttpDelete("DeleteRole")]
-        public async Task<IActionResult> DeleteRole(string RoleName)
+        public async Task<IActionResult> DeleteRole(string RoleId)
         {
-            var result = await _accountManager.DeleteRole(RoleName);
+            var result = await _accountManager.DeleteRole(RoleId);
             if (!result.successed)
             {
                 return BadRequest(result.Errors);
@@ -157,9 +157,9 @@ namespace OnlineQuiz.Api.Controllers
 
         // Add a role to a user
         [HttpPost("AddRoleToUser")]
-        public async Task<IActionResult> AddRoleToUser(string UserId,  string RoleName)
+        public async Task<IActionResult> AddRoleToUser(string UserId,  string RoleId)
         {
-            var result = await _accountManager.AddRoleToUser(UserId, RoleName);
+            var result = await _accountManager.AddRoleToUser(UserId, RoleId);
             if (!result.successed)
             {
                 return BadRequest(result.Errors);
@@ -169,9 +169,9 @@ namespace OnlineQuiz.Api.Controllers
 
         // Remove a role from a user
         [HttpDelete("RemoveRoleFromUser")]
-        public async Task<IActionResult> RemoveRoleFromUser(string UserId, string RoleName)
+        public async Task<IActionResult> RemoveRoleFromUser(string UserId, string RoleId)
         {
-            var result = await _accountManager.RemoveRoleFromUser(UserId, RoleName);
+            var result = await _accountManager.RemoveRoleFromUser(UserId, RoleId);
             if (!result.successed)
             {
                 return BadRequest(result.Errors);
@@ -186,12 +186,20 @@ namespace OnlineQuiz.Api.Controllers
             var result = await _accountManager.GetAllRoles();
             return Ok(result.Data);
         }
+        // Get all rolesIs Deleted
+        [HttpGet("GetAllRolesIsDeleted")]
+        public async Task<IActionResult> GetAllRolesIsDeleted()
+        {
+            var result = await _accountManager.GetAllRolesIsDeleted();
+            return Ok(result.Data);
+        }
+
 
         // Get all users in a specific role
         [HttpGet("GetUsersInRole")]
-        public async Task<IActionResult> GetUsersInRole(string RoleName)
+        public async Task<IActionResult> GetUsersInRole(string RoleId)
         {
-            var result = await _accountManager.GetUsersInRole(RoleName);
+            var result = await _accountManager.GetUsersInRole(RoleId);
             if (!result.successed)
             {
                 return BadRequest(result.Errors);

@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using OnlineQuiz.DAL.Data.Configuration;
 using OnlineQuiz.DAL.Data.Models;
 using System;
@@ -10,9 +10,12 @@ using System.Threading.Tasks;
 
 namespace OnlineQuiz.DAL.Data.DBHelper
 {
-    public class QuizContext :IdentityDbContext<Users>
+    public class QuizContext : IdentityDbContext<Users, CustomRole, string>
     {
-        public QuizContext(DbContextOptions<QuizContext> options) : base(options) { }
+        public QuizContext (DbContextOptions<QuizContext> options)
+            : base(options)
+        {
+        }
 
 
 
@@ -81,6 +84,7 @@ namespace OnlineQuiz.DAL.Data.DBHelper
         public virtual DbSet<Tracks> tracks { get; set; }
         public virtual DbSet<Option> Options { get; set; }
         public virtual DbSet<StudentInstructor> StudentInstructors { get; set; }
+        public virtual DbSet<CustomRole> CustomRoles { get; set; }
 
 
 
