@@ -58,8 +58,8 @@ namespace OnlineQuiz.Api
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.AddControllers()
-           .AddNewtonsoftJson(options =>
-            options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented); // Add this line for formatted JSON output
+              .AddNewtonsoftJson(options =>
+             options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented); // Add this line for formatted JSON output
             //QuicContext
             builder.Services.AddDbContext<QuizContext>(options =>
             {
