@@ -28,8 +28,12 @@ namespace OnlineQuiz.DAL.Repositoryies.AttemptRepository
         public void DeleteById(int id)
         {
             Attempts? attempts = _context.attempts.FirstOrDefault(a => a.Id == id);
-            _context.attempts.Remove(attempts!);
-            _context.SaveChanges();
+            if (attempts != null)
+            {
+                _context.attempts.Remove(attempts!);
+                _context.SaveChanges();
+            }
+            throw new Exception("Not Found");
         }
 
         public IQueryable<Attempts> GetAll()
@@ -64,7 +68,7 @@ namespace OnlineQuiz.DAL.Repositoryies.AttemptRepository
             foreach (Answers answer in submittedAnswers)
             {
 
-                var answers = new Answers
+                Answers answers = new Answers
                 {
                     AttemptId = attemptId,
                     QuestionId = answer.QuestionId,
@@ -73,14 +77,20 @@ namespace OnlineQuiz.DAL.Repositoryies.AttemptRepository
                     ?.CorrectAnswer == answer.SubmittedAnswer
                 };
 
-                _context.answers.Add(answers);
+                
                 if (answers.IsCorrect == true)
                 {
-                    attempt.Score = +1;
+                    attempt.Score = attempt.Score +1;
                 }
+                _context.answers.Add(answers);
             }
+            
 
             attempt.EndTime = DateTime.Now;
+        }
+
+        public void SaveChanges()
+        {
             _context.SaveChanges();
         }
 
@@ -125,11 +135,57 @@ namespace OnlineQuiz.DAL.Repositoryies.AttemptRepository
             return (double)correctAnswers / totalQuestions * 100;
         }
 
+        public int TotalAnswers(int attemptId)
+        {
+            int totalQuestions = _context.answers
+                .Where(a => a.AttemptId == attemptId)
+                .Count();
+            return totalQuestions;
+        }
+        public int CorrectAnswers(int attemptId) 
+        {
+            int correctAnswers = _context.answers
+                .Where(a => a.AttemptId == attemptId && a.IsCorrect)
+                .Count();
+            return correctAnswers;
+        }
+        public int WrongAnsers(int attemptId) 
+        {
+            int wronganswers = _context.answers
+                .Where(a => a.AttemptId == attemptId && !a.IsCorrect)
+                .Count();
+            return wronganswers;
+        }
         public Student GetStudentById(string id)
         {
             Student? student = _context.Users.OfType<Student>().FirstOrDefault(s => s.Id == id);
             return student!;
         }
+        public string GetGrade(int totalScore)
+        {
+            
+            if (totalScore < 50)
+            {
+                return "Failed";
+            }
+            else if (totalScore >= 50 && totalScore < 65)
+            {
+                return "Fair";
+            }
+            else if (totalScore >= 65 && totalScore < 75)
+            {
+                return "Good";
+            }
+            else if (totalScore >= 75 && totalScore < 85)
+            {
+                return "Very Good";
+            }
+            else
+            {
+                return "Excellent";
+            }
+        }
+
 
         public Quizzes GetQuizById(int quizID)
         {
