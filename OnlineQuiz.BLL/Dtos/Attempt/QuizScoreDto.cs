@@ -11,5 +11,6 @@ namespace OnlineQuiz.BLL.Dtos.Attempt
         public int QuizId { get; set; }
         public string QuizTitle { get; set; }
         public double TotalScore { get; set; }
+        public string Grade { get; set; }
     }
 }

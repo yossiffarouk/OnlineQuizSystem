@@ -126,21 +126,20 @@ namespace OnlineQuiz.BLL.Managers.Attempt
             };
         }
 
-        public AttemptDto GetResults(int attemptId)
+        public GetResultAttemptDto GetResults(int attemptId)
         {
-            var attempt = _attempt.GetResults(attemptId);
+            Attempts? attempt = _attempt.GetResults(attemptId);
             if (attempt == null)
                 throw new Exception("Attempt not found");
 
-            return new AttemptDto
+            return new GetResultAttemptDto
             {
-                Id = attempt.Id,
-                QuizId = attempt.QuizId,
-                StudentId = attempt.StudentId,
-                Score = attempt.Score,
-                StartTime = attempt.StartTime,
-                EndTime = attempt.EndTime,
-                stateforexam = attempt.StateForExam
+                QuizName = attempt.Quiz.Tittle.ToString(),
+                StudentName = attempt.Student.UserName,
+                TotalAnswers = _attempt.TotalAnswers(attemptId),
+                CorrectAnswers = _attempt.CorrectAnswers(attemptId),
+                WrongAnswers = _attempt.WrongAnsers(attemptId),
+                Score = (int)attempt.Score
             };
         }
 
@@ -159,7 +158,7 @@ namespace OnlineQuiz.BLL.Managers.Attempt
             };
         }
 
-        public IEnumerable<AttemptDto> GetUserAttempts(string studentId)
+        public IEnumerable<GetUserAttemptsDto> GetUserAttempts(string studentId)
         {
 
             var attempts = _attempt.GetUserAttempts(studentId);
@@ -167,15 +166,14 @@ namespace OnlineQuiz.BLL.Managers.Attempt
             if (attempts == null || !attempts.Any())
                 throw new Exception("No attempts found for the user");
 
-            return attempts.Select(attempt => new AttemptDto
+            return attempts.Select(attempt => new GetUserAttemptsDto
             {
-                Id = attempt.Id,
-                QuizId = attempt.QuizId,
-                StudentId = attempt.StudentId,
+                AttemptID = attempt.Id,
+                QuizName = attempt.Quiz.Tittle,
+                StudentName = attempt.Student.UserName,
                 StartTime = attempt.StartTime,
                 EndTime = attempt.EndTime,
-                Score = attempt.Score,
-                stateforexam = attempt.StateForExam
+                Score = (int)attempt.Score,
 
             }).ToList();
         }
@@ -191,11 +189,21 @@ namespace OnlineQuiz.BLL.Managers.Attempt
             }).ToList();
 
             _attempt.SubmitQuizAttempt(attemptId, answers);
+            _attempt.SaveChanges();
         }
 
         public void Update(AttemptDto entity)
         {
-            throw new NotImplementedException();
+            Attempts attempts = _attempt.GetById(entity.Id);
+            if (attempts == null)
+            {
+                throw new Exception("Not Found");
+            }
+            attempts.StartTime = entity.StartTime;
+            attempts!.EndTime = (DateTime)entity.EndTime;
+            attempts.Score = entity.Score;
+            attempts.StateForExam = entity.stateforexam;
+            _attempt.Update(attempts);
         }
 
         public List<QuesstionDto> GetQuestionsByQuizId(int quizId)
@@ -243,7 +251,8 @@ namespace OnlineQuiz.BLL.Managers.Attempt
                 {
                     QuizId = group.Key,
                     QuizTitle = group.First().Quiz.Tittle,
-                    TotalScore = group.Sum(a => a.Score)
+                    TotalScore = group.Sum(a => a.Score),
+                    Grade = _attempt.GetGrade(group.Sum(a => (int)a.Score))
                 })
                 .ToList();
 
