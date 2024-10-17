@@ -24,11 +24,14 @@ namespace OnlineQuiz.Api.Controllers
             _iAdminManger = IAdminManger;
 
         }
+
         [HttpGet]
         [Route("GetAllStudents")]
-        public  IActionResult GetAllStudents()
+        public async Task<IActionResult> GetAllStudents()
         {
-            return Ok( _iAdminManger.GetAllStudent() );
+            var students = await _iAdminManger.GetAllStudentAsync();
+            var x = 10;
+            return Ok( students );
         }
 
         [HttpGet]

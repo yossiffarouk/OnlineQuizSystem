@@ -25,10 +25,10 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
             _Context.SaveChanges();
         }
 
-        public void AddStudent(Student student)
+        public async Task AddStudent(Student student)
         {
             _Context.Add(student);
-            _Context.SaveChanges();
+            await SaveChanges();
         }
 
 
@@ -39,10 +39,10 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
              SaveChanges();
         }
 
-        public void DeleteStudent(Student student)
+        public async Task DeleteStudent(Student student)
         {
             _Context.Remove(student);
-            SaveChanges();
+            await SaveChanges();
         }
 
         public IEnumerable<Instructor> GetAllInstructo()
@@ -50,9 +50,10 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
             return _Context.Instructors.ToList();
         }
 
-        public IEnumerable<Student> GetAllStudent()
+        public async Task<IEnumerable<Student>> GetAllStudentAsync()
         {
-            return _Context.Students.ToList();
+             
+            return await _Context.Students.ToListAsync();
         }
 
         public Instructor GetInstructorById(string id)
@@ -66,15 +67,15 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
 
         }
 
-        public Student GetStudentById(string id)
+        public async Task<Student> GetStudentById(string id)
         {
-            return _Context.Students.FirstOrDefault(Key => Key.Id == id);
+            return await _Context.Students.FirstOrDefaultAsync(Key => Key.Id == id);
 
         }
 
-        public Student GetStudentByName(string name)
+        public async Task<Student> GetStudentByName(string name)
         {
-            return _Context.Students.FirstOrDefault(Key => Key.UserName == name.ToString());
+            return await _Context.Students.FirstOrDefaultAsync(Key => Key.UserName == name.ToString());
 
         }
 
@@ -83,20 +84,20 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
 
         public void UpdateInstructor(Instructor Instructor)
         {
-            SaveChanges();
+             SaveChanges();
         }
 
-        public void UpdateStudent(Student student)
+        public async Task UpdateStudent(Student student)
         {
-            SaveChanges();
+             await SaveChanges();
         }
 
 
 
 
-        public void SaveChanges()
+        public async Task SaveChanges()
         {
-            _Context.SaveChanges();
+            await _Context.SaveChangesAsync();
         }
 
         public void ApproveInstructorAsync(string InstructorId)
@@ -165,5 +166,7 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
         {
              return _Context.attempts.Count().ToString();
         }
+
+
     }
 }

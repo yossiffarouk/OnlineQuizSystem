@@ -13,20 +13,20 @@ namespace OnlineQuiz.BLL.Managers.Admin
     {  
         
         // get all  student 
-        IEnumerable<StudentReadDto> GetAllStudent();
+        Task<IEnumerable<StudentReadDto>> GetAllStudentAsync();
 
         // get by id or name student 
-        StudentReadDto GetStudentById(string id);
-        StudentReadDto GetStudentByName(string name);
+        Task<StudentReadDto> GetStudentById(string id);
+        Task<StudentReadDto> GetStudentByName(string name);
 
 
         // add student 
-        public void AddStudent(StudentAddDto StudentAddDto);
+        public Task AddStudent(StudentAddDto StudentAddDto);
         // edit student 
-        public void UpdateStudent(StudentUpdateDto StudentUpdateDto);
+        public Task UpdateStudent(StudentUpdateDto StudentUpdateDto);
 
         // delete student 
-        public void DeleteStudent(string id);
+        public Task DeleteStudent(string id);
 
         //--------------------------------------------------------------------------------
 

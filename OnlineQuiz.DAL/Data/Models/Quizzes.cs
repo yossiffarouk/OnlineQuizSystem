@@ -23,7 +23,7 @@ namespace OnlineQuiz.DAL.Data.Models
 
 
         public int TracksId { get; set; }
-        public virtual Tracks Tracks { get; set; }
+        public virtual Tracks Tracks { get; set; } 
 
         // for Instructor  (foreign Key)
         public string InstructorId { get; set; }

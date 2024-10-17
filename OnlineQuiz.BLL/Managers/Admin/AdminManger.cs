@@ -34,44 +34,47 @@ namespace OnlineQuiz.BLL.Managers.Admin
         //
 
 
-        public IEnumerable<StudentReadDto> GetAllStudent()
+        public async Task<IEnumerable<StudentReadDto>> GetAllStudentAsync()
         {
-            return _IMapper.Map<List<StudentReadDto>>(_IAdminRepositroy.GetAllStudent());
+
+            var x = await _IAdminRepositroy.GetAllStudentAsync();
+            return  _IMapper.Map<IEnumerable<StudentReadDto>>(x);
+
         }
 
 
 
 
 
-        public StudentReadDto GetStudentById(string id)
+        public async Task<StudentReadDto> GetStudentById(string id)
         {
-            return _IMapper.Map<StudentReadDto>(_IAdminRepositroy.GetStudentById(id));
+            return _IMapper.Map<StudentReadDto>( await _IAdminRepositroy.GetStudentById(id));
         }
 
-        public StudentReadDto GetStudentByName(string name)
+        public async Task<StudentReadDto> GetStudentByName(string name)
         {
-            return _IMapper.Map<StudentReadDto>(_IAdminRepositroy.GetStudentByName(name));
+            return _IMapper.Map<StudentReadDto>( await _IAdminRepositroy.GetStudentByName(name));
         }
 
 
-        public void AddStudent(StudentAddDto StudentAddDto)
+        public async Task AddStudent(StudentAddDto StudentAddDto)
         {
             _IAdminRepositroy.AddStudent(_IMapper.Map<OnlineQuiz.DAL.Data.Models.Student>(StudentAddDto));
-            SaveChanges();
+            //SaveChanges();
         }
 
-        public void UpdateStudent(StudentUpdateDto StudentUpdateDto)
+        public async Task UpdateStudent(StudentUpdateDto StudentUpdateDto)
         {
-            _IAdminRepositroy.UpdateStudent(_IMapper.Map(StudentUpdateDto, _IAdminRepositroy.GetStudentById(StudentUpdateDto.Id)));
-            SaveChanges();
+            _IAdminRepositroy.UpdateStudent( await _IMapper.Map(StudentUpdateDto, _IAdminRepositroy.GetStudentById(StudentUpdateDto.Id)));
+            //aw SaveChanges();
         }
 
 
 
-        public void DeleteStudent(string id)
+        public async Task DeleteStudent(string id)
         {
-            _IAdminRepositroy.DeleteStudent(_IAdminRepositroy.GetStudentById(id));
-            SaveChanges();
+            _IAdminRepositroy.DeleteStudent( await _IAdminRepositroy.GetStudentById(id));
+            //SaveChanges();
         }
 
 
