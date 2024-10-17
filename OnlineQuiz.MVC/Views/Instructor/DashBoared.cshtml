@@ -16,22 +16,13 @@
             display: flex;
         }
 
-        .main-content {
-            flex-grow: 1;
-            padding: 20px;
-        }
-        /* Sidebar styling to make it static */
         .sidebar {
-            position: fixed; /* This makes the sidebar static */
-            top: 0;
-            left: 0;
-            height: 100%; /* Ensures sidebar takes up full height of the viewport */
             min-width: 250px;
             max-width: 250px;
             background-color: #343a40;
             color: white;
+            min-height: 100vh;
             padding-top: 20px;
-            z-index: 1000; /* Ensures sidebar is on top */
         }
 
             .sidebar a {
@@ -47,7 +38,11 @@
                     background-color: #495057;
                 }
 
-        /* Header inside the main content */
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
         .header {
             background-color: #343a40;
             color: white;
