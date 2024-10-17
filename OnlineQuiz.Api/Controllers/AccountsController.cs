@@ -25,11 +25,6 @@ namespace OnlineQuiz.Api.Controllers
         {
 
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new { Errors = "Invalid input data" });
-            }
-
 
             // This provides the UrlHelper instance
             var urlHelper = Url;
@@ -53,10 +48,7 @@ namespace OnlineQuiz.Api.Controllers
         public async Task<ActionResult> Login(LoginDto loginDto)
         {
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new { Errors = "Invalid input data" });
-            }
+     
 
             var response = await _accountManager.Login(loginDto);
 
@@ -72,10 +64,7 @@ namespace OnlineQuiz.Api.Controllers
         [HttpGet("ConfirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string userId, string token)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new { Errors = "Invalid input data" });
-            }
+          
             var responce = await _accountManager.ConfirmEmail(userId, token);
             if (responce.successed)
                 
@@ -88,10 +77,7 @@ namespace OnlineQuiz.Api.Controllers
         [HttpPost("ForgotPassword")]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordDto forgotPasswordDto )
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new { Errors = "Invalid input data" });
-            }
+         
 
             var UrlHepler = Url;
             var result = await _accountManager.ForgotPassword(forgotPasswordDto , UrlHepler);
@@ -105,10 +91,7 @@ namespace OnlineQuiz.Api.Controllers
         [HttpPost("ResetPassword")]
         public async Task<IActionResult> ResetPassword(ResetPasswordDto resetPasswordDto)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(new { Errors = "Invalid input data" });
-            }
+         
 
             var UrlHepler = Url;
             var result = await _accountManager.ResetPassword(resetPasswordDto);
@@ -118,6 +101,7 @@ namespace OnlineQuiz.Api.Controllers
             }
             return BadRequest(result.Errors);
         }
+
         [HttpGet("ShowResetToken")]
         public IActionResult ShowResetToken(string token, string email)
         {
@@ -154,6 +138,7 @@ namespace OnlineQuiz.Api.Controllers
             }
             return Ok(result.successed);
         }
+
         // Restore Role
         [HttpPost("RestoreRole")]
         public async Task<IActionResult> RestoreRole(string RoleId)
@@ -197,6 +182,7 @@ namespace OnlineQuiz.Api.Controllers
             var result = await _accountManager.GetAllRoles();
             return Ok(result);
         }
+
         // Get all rolesIs Deleted
         [HttpGet("GetAllRolesIsDeleted")]
         public async Task<IActionResult> GetAllRolesIsDeleted()
@@ -204,7 +190,6 @@ namespace OnlineQuiz.Api.Controllers
             var result = await _accountManager.GetAllRolesIsDeleted();
             return Ok(result);
         }
-
 
         // Get all users in a specific role
         [HttpGet("GetUsersInRole")]

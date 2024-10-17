@@ -39,6 +39,7 @@ using OnlineQuiz.BLL.AutoMapper.InstructorMapper;
 using OnlineQuiz.BLL.Managers.Answer;
 using OnlineQuiz.DAL.Repositoryies.AnswerRepository;
 using OnlineQuiz.BLL.AutoMapper.AnswerMapper;
+using OnlineQuiz.BLL.Middlewares;
 
 
 
@@ -57,6 +58,7 @@ namespace OnlineQuiz.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             builder.Services.AddControllers()
               .AddNewtonsoftJson(options =>
              options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented); // Add this line for formatted JSON output
@@ -151,6 +153,7 @@ namespace OnlineQuiz.Api
 
 
             var app = builder.Build();
+            app.UseMiddleware<GlobalErrorHandlingMiddleware>();
 
             // Call the SeedRoles method
             using (var scope = app.Services.CreateScope())
@@ -169,6 +172,7 @@ namespace OnlineQuiz.Api
 
 
             app.UseHttpsRedirection();
+     
             app.UseAuthentication();
             app.UseAuthorization();
 
