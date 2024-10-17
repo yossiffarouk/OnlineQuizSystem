@@ -39,7 +39,7 @@ namespace OnlineQuiz.DAL.Data.DBHelper
                     Id = Guid.NewGuid().ToString(),
                     UserName = "Yossif Farouk",
                     Email = "yossif155farouk@gmail.com",
-                    PasswordHash = HashPassword("ZX12zx12#"),
+                    PasswordHash = "ZX12zx12#",
                     Adress = "Mansura",
                     Gender = 0,
                     UserType = UserTypeEnum.Admin,

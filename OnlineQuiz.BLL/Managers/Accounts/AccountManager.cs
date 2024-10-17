@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -140,7 +141,30 @@ namespace OnlineQuiz.BLL.Managers.Accounts
                    "Email not confirmed. Please check your inbox.");
                 return response;
             }
-       
+           
+            if (user.IsBanned)
+            {
+                response.Errors.Add("Your account has been banned.");
+                return response;
+            }
+            if (user.UserType == UserTypeEnum.Instructor)
+            {
+                var instructor = user as OnlineQuiz.DAL.Data.Models.Instructor; 
+
+                if (instructor != null)
+                {
+                    if (instructor.Status == ApprovalStatus.Pending)
+                    {
+                        response.Errors.Add("Your account is pending approval by the admin.");
+                        return response;
+                    }
+                    else if (instructor.Status == ApprovalStatus.Denied)
+                    {
+                        response.Errors.Add("Your account has been denied by the admin.");
+                        return response;
+                    }
+                }
+            }
 
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
             if (result)
@@ -312,7 +336,30 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             response.Errors.AddRange(roleResult.Errors.Select(e => e.Description));
             return response;
         }
-        
+
+        public async Task<GeneralRespnose> RestoreRole(string RoleId)
+        {
+            var response = new GeneralRespnose();
+
+          var role =  _roleManager.Roles
+                .Where(r => r.IsDeleted && r.Id == RoleId) 
+                    .FirstOrDefault();
+            if (role == null)
+            {
+                response.Errors.Add("Role not found or already active.");
+                return response;
+            }
+            role.IsDeleted = false;
+            var result = await _roleManager.UpdateAsync(role);
+            if (result.Succeeded)
+            {
+                response.successed = true;
+                return response;
+            }
+            response.Errors.AddRange(result.Errors.Select(e => e.Description));
+            return response;
+        }
+
         public async Task<GeneralRespnose> AddRoleToUser(string UserId, string RoleId)
         {
             var response = new GeneralRespnose();
@@ -376,33 +423,33 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             return response;
         }
 
-        public async Task<RoleResponce<IQueryable<string>>> GetAllRoles()
+        public async Task<List<GetAllRolesDto>> GetAllRoles()
         {
-            var response = new RoleResponce<IQueryable<string>>();
-            var roles = _roleManager.Roles
-                .Where(r => !r.IsDeleted)
-                .Select(r => r.Name);
+            var roles =  _roleManager.Roles
+                .Where(r => !r.IsDeleted) 
+                .Select(r => new GetAllRolesDto
+                {
+                    RoleId = r.Id,
+                    RoleName = r.Name
+                })
+                .ToList(); 
 
-            response.Data = roles;
-            response.successed = true;
-
-            return response;
+            return roles; 
         }
 
-        public async Task<RoleResponce<IQueryable<string>>> GetAllRolesIsDeleted()
+        public async Task<List<GetAllRolesDto>> GetAllRolesIsDeleted()
         {
-            var response = new RoleResponce<IQueryable<string>>();
-            var roles = _roleManager.Roles
+            var roles =  _roleManager.Roles
                 .Where(r => r.IsDeleted)
-                .Select(r => r.Name);
+                .Select(r => new GetAllRolesDto
+                {
+                    RoleId = r.Id,
+                    RoleName = r.Name
+                })
+                .ToList();
 
-            response.Data = roles;
-            response.successed = true;
-
-            return response;
+            return roles;
         }
-       
-        
 
         public async Task<RoleResponce<UserRoleInfo>> GetUsersInRole(string RoleId)
         {
@@ -477,7 +524,8 @@ namespace OnlineQuiz.BLL.Managers.Accounts
 
    
     }
-    }
+
+}
 
 
 

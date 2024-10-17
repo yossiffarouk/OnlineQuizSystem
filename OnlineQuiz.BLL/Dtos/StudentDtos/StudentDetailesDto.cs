@@ -13,7 +13,7 @@ namespace OnlineQuiz.BLL.Dtos.StudentDtos
         public string UserName { get; set; }
         public string Email { get; set; }
         public int Age { get; set; }
-        public string Gender { get; set; }
+        public GenderType Gender { get; set; }
         public string Adress { get; set; }
         public string ImgUrl { get; set; }
         public string Grade { get; set; }

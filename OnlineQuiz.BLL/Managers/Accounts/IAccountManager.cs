@@ -18,10 +18,11 @@ namespace OnlineQuiz.BLL.Managers.Accounts
         Task<GeneralRespnose> ResetPassword(ResetPasswordDto resetPasswordDto);
         Task<GeneralRespnose> AddRole(string RoleName);
         Task<GeneralRespnose> DeleteRole(string  RoleId);
+        Task<GeneralRespnose> RestoreRole(string RoleId);
         Task<GeneralRespnose> AddRoleToUser(string UserId,  string RoleId);
         Task<GeneralRespnose> RemoveRoleFromUser(string UserId, string RoleId);
-        Task<RoleResponce<IQueryable<string>>> GetAllRoles();
-        Task<RoleResponce<IQueryable<string>>> GetAllRolesIsDeleted();
+        Task<List<GetAllRolesDto>>GetAllRoles();
+        Task<List<GetAllRolesDto>> GetAllRolesIsDeleted();
         Task<RoleResponce<UserRoleInfo>> GetUsersInRole(string RoleId);
 
 

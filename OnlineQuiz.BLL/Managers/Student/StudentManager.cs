@@ -60,6 +60,7 @@ namespace OnlineQuiz.BLL.Managers.Student
             return studentDto;
 
         }
+
         public async Task<PagintedResult<StudentReadPaginatedDto>> GetPaginatedStudentsAsync(int pageNumber, int pageSize)
         {
             var Query = _mapper.ProjectTo<StudentReadPaginatedDto>(_studentRepo.GetAll());

@@ -154,6 +154,17 @@ namespace OnlineQuiz.Api.Controllers
             }
             return Ok(result.successed);
         }
+        // Restore Role
+        [HttpPost("RestoreRole")]
+        public async Task<IActionResult> RestoreRole(string RoleId)
+        {
+            var result = await _accountManager.RestoreRole(RoleId);
+            if (!result.successed)
+            {
+                return BadRequest($"{result.Errors}");
+            }
+            return Ok(result.successed);
+        }
 
         // Add a role to a user
         [HttpPost("AddRoleToUser")]
@@ -184,14 +195,14 @@ namespace OnlineQuiz.Api.Controllers
         public async Task<IActionResult> GetAllRoles()
         {
             var result = await _accountManager.GetAllRoles();
-            return Ok(result.Data);
+            return Ok(result);
         }
         // Get all rolesIs Deleted
         [HttpGet("GetAllRolesIsDeleted")]
         public async Task<IActionResult> GetAllRolesIsDeleted()
         {
             var result = await _accountManager.GetAllRolesIsDeleted();
-            return Ok(result.Data);
+            return Ok(result);
         }
 
 

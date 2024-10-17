@@ -10,7 +10,6 @@ namespace OnlineQuiz.BLL.Dtos.Accounts
     {
         public string RoleId { get; set; }
         public string RoleName { get; set; }
-        public List<GetAllRolesDto> Roles { get; set; }
 
     }
 }
