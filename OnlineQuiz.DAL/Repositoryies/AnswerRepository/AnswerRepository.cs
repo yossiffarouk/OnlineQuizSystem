@@ -25,9 +25,10 @@ namespace OnlineQuiz.DAL.Repositoryies.AnswerRepository
         public List<Answers> GetAnswersByAttemptId(int attemptId)
         {
 
-            return _context.answers
+           return _context.answers
                 .Where(a => a.AttemptId == attemptId)
                 .ToList();
+
         }
         public String getcorrectanswer(Answers answer)
         {
@@ -50,14 +51,11 @@ namespace OnlineQuiz.DAL.Repositoryies.AnswerRepository
                 .Select(q => q.CorrectAnswer)
                 .ToList();
         }
-        List<Answers> IAnswerRepository.GetAnswersByAttemptId(int attemptId)
-        {
-           var answers =  _context.answers.Where(a => a.AttemptId== attemptId).ToList();
-            return answers;
-        }
+      
         public string AnswerExist(int answerid)
         {
-                return _context.answers.Where(a => a.Id == answerid).Select(a => a.SubmittedAnswer).FirstOrDefault();
+                return _context.answers.Where(a => a.Id == answerid)
+                 .Select(a => a.SubmittedAnswer).FirstOrDefault();
          
         }
 

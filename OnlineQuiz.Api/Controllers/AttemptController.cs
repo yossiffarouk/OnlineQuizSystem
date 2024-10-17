@@ -42,9 +42,8 @@ namespace OnlineQuiz.Api.Controllers
 
             try
             {
-                var submittedAnswer = _mapper.Map<List<Answers>>(submittedAnswers);
                 _attemptManager.SubmitQuizAttempt(attemptId, submittedAnswers);
-                return Ok(new { message = "Quiz attempt submitted successfully" });
+                return Ok(_attemptManager.GetResults(attemptId));
             }
             catch (Exception ex)
             {
@@ -52,21 +51,7 @@ namespace OnlineQuiz.Api.Controllers
             }
         }
 
-        [HttpGet("GetResults")]
-        public IActionResult GetResults(int attemptId)
-        {
-            
-            try
-            {
-                var result = _attemptManager.GetResults(attemptId);
 
-                return Ok(result); 
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
 
         [HttpGet("GetUserAttempts")]
         public IActionResult GetUserAttempts(string studentId)
@@ -95,6 +80,24 @@ namespace OnlineQuiz.Api.Controllers
             {
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet("GetAllAttempts")]
+        public IActionResult GetAllAttempts()
+        {
+            return Ok(_attemptManager.GetAll());
+        }
+
+        
+        
+        [HttpDelete("DeleteAttempt/{id}")]
+        public IActionResult DeleteAttempt(int id)
+        {
+            try
+            {
+                _attemptManager.DeleteById(id);
+                return Ok("Done..");
+            }catch (Exception ex) { throw new Exception(ex.Message); }
         }
     }
 }

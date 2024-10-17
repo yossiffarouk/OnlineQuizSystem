@@ -16,7 +16,6 @@ namespace OnlineQuiz.BLL.AutoMapper.StudentMapper
     {
         public StudentMapper()
         {
-           
 
             CreateMap<Student, StudentReadDto>().ReverseMap();
             CreateMap<Student, StudentAddDto>().ReverseMap();

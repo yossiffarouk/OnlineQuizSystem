@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -19,16 +20,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
+
 namespace OnlineQuiz.BLL.Managers.Accounts
 {
     public class AccountManager : IAccountManager
     {
         private readonly UserManager<Users> _userManager;
         private readonly IConfiguration _configuration;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<CustomRole> _roleManager;
         private readonly IEmailService _emailService;
 
-        public AccountManager(UserManager<Users> userManager, IConfiguration configuration, RoleManager<IdentityRole> roleManager
+        public AccountManager(UserManager<Users> userManager, IConfiguration configuration, RoleManager<CustomRole> roleManager
             ,IEmailService emailService )
         {
             _userManager = userManager;
@@ -139,7 +141,30 @@ namespace OnlineQuiz.BLL.Managers.Accounts
                    "Email not confirmed. Please check your inbox.");
                 return response;
             }
-       
+           
+            if (user.IsBanned)
+            {
+                response.Errors.Add("Your account has been banned.");
+                return response;
+            }
+            if (user.UserType == UserTypeEnum.Instructor)
+            {
+                var instructor = user as OnlineQuiz.DAL.Data.Models.Instructor; 
+
+                if (instructor != null)
+                {
+                    if (instructor.Status == ApprovalStatus.Pending)
+                    {
+                        response.Errors.Add("Your account is pending approval by the admin.");
+                        return response;
+                    }
+                    else if (instructor.Status == ApprovalStatus.Denied)
+                    {
+                        response.Errors.Add("Your account has been denied by the admin.");
+                        return response;
+                    }
+                }
+            }
 
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
             if (result)
@@ -263,7 +288,10 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             return response;
         }
 
-        public async Task<GeneralRespnose> AddRole(string RoleName)
+
+
+
+        public async Task<GeneralRespnose> AddRole(string RoleName )
         {
             var response = new GeneralRespnose();
 
@@ -274,7 +302,7 @@ namespace OnlineQuiz.BLL.Managers.Accounts
                 return response;
             }
 
-            var roleResult = await _roleManager.CreateAsync(new IdentityRole(RoleName));
+            var roleResult = await _roleManager.CreateAsync(new CustomRole { Name = RoleName});
             if (roleResult.Succeeded)
             {
                 response.successed = true;
@@ -285,29 +313,54 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             return response;
         }
 
-        public async Task<GeneralRespnose> DeleteRole(string RoleName)
+        public async Task<GeneralRespnose> DeleteRole(string RoleId)
         {
             var response = new GeneralRespnose();
 
-            var role = await _roleManager.FindByNameAsync(RoleName);
+            var role = await _roleManager.FindByIdAsync(RoleId);
             if (role == null)
             {
                 response.Errors.Add("Role not found.");
                 return response;
             }
 
-
-            var roleResult = await _roleManager.DeleteAsync(role);
+            role.IsDeleted = true;
+            var roleResult = await _roleManager.UpdateAsync(role);
+      
             if (roleResult.Succeeded)
             {
+             
                 response.successed = true;
                 return response;
             }
             response.Errors.AddRange(roleResult.Errors.Select(e => e.Description));
             return response;
         }
-        
-        public async Task<GeneralRespnose> AddRoleToUser(string UserId, string RoleName)
+
+        public async Task<GeneralRespnose> RestoreRole(string RoleId)
+        {
+            var response = new GeneralRespnose();
+
+          var role =  _roleManager.Roles
+                .Where(r => r.IsDeleted && r.Id == RoleId) 
+                    .FirstOrDefault();
+            if (role == null)
+            {
+                response.Errors.Add("Role not found or already active.");
+                return response;
+            }
+            role.IsDeleted = false;
+            var result = await _roleManager.UpdateAsync(role);
+            if (result.Succeeded)
+            {
+                response.successed = true;
+                return response;
+            }
+            response.Errors.AddRange(result.Errors.Select(e => e.Description));
+            return response;
+        }
+
+        public async Task<GeneralRespnose> AddRoleToUser(string UserId, string RoleId)
         {
             var response = new GeneralRespnose();
 
@@ -317,15 +370,15 @@ namespace OnlineQuiz.BLL.Managers.Accounts
                 response.Errors.Add("User not found.");
                 return response;
             }
-     
-            var roleExists = await _roleManager.RoleExistsAsync(RoleName);
-            if (!roleExists)
+            var role = await _roleManager.FindByIdAsync(RoleId);
+            if (role == null || role.IsDeleted)
             {
-                response.Errors.Add("Role does not exist.");
+                response.Errors.Add("Role does not exist or is deleted.");
                 return response;
             }
 
-            var result = await _userManager.AddToRoleAsync(user, RoleName);
+
+            var result = await _userManager.AddToRoleAsync(user, role.Name);
             if (result.Succeeded)
             {
                 response.successed = true;
@@ -335,7 +388,7 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             return response;
         }
 
-        public async Task<GeneralRespnose> RemoveRoleFromUser(string UserId, string RoleName)
+        public async Task<GeneralRespnose> RemoveRoleFromUser(string UserId, string RoleId)
         {
             var response = new GeneralRespnose();
 
@@ -345,9 +398,14 @@ namespace OnlineQuiz.BLL.Managers.Accounts
                 response.Errors.Add("User not found.");
                 return response;
             }
+            var role = await _roleManager.FindByIdAsync(RoleId);
+            if (role == null || role.IsDeleted)
+            {
+                response.Errors.Add("Role does not exist or is deleted.");
+                return response;
+            }
 
-          
-            var isInRole = await _userManager.IsInRoleAsync(user, RoleName);
+            var isInRole = await _userManager.IsInRoleAsync(user, role.Name);
             if (!isInRole)
             {
                 response.Errors.Add("User is not in this role.");
@@ -355,7 +413,7 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             }
 
            
-            var result = await _userManager.RemoveFromRoleAsync(user, RoleName);
+            var result = await _userManager.RemoveFromRoleAsync(user, role.Name);
             if (result.Succeeded)
             {
                 response.successed = true;
@@ -365,36 +423,53 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             return response;
         }
 
-        public async Task<RoleResponce<IEnumerable<string>>> GetAllRoles()
+        public async Task<List<GetAllRolesDto>> GetAllRoles()
         {
-            var response = new RoleResponce<IEnumerable<string>>();
-            var roles = _roleManager.Roles.ToList();
-            response.Data = roles.Select(s => s.Name).ToList(); 
+            var roles =  _roleManager.Roles
+                .Where(r => !r.IsDeleted) 
+                .Select(r => new GetAllRolesDto
+                {
+                    RoleId = r.Id,
+                    RoleName = r.Name
+                })
+                .ToList(); 
 
-            response.successed = true;
-            return response;
+            return roles; 
         }
 
-        public async Task<RoleResponce<UserRoleInfo>> GetUsersInRole(string RoleName)
+        public async Task<List<GetAllRolesDto>> GetAllRolesIsDeleted()
+        {
+            var roles =  _roleManager.Roles
+                .Where(r => r.IsDeleted)
+                .Select(r => new GetAllRolesDto
+                {
+                    RoleId = r.Id,
+                    RoleName = r.Name
+                })
+                .ToList();
+
+            return roles;
+        }
+
+        public async Task<RoleResponce<UserRoleInfo>> GetUsersInRole(string RoleId)
         {
             var response = new RoleResponce<UserRoleInfo>();
 
-    
-            var roleExists = await _roleManager.RoleExistsAsync(RoleName);
-            if (!roleExists)
+            var role = await _roleManager.FindByIdAsync(RoleId);
+            if (role == null)
             {
                 response.Errors.Add("Role does not exist.");
                 return response;
             }
 
             // Get users in the specified role
-            var users = await _userManager.GetUsersInRoleAsync(RoleName);
+            var users = await _userManager.GetUsersInRoleAsync(role.Name);
             var userCount = users.Count();
 
             // Prepare the response data
             response.Data = new UserRoleInfo
             {
-                RoleName = RoleName,
+                RoleName = role.Name,
                 UsersCount = userCount,
                 Users = users.Select(u => new UserInfo
                 {
@@ -449,7 +524,8 @@ namespace OnlineQuiz.BLL.Managers.Accounts
 
    
     }
-    }
+
+}
 
 
 

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using OnlineQuiz.BLL.Dtos.Answer;
 using OnlineQuiz.BLL.Managers.Answer;
@@ -30,7 +31,12 @@ namespace OnlineQuiz.Api.Controllers
         public IActionResult GetUserAnswers(int attemptId)
         {
             var answers = _answerManager.GetUserAnswers(attemptId);
-            return Ok(answers);
+            if (answers != null)
+            {
+                return Ok(answers);
+            }
+
+            return NotFound("There is no answers for that AttemptId");
         }
 
         [HttpGet("CorrectAnswers/{quizId}")]

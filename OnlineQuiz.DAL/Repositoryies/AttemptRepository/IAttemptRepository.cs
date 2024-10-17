@@ -18,5 +18,10 @@ namespace OnlineQuiz.DAL.Repositoryies.AttemptRepository
         Quizzes GetQuizById(int quizId);
         IEnumerable<Questions> questions(int quizId);
         IEnumerable<Attempts> GetAttemptsByStudentId(string studentId);
+        void SaveChanges();
+        public int TotalAnswers(int attemptId);
+        public int CorrectAnswers(int attemptId);
+        public int WrongAnsers(int attemptId);
+        public string GetGrade(int totalScore);
     }
 }

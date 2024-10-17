@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using OnlineQuiz.DAL.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace OnlineQuiz.BLL.Dtos.Accounts
 {
     public class SeedRolesDtocs
     {
-        public static async Task SeedRoles(RoleManager<IdentityRole> roleManager)
+        public static async Task SeedRoles(RoleManager<CustomRole> roleManager)
         {
             var roles = new List<string> {Roles.Admin, Roles.Instructor, Roles.Student };
 
@@ -17,7 +18,7 @@ namespace OnlineQuiz.BLL.Dtos.Accounts
             {
                 if (!await roleManager.RoleExistsAsync(role))
                 {
-                    await roleManager.CreateAsync(new IdentityRole(role));
+                    await roleManager.CreateAsync(new CustomRole { Name = role  });
                 }
             }
         }

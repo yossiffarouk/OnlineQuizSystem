@@ -14,11 +14,10 @@ namespace OnlineQuiz.BLL.Managers.Attempt
     {
         List<QuesstionDto> StartQuizAttempt(StartQuizAttemptDto attempt);
         void SubmitQuizAttempt(int attemptId, List<AnswerDto> submittedAnswers);
-        AttemptDto GetResults(int attemptId);
-        IEnumerable<AttemptDto> GetUserAttempts(string studentId);
+        GetResultAttemptDto GetResults(int attemptId);
+        IEnumerable<GetUserAttemptsDto> GetUserAttempts(string studentId);
         StudentReadByIdDto GetStudentById(string studID);
         QuizReadByIdDto GetQuizById(int quizId);
         List<QuizScoreDto> GetTotalScoresByStudentId(string studentId);
-
     }
 }

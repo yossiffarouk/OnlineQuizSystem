@@ -39,6 +39,7 @@ using OnlineQuiz.BLL.AutoMapper.InstructorMapper;
 using OnlineQuiz.BLL.Managers.Answer;
 using OnlineQuiz.DAL.Repositoryies.AnswerRepository;
 using OnlineQuiz.BLL.AutoMapper.AnswerMapper;
+using OnlineQuiz.BLL.Middlewares;
 
 
 
@@ -57,9 +58,10 @@ namespace OnlineQuiz.Api
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
             builder.Services.AddControllers()
-           .AddNewtonsoftJson(options =>
-            options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented); // Add this line for formatted JSON output
+              .AddNewtonsoftJson(options =>
+             options.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented); // Add this line for formatted JSON output
             //QuicContext
             builder.Services.AddDbContext<QuizContext>(options =>
             {
@@ -112,7 +114,7 @@ namespace OnlineQuiz.Api
 
 
             //Identity
-            builder.Services.AddIdentity<Users, Microsoft.AspNetCore.Identity.IdentityRole>(options =>
+            builder.Services.AddIdentity<Users, CustomRole>(options =>
             {
                 options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireLowercase = true;
@@ -151,11 +153,12 @@ namespace OnlineQuiz.Api
 
 
             var app = builder.Build();
+            app.UseMiddleware<GlobalErrorHandlingMiddleware>();
 
             // Call the SeedRoles method
             using (var scope = app.Services.CreateScope())
             {
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<CustomRole>>();
                 await SeedRolesDtocs.SeedRoles(roleManager);
             }
 
@@ -169,6 +172,7 @@ namespace OnlineQuiz.Api
 
 
             app.UseHttpsRedirection();
+     
             app.UseAuthentication();
             app.UseAuthorization();
 
