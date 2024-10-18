@@ -10,7 +10,7 @@ using OnlineQuiz.BLL.Managers.Admin;
 
 namespace OnlineQuiz.Api.Controllers
 {
-    //[Route("api/[controller]")]
+    [Route("api/[controller]")]
     //[ApiController]
     //[Authorize(Roles ="Admin")]
     public class AdminController : ControllerBase
@@ -27,10 +27,9 @@ namespace OnlineQuiz.Api.Controllers
 
         [HttpGet]
         [Route("GetAllStudents")]
-        public async Task<IActionResult> GetAllStudents()
+        public IActionResult GetAllStudents()
         {
-            var students = await _iAdminManger.GetAllStudentAsync();
-            var x = 10;
+            var students =  _iAdminManger.GetAllStudentAsync();
             return Ok( students );
         }
 
@@ -53,9 +52,9 @@ namespace OnlineQuiz.Api.Controllers
         [HttpPost]
         [Route("AddStudent")]
 
-        public IActionResult AddStudent(StudentAddDto StudentAddDto)
+        public IActionResult AddStudent(StudentAddDto studentAddDto)
         {
-            _iAdminManger.AddStudent(StudentAddDto);
+            _iAdminManger.AddStudent(studentAddDto);
             return Ok(new {message = "Student Added succefuly"});
         }
 
@@ -92,7 +91,6 @@ namespace OnlineQuiz.Api.Controllers
             return Ok(_iAdminManger.GetInstructorById(id));
         }
 
-
         [HttpGet]
         [Route("GetInstructorByName/{Name}")]
         public IActionResult GetInstructorByName(string Name)
@@ -104,7 +102,7 @@ namespace OnlineQuiz.Api.Controllers
         [HttpPost]
         [Route("AddInstructor")]
 
-        public IActionResult AddInstructor(InstructorAddDto InstructorAddDto)
+        public IActionResult AddInstructor(string id ,InstructorAddDto InstructorAddDto)
         {
             _iAdminManger.AddInstructor(InstructorAddDto);
             return Ok(new { message = "Instructor Added succefuly" });

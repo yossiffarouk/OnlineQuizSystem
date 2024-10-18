@@ -25,10 +25,10 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
             _Context.SaveChanges();
         }
 
-        public async Task AddStudent(Student student)
+        public void AddStudent(Student student)
         {
             _Context.Add(student);
-            await SaveChanges();
+            SaveChanges();
         }
 
 
@@ -39,10 +39,10 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
              SaveChanges();
         }
 
-        public async Task DeleteStudent(Student student)
+        public void DeleteStudent(Student student)
         {
             _Context.Remove(student);
-            await SaveChanges();
+            SaveChanges();
         }
 
         public IEnumerable<Instructor> GetAllInstructo()
@@ -50,10 +50,10 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
             return _Context.Instructors.ToList();
         }
 
-        public async Task<IEnumerable<Student>> GetAllStudentAsync()
+        public IEnumerable<Student> GetAllStudentAsync()
         {
              
-            return await _Context.Students.ToListAsync();
+            return  _Context.Students.ToList();
         }
 
         public Instructor GetInstructorById(string id)
@@ -67,15 +67,15 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
 
         }
 
-        public async Task<Student> GetStudentById(string id)
+        public Student GetStudentById(string id)
         {
-            return await _Context.Students.FirstOrDefaultAsync(Key => Key.Id == id);
+            return  _Context.Students.FirstOrDefault(Key => Key.Id == id);
 
         }
 
-        public async Task<Student> GetStudentByName(string name)
+        public Student GetStudentByName(string name)
         {
-            return await _Context.Students.FirstOrDefaultAsync(Key => Key.UserName == name.ToString());
+            return  _Context.Students.FirstOrDefault(Key => Key.UserName == name.ToString());
 
         }
 
@@ -87,17 +87,17 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
              SaveChanges();
         }
 
-        public async Task UpdateStudent(Student student)
+        public void UpdateStudent(Student student)
         {
-             await SaveChanges();
+            SaveChanges();
         }
 
 
 
 
-        public async Task SaveChanges()
+        public void SaveChanges()
         {
-            await _Context.SaveChangesAsync();
+             _Context.SaveChanges();
         }
 
         public void ApproveInstructorAsync(string InstructorId)

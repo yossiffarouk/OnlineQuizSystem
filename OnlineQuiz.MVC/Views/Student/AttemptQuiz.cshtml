@@ -1,0 +1,89 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Attempt</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container my-5">
+        <h1 class="mb-4">Quiz Attempt</h1>
+
+        <!-- Quiz Information -->
+        <div class="card">
+            <div class="card-body">
+                <h3 id="quiz-title">Quiz Title</h3>
+                <p id="quiz-description">This is the description of the quiz. Please attempt all questions and submit when done.</p>
+            </div>
+        </div>
+
+        <!-- Quiz Questions -->
+        <div class="mt-4">
+            <h4>Question 1: What is 5 + 3?</h4>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" id="q1a" value="6">
+                <label class="form-check-label" for="q1a">6</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" id="q1b" value="8">
+                <label class="form-check-label" for="q1b">8</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="q1" id="q1c" value="10">
+                <label class="form-check-label" for="q1c">10</label>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h4>Question 2: Who was the first President of the United States?</h4>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" id="q2a" value="George Washington">
+                <label class="form-check-label" for="q2a">George Washington</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" id="q2b" value="Abraham Lincoln">
+                <label class="form-check-label" for="q2b">Abraham Lincoln</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="q2" id="q2c" value="Thomas Jefferson">
+                <label class="form-check-label" for="q2c">Thomas Jefferson</label>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mt-5">
+            <button type="button" class="btn btn-primary" onclick="submitQuiz()">Submit</button>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script to Handle Quiz Submission -->
+    <script>
+        function submitQuiz() {
+            alert('Quiz submitted successfully!');
+            window.close(); // Close the quiz tab after submission
+        }
+
+        // Get quiz data from URL (optional)
+        const params = new URLSearchParams(window.location.search);
+        const quiz = params.get('quiz');
+
+        if (quiz === 'math-basics') {
+            document.getElementById('quiz-title').textContent = 'Math Basics Quiz';
+            document.getElementById('quiz-description').textContent = 'Test your math skills with basic addition and subtraction questions.';
+        } else if (quiz === 'history') {
+            document.getElementById('quiz-title').textContent = 'History Quiz';
+            document.getElementById('quiz-description').textContent = 'Test your knowledge of important historical events and figures.';
+        } else if (quiz === 'science') {
+            document.getElementById('quiz-title').textContent = 'Science Quiz';
+            document.getElementById('quiz-description').textContent = 'Test your understanding of basic science concepts.';
+        }
+    </script>
+</body>
+</html>

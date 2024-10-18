@@ -8,5 +8,11 @@ namespace OnlineQuiz.MVC.Controllers
         {
             return View();
         }
+
+
+        public IActionResult AttemptQuiz()
+        {
+            return View();
+        }
     }
 }

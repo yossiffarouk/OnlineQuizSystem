@@ -17,20 +17,20 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
         //------------------------------------------------------------------------------------
 
         // get all student 
-        Task<IEnumerable<Student>> GetAllStudentAsync();
+        IEnumerable<Student> GetAllStudentAsync();
 
         // get by id or name (student)
-        Task<Student> GetStudentById(string id);
-        Task<Student> GetStudentByName(string name);
+        Student GetStudentById(string id);
+        Student GetStudentByName(string name);
 
 
         // add student 
-        public Task AddStudent(Student student);
+        public void AddStudent(Student student);
         // edit student 
-        public Task UpdateStudent(Student student);
+        public void UpdateStudent(Student student);
 
         // delete student 
-        public Task DeleteStudent(Student student);
+        public void DeleteStudent(Student student);
 
         //------------------------------------------------------------------------------------
 
@@ -73,7 +73,7 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
 
         // role admin only acsses
 
-        Task SaveChanges();
+       void SaveChanges();
        
     }
 }
