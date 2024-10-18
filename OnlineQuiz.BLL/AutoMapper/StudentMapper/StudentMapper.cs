@@ -28,7 +28,7 @@ namespace OnlineQuiz.BLL.AutoMapper.StudentMapper
 
             CreateMap<Student, StudentDetailesDto>()
                 .ForMember(dest => dest.InstructorToStudentDtos, opt => opt
-                .MapFrom(src => src.StudentInstructors))
+                .MapFrom(src => src.StudentInstructors.Select(si => si.Instructor)))
                 .ForMember(dest => dest.AttemptDetailsDtos, opt => opt
                 .MapFrom(src => src.Attempts));
 
@@ -38,3 +38,5 @@ namespace OnlineQuiz.BLL.AutoMapper.StudentMapper
         }
     }
 }
+
+
