@@ -14,5 +14,15 @@ namespace OnlineQuiz.MVC.Controllers
         {
             return View();
         }
+
+        public IActionResult GetQuestions()
+        {
+            return View();
+        }
+
+        public IActionResult PastQuizzes()
+        {
+            return View();
+        }
     }
 }

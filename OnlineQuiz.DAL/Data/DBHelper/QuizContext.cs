@@ -75,7 +75,7 @@ namespace OnlineQuiz.DAL.Data.DBHelper
         }
 
         public virtual DbSet<Users> users { get; set; }
-        public virtual DbSet<Student> Students { get; set; }
+        public  DbSet<Student> Students { get; set; }
         public virtual DbSet<Instructor> Instructors { get; set; }
         public virtual DbSet<Quizzes> quizzes { get; set; }
         public virtual DbSet<Questions> questions { get; set; }

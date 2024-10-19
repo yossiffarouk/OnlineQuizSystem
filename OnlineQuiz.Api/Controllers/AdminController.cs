@@ -27,9 +27,9 @@ namespace OnlineQuiz.Api.Controllers
 
         [HttpGet]
         [Route("GetAllStudents")]
-        public IActionResult GetAllStudents()
+        public async Task <IActionResult> GetAllStudents()
         {
-            var students =  _iAdminManger.GetAllStudentAsync();
+            var students =  await _iAdminManger.GetAllStudentAsync();
             return Ok( students );
         }
 

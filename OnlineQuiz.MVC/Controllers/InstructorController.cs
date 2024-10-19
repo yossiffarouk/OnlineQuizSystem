@@ -13,13 +13,25 @@ namespace OnlineQuiz.MVC.Controllers
         }
         public IActionResult Dashboared()
         {
-            var x = _adminManger.GetAllInstructo();
-            return View(x);
+            //var x = _adminManger.GetAllInstructo();
+            return View();
         }
         public IActionResult QuizCreation()
         {
 
-            return View("QuizCreation");
+            return View();
+        }
+
+        public IActionResult QuizQuestion()
+        {
+
+            return View();
+        }
+
+        public IActionResult GetStudents()
+        {
+
+            return View();
         }
 
     }

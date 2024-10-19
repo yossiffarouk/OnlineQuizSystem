@@ -1,443 +1,592 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="light">
 
 <head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - Ninestars Bootstrap Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizTech - Advanced Online Quiz Platform</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ asset('webassets/images/Qlogo.png') }}" type="image/x-icon">
+    <style>
+        :root {
+            --primary-color: #391560;
+            --primary: #F0F3F8;
+            --secondary: #391560;
+            --tertiary: #b12166;
+            --action: #f77f00;
+            --navbg: rgba(255, 255, 255, 1);
+            --fontcolor: black;
+            --tcolor: rgba(17, 24, 39, 1);
+            --headingcolor: rgb(7, 10, 17);
+            --card-bg: #ffffff;
+            --footer-bg: #391560;
+        }
 
-  <!-- Favicons -->
-  <link href="~/assets/img/favicon.png" rel="icon">
-  <link href="~/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+        .dark {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --tertiary: #e94560;
+            --action: #f77f00;
+            --navbg: rgba(26, 26, 46, 0.8);
+            --fontcolor: #e0e0e0;
+            --tcolor: rgba(224, 224, 224, 0.9);
+            --headingcolor: #ffffff;
+            --card-bg: #16213e;
+            --footer-bg: #0f3460;
+        }
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com" rel="preconnect">
-  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--primary);
+            color: var(--fontcolor);
+            transition: background-color 0.3s, color 0.3s;
+        }
 
-  <!-- Vendor CSS Files -->
-  <link href="~/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="~/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="~/assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="~/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="~/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+        .navbar {
+            background-color: var(--navbg);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
 
-  <!-- Main CSS File -->
-  <link href="~/assets/css/main.css" rel="stylesheet">
+        .navbar-brand img {
+            height: 2.1875rem;
+        }
 
-  <!-- =======================================================
-  * Template Name: Ninestars
-  * Template URL: https://bootstrapmade.com/ninestars-free-bootstrap-3-theme-for-creative/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+        .navbar-brand {
+            color: var(--headingcolor);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--tcolor);
+            font-weight: 500;
+        }
+
+        .btn-primary {
+            background-color: var(--action);
+            border-color: var(--action);
+        }
+
+        .btn-outline-primary {
+            color: var(--action);
+            border-color: var(--action);
+        }
+
+            .btn-outline-primary:hover {
+                background-color: var(--action);
+                color: white;
+            }
+
+        .hero {
+            background-color: var(--secondary);
+            color: var(--action);
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .hero::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D') no-repeat center center;
+                background-size: cover;
+                opacity: 0.2;
+                z-index: 0;
+            }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--tertiary);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            color: var(--headingcolor);
+            font-weight: bold;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
+        }
+
+            .card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+
+        .footer {
+            background-color: var(--footer-bg);
+            color: white;
+            padding: 2rem 0;
+            transition: background-color 0.3s;
+        }
+
+        .testimonial {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+            .testimonial img {
+                width: 60px;
+                height: 60px;
+                border-radius: 50%;
+                margin-right: 15px;
+            }
+
+        .quiz-demo {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .stats-container {
+            background-color: var(--tertiary);
+            color: white;
+            padding: 40px 0;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-table {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+
+        .pricing-header {
+            background-color: var(--secondary);
+            color: var(--fontcolor);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .pricing-features {
+            padding: 20px;
+        }
+
+        .pricing-price {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            margin-top: 5px;
+            padding: 4px 16px;
+            border-radius: 20px;
+            transition: background-color 0.3s;
+        }
+
+        .light .theme-toggle {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .dark .theme-toggle {
+            background-color: var(--primary);
+            color: var(--fontcolor);
+        }
+    </style>
 </head>
 
-<body class="index-page">
-
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="~/assets/img/logo.png" alt=""> -->
-        <h1 class="sitename">Online Quiz</h1>
-      </a>
-
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="#hero" class="active">Home</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#team">Team</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="/Home/Login">Login</a></li>
-          <li><a href="/Home/Register">Register</a></li>
-        </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-
-    </div>
-  </header>
-
-  <main class="main">
-
-    <!-- Hero Section -->
-    <section id="hero" class="section hero light-background">
-
-      <div class="container">
-        <div class="row gy-4">
-          <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center" data-aos="fade-up">
-            <h1>the first online quiz platform that have Many isntructors and student </h1>
-            <p>you are instructor or student that wont to study</p>
-            <div class="d-flex">
-              <a href="/Home/Login" class="btn-get-started">Get Started</a>
-             @*  <a href="https://www.youtube.com/watch?v=Y7f98aduVJ8" class="glightbox btn-watch-video d-flex align-items-center"><i class="bi bi-play-circle"></i><span>Watch Video</span></a> *@
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src=""
+                     alt="QuizTech">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works">How It Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    <li class="nav-item">
+                        <span class="nav-link theme-toggle" id="themeToggle">
+                            <i class="fas fa-sun"></i>
+                        </span>
+                    </li>
+                </ul>
+                <div class="ms-3">
+                    <a href="/Home/Login" class="btn btn-outline-primary me-2">Log In</a>
+                    <a href="/Home/Register" class="btn btn-primary">Sign Up</a>
+                </div>
             </div>
-          </div>
-          <div class="col-lg-6 order-1 order-lg-2 hero-img" data-aos="zoom-out" data-aos-delay="200">
-            <img src="~/assets/img/hero-img.svg" class="img-fluid animated" alt="">
-          </div>
         </div>
-      </div>
+    </nav>
 
-    </section><!-- /Hero Section -->
-
-    <!-- About Section -->
-    <section id="about" class="section about">
-
-      <div class="container">
-
-        <div class="row gy-3">
-
-          <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-            <img src="~/assets/img/about-img.svg" alt="" class="img-fluid">
-          </div>
-
-          <div class="col-lg-6 d-flex flex-column justify-content-center" data-aos="fade-up" data-aos-delay="200">
-            <div class="about-content ps-0 ps-lg-3">
-                            <h3>
-                                Are you a student seeking expert guidance or an instructor looking to share your knowledge? Online Qiuz is here to connect you with the perfect match.
-
-                            </h3>
-             
-              <ul>
-                <li>
-                  <i class="bi bi-diagram-3"></i>
-                  <div>
-                                        <h4>For Students:</h4>
-                                        <p>
-                                           
-                                            Find Your Ideal Instructor: Search through our extensive database to find instructors who specialize in your desired subjects.
-                                            Personalized Learning: Enjoy one-on-one or small group sessions tailored to your specific needs and learning style.
-                                            Flexible Scheduling: Choose a time and location that works best for you.
-                                            Track Your Progress: Monitor your learning journey and celebrate your achievements.
-                                        </p>
-                  </div>
-                </li>
-                <li>
-                  <i class="bi bi-fullscreen-exit"></i>
-                  <div>
-                                        <h4>For Instructors:</h4>
-                                        <p>
-                                            For Instructors:
-
-                                            Share Your Expertise: Offer your knowledge and skills to students seeking guidance.
-                                            Build Your Reputation: Establish yourself as a trusted expert in your field.
-                                            Flexible Work Arrangements: Set your own hours and work from the comfort of your own home.
-                                            Connect with Students: Engage with students from around the world and make a positive impact on their lives.
-                                        </p>
-                  </div>
-                </li>
-              </ul>
-              @* <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                culpa qui officia deserunt mollit anim id est laborum
-              </p> *@
-            </div>
-
-          </div>
+    <header class="hero">
+        <div class="container text-center hero-content">
+            <h1>Welcome to QuizTech</h1>
+            <p class="lead" style=" color: white;">
+                Revolutionize your teaching and learning experience with our
+                advanced quiz platform
+            </p>
+            <a href="{{ route('registration') }}" class="btn btn-primary btn-lg me-3">Get Started for Free</a>
+            <a href="#how-it-works" class="btn btn-outline-light btn-lg">Learn More</a>
         </div>
+    </header>
 
-      </div>
-
-    </section><!-- /About Section -->
-
-
-
-    <!-- Team Section -->
-    <section id="team" class="team section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Team</h2>
-                <p>Meet our exciting team</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row gy-4">
-
-          <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-            <div class="member">
-              @* <img src="~/assets/img/team/team-1.jpg" class="img-fluid" alt=""> *@
-              <img src="~/images/yossif.jpeg" class="img-fluid" alt="" style="height: 308px; width:308px ">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>Yossef farouk</h4>
-                  <span>.net devolper(Team member)</span>
+    <section id="features" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Why Choose QuizTech?</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center p-4">
+                        <i class="fas fa-chalkboard-teacher feature-icon"></i>
+                        <h3>For Educators</h3>
+                        <p>
+                            Create engaging quizzes, track student progress, and manage your classes with our intuitive
+                            dashboard.
+                        </p>
+                    </div>
                 </div>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href="https://www.facebook.com/sara.samar.52438?mibextid=JRoKGi"><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href="www.linkedin.com/in/youssef-farouk-95ab962a3"><i class="bi bi-linkedin"></i></a>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center p-4">
+                        <i class="fas fa-user-graduate feature-icon"></i>
+                        <h3>For Students</h3>
+                        <p>
+                            Take quizzes, view your results, and stay updated on upcoming assessments with our
+                            user-friendly interface.
+                        </p>
+                    </div>
                 </div>
-              </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 text-center p-4">
+                        <i class="fas fa-chart-line feature-icon"></i>
+                        <h3>Advanced Analytics</h3>
+                        <p>Gain insights into student performance with our detailed analytics and reporting tools.</p>
+                    </div>
+                </div>
             </div>
-          </div><!-- End Team Member -->
+        </div>
+    </section>
 
-          <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-            <div class="member">
-                            <img src="~/images/Ashraf wael.jpg" class="img-fluid" alt="" style="height: 308px; width:308px ">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>Ashref wael</h4>
-                  <span>.net devolper(Team member)</span>
+    <section id="how-it-works" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">How It Works</h2>
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <ol class="list-group list-group-numbered">
+                        <li class="list-group-item">Sign up for a free account</li>
+                        <li class="list-group-item">Create your first quiz or join a class</li>
+                        <li class="list-group-item">Take quizzes or assign them to your students</li>
+                        <li class="list-group-item">Track progress and analyze results</li>
+                        <li class="list-group-item">Improve learning outcomes</li>
+                    </ol>
                 </div>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
+                <div class="col-md-6">
+                    <img src="https://plus.unsplash.com/premium_photo-1680807869780-e0876a6f3cd5?q=80&w=1742&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                         alt="Classroom" class="img-fluid rounded shadow">
                 </div>
-              </div>
             </div>
-          </div><!-- End Team Member -->
+        </div>
+    </section>
 
-          <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
-            <div class="member">
-              <img src="~/images/Kiroo isac.jpg class="img-fluid" alt="" style="height: 308px; width:308px ">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>Krolis isac</h4>
-                  <span>.net devolper(Team member)</span>
+    <section class="stats-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="stat-item">
+                        <div class="stat-number">100,000+</div>
+                        <div>Active Users</div>
+                    </div>
                 </div>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href="https://www.facebook.com/kirols.isaac.9"><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href="https://www.linkedin.com/in/kirols-isaac-5a686427b/"><i class="bi bi-linkedin"></i></a>
+                <div class="col-md-3 col-sm-6">
+                    <div class="stat-item">
+                        <div class="stat-number">500,000+</div>
+                        <div>Quizzes Created</div>
+                    </div>
                 </div>
-              </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="stat-item">
+                        <div class="stat-number">5,000+</div>
+                        <div>Schools</div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div>Satisfaction Rate</div>
+                    </div>
+                </div>
             </div>
-          </div><!-- End Team Member -->
+        </div>
+    </section>
 
-          <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-            <div class="member">
-               <img src="~/images/Kiroo isac.jpg" class="img-fluid" alt="" style="height: 308px; width:308px ">
-              <div class="member-info">
-                <div class="member-info-content">
-                  <h4>zyad gamal</h4>
-                  <span>.net devolper(Team member)</span>
-                </div>
-                <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
-                </div>
-              </div>
-            </div>
-          </div><!-- End Team Member -->
-
-                    <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                      <div class="member">
-                        <img src="~/images/Fawzy el farmway.jpg" class="img-fluid" alt="" style="height: 308px; width:308px ">
-                        <div class="member-info">
-                          <div class="member-info-content">
-                            <h4>Fawzy el farmaye</h4>
-                            <span>.net devolper(Team Leader)</span>
-                          </div>
-                          <div class="social">
-                            <a href=""><i class="bi bi-twitter-x"></i></a>
-                            <a href=""><i class="bi bi-facebook"></i></a>
-                            <a href=""><i class="bi bi-instagram"></i></a>
-                            <a href="https://www.linkedin.com/in/fawzi-elfaramawy-829463258?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"><i class="bi bi-linkedin"></i></a>
-                          </div>
+    <section id="pricing" class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Choose Your Plan</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="pricing-table">
+                        <div class="pricing-header">
+                            <h3 class="text-white">Basic</h3>
                         </div>
-                      </div>
-                    </div><!-- End Team Member -->
-
-                              <div class="col-xl-3 col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="400">
-                                <div class="member">
-                            <img src="~/images/Karem Ayman.jpg" class="img-fluid" alt="" style="height: 308px; width:308px ">
-                                  <div class="member-info">
-                                    <div class="member-info-content">
-                                      <h4>Karem Aymen</h4>
-                                      <span>Full Stack .net devolper(Team member)</span>
-                                    </div>
-                                    <div class="social">
-                                      <a href=""><i class="bi bi-twitter-x"></i></a>
-                                      <a href=""><i class="bi bi-facebook"></i></a>
-                                      <a href=""><i class="bi bi-instagram"></i></a>
-                                      <a href=""><i class="bi bi-linkedin"></i></a>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div><!-- End Team Member -->
-
-        </div>
-
-      </div>
-
-    </section><!-- /Team Section -->
-
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Contact</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-5">
-
-            <div class="info-wrap">
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="200">
-                <i class="bi bi-geo-alt flex-shrink-0"></i>
-                <div>
-                  <h3>Address</h3>
-                  <p>egypt , mansoura</p>
+                        <div class="pricing-price">$0 / month</div>
+                        <div class="pricing-features">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Create up to 5 quizzes</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Basic analytics</li>
+                                <li><i class="fas fa-check text-success me-2"></i>50 student limit</li>
+                            </ul>
+                        </div>
+                        <div class="text-center pb-4">
+                            <a href="#" class="btn btn-outline-primary">Get Started</a>
+                        </div>
+                    </div>
                 </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="300">
-                <i class="bi bi-telephone flex-shrink-0"></i>
-                <div>
-                  <h3>Call Us</h3>
-                  <p>+20 01028951583</p>
+                <div class="col-md-4 mb-4">
+                    <div class="pricing-table">
+                        <div class="pricing-header">
+                            <h3 class="text-white">Pro</h3>
+                        </div>
+                        <div class="pricing-price">$29 / month</div>
+                        <div class="pricing-features">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>Unlimited quizzes</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Advanced analytics</li>
+                                <li><i class="fas fa-check text-success me-2"></i>500 student limit</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Priority support</li>
+                            </ul>
+                        </div>
+                        <div class="text-center pb-4">
+                            <a href="#" class="btn btn-primary">Choose Pro</a>
+                        </div>
+                    </div>
                 </div>
-              </div><!-- End Info Item -->
-
-              <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
-                <i class="bi bi-envelope flex-shrink-0"></i>
-                <div>
-                  <h3>Email Us</h3>
-                  <p>Yossif155farouk@gmail.com</p>
+                <div class="col-md-4 mb-4">
+                    <div class="pricing-table">
+                        <div class="pricing-header">
+                            <h3 class="text-white">Enterprise</h3>
+                        </div>
+                        <div class="pricing-price">Custom</div>
+                        <div class="pricing-features">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success me-2"></i>All Pro features</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Unlimited students</li>
+                                <li><i class="fas fa-check text-success me-2"></i>API access</li>
+                                <li><i class="fas fa-check text-success me-2"></i>Dedicated support</li>
+                            </ul>
+                        </div>
+                        <div class="text-center pb-4">
+                            <a href="#" class="btn btn-outline-primary">Contact Sales</a>
+                        </div>
+                    </div>
                 </div>
-              </div><!-- End Info Item -->
-
-              <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d48389.78314118045!2d-74.006138!3d40.710059!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a22a3bda30d%3A0xb89d1fe6bc499443!2sDowntown%20Conference%20Center!5e0!3m2!1sen!2sus!4v1676961268712!5m2!1sen!2sus" frameborder="0" style="border:0; width: 100%; height: 270px;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
-          </div>
-
-          <div class="col-lg-7">
-            <form action="~/forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
-              <div class="row gy-4">
-
-                <div class="col-md-6">
-                  <label for="name-field" class="pb-2">Your Name</label>
-                  <input type="text" name="name" id="name-field" class="form-control" required="">
-                </div>
-
-                <div class="col-md-6">
-                  <label for="email-field" class="pb-2">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email-field" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <label for="subject-field" class="pb-2">Subject</label>
-                  <input type="text" class="form-control" name="subject" id="subject-field" required="">
-                </div>
-
-                <div class="col-md-12">
-                  <label for="message-field" class="pb-2">Message</label>
-                  <textarea class="form-control" name="message" rows="10" id="message-field" required=""></textarea>
-                </div>
-
-                <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                  <button type="submit">Send Message</button>
-                </div>
-
-              </div>
-            </form>
-          </div><!-- End Contact Form -->
-
         </div>
+    </section>
 
-      </div>
-
-    </section><!-- /Contact Section -->
-
-  </main>
-
-  <footer id="footer" class="footer position-relative">
-
-
-
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-          <a href="index.html" class="d-flex align-items-center">
-            <span class="sitename">Online Quiz</span>
-          </a>
-          <div class="footer-contact pt-3">
-            <p>Admin info</p>
-            <p>Egypt ,Mansoura qusim tany </p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+20 01028951583</span></p>
-            <p><strong>Email:</strong> <span>yossif155farouk@gmail.com</span></p>
-          </div>
+    <section id="testimonials" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center section-title">What Our Users Say</h2>
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="testimonial">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://i.pravatar.cc/150?img=1" alt="User" class="rounded-circle">
+                            <div>
+                                <h5 class="mb-0">Sarah Johnson</h5>
+                                <p class="text-muted mb-0">High School Teacher</p>
+                            </div>
+                        </div>
+                        <p>
+                            "QuizTech has revolutionized the way I assess my students. It's user-friendly and provides
+                            valuable insights into their progress."
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="testimonial">
+                        <div class="d-flex align-items-center mb-3">
+                            <img src="https://i.pravatar.cc/150?img=3" alt="User" class="rounded-circle">
+                            <div>
+                                <h5 class="mb-0">Michael Chen</h5>
+                                <p class="text-muted mb-0">University Professor</p>
+                            </div>
+                        </div>
+                        <p>
+                            "The analytics provided by QuizTech have helped me identify areas where my students need
+                            additional support. It's an invaluable tool for educators."
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Useful Links</h4>
-          <ul>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">Home</a></li>
-            <li><i class="bi bi-chevron-right"></i> <a href="#">About us</a></li>
-          </ul>
+    <section class="py-5">
+        <div class="container">
+            <h2 class="text-center section-title">Try a Demo Quiz</h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="quiz-demo">
+                        <h3 class="mb-4">Sample Quiz: General Knowledge</h3>
+                        <form>
+                            <div class="mb-3">
+                                <p>1. What is the capital of France?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="q1" id="q1a"
+                                           value="a">
+                                    <label class="form-check-label" for="q1a">London</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="q1" id="q1b"
+                                           value="b">
+                                    <label class="form-check-label" for="q1b">Berlin</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="q1" id="q1c"
+                                           value="c">
+                                    <label class="form-check-label" for="q1c">Paris</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <p>2. Which planet is known as the Red Planet?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="q2" id="q2a"
+                                           value="a">
+                                    <label class="form-check-label" for="q2a">Venus</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="q2" id="q2b"
+                                           value="b">
+                                    <label class="form-check-label" for="q2b">Mars</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="q2" id="q2c"
+                                           value="c">
+                                    <label class="form-check-label" for="q2c">Jupiter</label>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Answers</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-
-
-        <div class="col-lg-4 col-md-12">
-          <h4>Follow Us</h4>
-          <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p>
-          <div class="social-links d-flex">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div>
+    <section class="py-5 bg-light">
+        <div class="container text-center">
+            <h2 class="section-title">Ready to Transform Your Teaching?</h2>
+            <p class="lead mb-4">
+                Join thousands of educators and students who are already using QuizTech to enhance
+                their learning experience.
+            </p>
+            <a href="{{ route('registration') }}" class="btn btn-primary btn-lg me-3">Sign Up Now</a>
+            <a href="#" class="btn btn-outline-primary btn-lg">Request a Demo</a>
         </div>
+    </section>
 
-      </div>
-    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>QuizTech</h5>
+                    <p>Empowering education through interactive quizzes and advanced analytics.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Home</a></li>
+                        <li><a href="#features" class="text-white">Features</a></li>
+                        <li><a href="#pricing" class="text-white">Pricing</a></li>
+                        <li><a href="#" class="text-white">Blog</a></li>
+                        <li><a href="#" class="text-white">Support</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Connect With Us</h5>
+                    <div class="d-flex">
+                        <a href="#" class="text-white me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <div class="mt-3">
+                        <a href="#" class="text-white me-3">Privacy Policy</a>
+                        <a href="#" class="text-white">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="mt-4 bg-light">
+            <div class="text-center mt-4">
+                <p>&copy; 2023 QuizTech. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
 
-    <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Dpei Team</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        @* Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> *@
-      </div>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        const htmlElement = document.documentElement;
+        const moonIcon = '<i class="fas fa-moon"></i>';
+        const sunIcon = '<i class="fas fa-sun"></i>';
 
-  </footer>
-
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="~/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="~/assets/vendor/php-email-form/validate.js"></script>
-  <script src="~/assets/vendor/aos/aos.js"></script>
-  <script src="~/assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="~/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-  <script src="~/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="~/assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Main JS File -->
-  <script src="~/assets/js/main.js"></script>
-
+        themeToggle.addEventListener('click', () => {
+            htmlElement.classList.toggle('dark');
+            themeToggle.innerHTML = htmlElement.classList.contains('dark') ? moonIcon : sunIcon;
+        });
+    </script>
 </body>
 
 </html>

@@ -34,10 +34,11 @@ namespace OnlineQuiz.BLL.Managers.Admin
         //
 
 
-        public IEnumerable<StudentReadDto> GetAllStudentAsync()
+        public async Task<IEnumerable<StudentReadDto>> GetAllStudentAsync()
         {
-
-            return  _IMapper.Map<IEnumerable<StudentReadDto>>(_IAdminRepositroy.GetAllStudentAsync());
+            var y = await _IAdminRepositroy.GetAllStudentAsync();
+            var x = _IMapper.Map<IEnumerable<StudentReadDto>>(y);
+            return  x;
 
         }
 

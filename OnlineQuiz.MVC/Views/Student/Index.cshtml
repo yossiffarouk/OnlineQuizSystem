@@ -1,142 +1,255 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>QuizTech | Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <style>
         body {
-            min-height: 100vh;
+            background-color: #f4f7fa; /* Light background for better contrast */
         }
 
         .sidebar {
-            min-height: 100vh;
-            background-color: #343a40;
+            background-color: #343a40; /* Dark sidebar for contrast */
+            min-height: 100vh; /* Full height */
         }
 
-            .sidebar a {
-                color: white;
-                text-decoration: none;
-                padding: 10px;
-                display: block;
+            .sidebar .nav-link {
+                color: #ffffff; /* White text for sidebar links */
+                transition: background-color 0.3s; /* Smooth background transition */
             }
 
-                .sidebar a:hover {
-                    background-color: #495057;
+                .sidebar .nav-link:hover {
+                    background-color: #495057; /* Darker background on hover */
+                    border-radius: 8px; /* Rounded corners on hover */
                 }
+
+                .sidebar .nav-link.active {
+                    background-color: #495057; /* Darker background for active link */
+                    border-radius: 8px; /* Rounded corners for active link */
+                }
+
+        .brand-logo {
+            font-size: 1.5rem;
+            color: #ffffff;
+            text-align: center;
+            padding: 1.5rem 0; /* Add padding around the logo */
+        }
+
+        .widget {
+            background-color: #ffffff; /* White background for widgets */
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            margin-bottom: 1.5rem; /* Space between cards */
+            padding: 1rem; /* Padding for cards */
+        }
+
+            .widget:hover {
+                transform: translateY(-5px); /* Elevate card on hover */
+            }
+
+        .quiz-icon {
+            font-size: 2rem; /* Icon size for better visibility */
+        }
+
+        .main-content {
+            padding: 2rem; /* Add padding for the main content */
+        }
+
+        h2 {
+            color: #333; /* Darker color for headings */
+        }
+
+        .stat-number {
+            font-size: 1.5rem; /* Slightly larger font for statistics */
+            font-weight: bold; /* Bold font for statistics */
+        }
+
+        .progress {
+            height: 1rem; /* Height for progress bars */
+            border-radius: 8px; /* Round edges of progress bars */
+        }
+
+        /* Card Layout Enhancements */
+        .card {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.3s;
+        }
+
+            .card:hover {
+                transform: translateY(-3px); /* Slight elevation on hover */
+            }
+
+        .card-title {
+            font-size: 1.25rem;
+            color: #333;
+        }
+
+        .card-text {
+            color: #666;
+        }
+
+        .badge {
+            font-size: 0.875rem;
+        }
+
+        h2 {
+            color: #ffffff;
+        }
+
     </style>
 </head>
+
 <body>
+
     <div class="container-fluid">
         <div class="row">
-            <!-- Sidebar -->
-            <nav class="col-md-3 col-lg-2 d-md-block sidebar bg-dark">
+            <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+                <div class="brand-logo">
+                    <h2>QuizMaster</h2>
+                </div>
                 <div class="position-sticky">
-                    <ul class="nav flex-column mt-4">
+                    <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="#quizzes">
-                                <i class="bi bi-list-check"></i> Available Quizzes
+                            <a class="nav-link active" href="#">
+                                <i class="bi bi-house me-2"></i> Dashboard
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#instructors">
-                                <i class="bi bi-person"></i> Instructors
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-book me-2"></i> My Courses
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#degrees">
-                                <i class="bi bi-graph-up"></i> Quiz Degrees
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-file-earmark-text me-2"></i> Assignments
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-bar-chart me-2"></i> Progress
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <i class="bi bi-gear me-2"></i> Settings
                             </a>
                         </li>
                     </ul>
                 </div>
             </nav>
 
-            <!-- Main Content -->
-            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-                <h1 class="mt-4">Student Dashboard</h1>
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">Student Dashboard</h1>
+                    <a href="/Student/AttemptQuiz">
+                        <button class="btn btn-warning">
+                            <i class="bi bi-play me-2"></i> Start New Quiz
+                        </button>
+                    </a>
+                </div>
 
-                <!-- Available Quizzes Section -->
-                <section id="quizzes" class="my-4">
-                    <h2>Available Quizzes</h2>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th scope="col">Quiz Name</th>
-                                <th scope="col">Instructor Name</th>
-                                <th scope="col">Degree</th>
-                                <th scope="col">Attempt</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Math Basics</td>
-                                <td>John Doe</td>
-                                <td>100</td>
-                                <td><a href="/Student/AttemptQuiz" target="_blank" class="btn btn-primary">Attempt Quiz</a></td>
-                            </tr>
-                            <tr>
-                                <td>History</td>
-                                <td>Jane Smith</td>
-                                <td>85</td>
-                                <td><a href="/Student/AttemptQuiz" target="_blank" class="btn btn-primary">Attempt Quiz</a></td>
-                            </tr>
-                            <tr>
-                                <td>Science</td>
-                                <td>Emily Johnson</td>
-                                <td>90</td>
-                                <td><a href="/Student/AttemptQuiz" target="_blank" class="btn btn-primary">Attempt Quiz</a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="widget">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-check-circle quiz-icon text-success"></i>
+                                <div class="ms-3">
+                                    <h3 class="card-title">Completed Quizzes</h3>
+                                    <p class="stat-number">10</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="widget">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-star quiz-icon text-warning"></i>
+                                <div class="ms-3">
+                                    <h3 class="card-title">Average Score</h3>
+                                    <p class="stat-number">85%</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="widget">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-trophy quiz-icon text-danger"></i>
+                                <div class="ms-3">
+                                    <h3 class="card-title">Achievements</h3>
+                                    <p class="stat-number">7</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-
-                <!-- Instructors Section -->
-                <section id="instructors" class="my-4">
-                    <h2>Instructors</h2>
-                    <ul class="list-group">
-                        <li class="list-group-item">Mr. Smith - Math Instructor</li>
-                        <li class="list-group-item">Ms. Johnson - History Instructor</li>
-                        <li class="list-group-item">Dr. Brown - Science Instructor</li>
-                    </ul>
-                </section>
-
-                <!-- Quiz Degrees Section -->
-                <!-- Quiz Degrees Section -->
-                <section id="degrees" class="my-4">
-                    <h2>Quiz Degrees</h2>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Quiz</th>
-                                <th>Degree</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Quiz 1 - Math Basics</td>
-                                <td>85%</td>
-                            </tr>
-                            <tr>
-                                <td>Quiz 2 - History</td>
-                                <td>90%</td>
-                            </tr>
-                            <tr>
-                                <td>Quiz 3 - Science</td>
-                                <td>95%</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </section>
-
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="widget">
+                            <h3 class="card-title">Upcoming Quizzes</h3>
+                            <ul class="list-group">
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Quiz Title 1
+                                    <span class="badge bg-success">3 days left</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Quiz Title 2
+                                    <span class="badge bg-danger">Today</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Quiz Title 3
+                                    <span class="badge bg-info">Tomorrow</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="widget">
+                            <h3 class="card-title">Recent Performance</h3>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span>Quiz Title 1</span>
+                                        <span>90%</span>
+                                    </div>
+                                    <div class="progress mt-2">
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span>Quiz Title 2</span>
+                                        <span>75%</span>
+                                    </div>
+                                    <div class="progress mt-2">
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span>Quiz Title 3</span>
+                                        <span>60%</span>
+                                    </div>
+                                    <div class="progress mt-2">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </main>
         </div>
     </div>
 
-    <!-- Bootstrap JS and dependencies -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

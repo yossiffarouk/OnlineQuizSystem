@@ -13,7 +13,7 @@ namespace OnlineQuiz.BLL.Managers.Admin
     {  
         
         // get all  student 
-        IEnumerable<StudentReadDto> GetAllStudentAsync();
+       Task<IEnumerable<StudentReadDto>> GetAllStudentAsync();
 
         // get by id or name student 
         StudentReadDto GetStudentById(string id);

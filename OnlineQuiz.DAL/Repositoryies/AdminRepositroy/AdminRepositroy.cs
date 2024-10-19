@@ -50,10 +50,11 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
             return _Context.Instructors.ToList();
         }
 
-        public IEnumerable<Student> GetAllStudentAsync()
+        public async Task<IEnumerable<Student>> GetAllStudentAsync()
         {
-             
-            return  _Context.Students.ToList();
+            
+            var x = await _Context.Students.ToListAsync();
+            return x;
         }
 
         public Instructor GetInstructorById(string id)

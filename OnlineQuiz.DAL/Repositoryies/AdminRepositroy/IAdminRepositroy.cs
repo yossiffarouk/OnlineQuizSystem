@@ -17,7 +17,7 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
         //------------------------------------------------------------------------------------
 
         // get all student 
-        IEnumerable<Student> GetAllStudentAsync();
+        Task<IEnumerable<Student>> GetAllStudentAsync();
 
         // get by id or name (student)
         Student GetStudentById(string id);
