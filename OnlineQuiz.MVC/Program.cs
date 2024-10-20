@@ -3,15 +3,18 @@ using Microsoft.EntityFrameworkCore;
 using OnlineQuiz.BLL.AutoMapper.AdminAutoMapper;
 using OnlineQuiz.BLL.AutoMapper.QuestionMapper;
 using OnlineQuiz.BLL.AutoMapper.QuizMapper;
+using OnlineQuiz.BLL.AutoMapper.TrackMapper;
 using OnlineQuiz.BLL.Managers.Admin;
 using OnlineQuiz.BLL.Managers.Base;
 using OnlineQuiz.BLL.Managers.QuestionManager;
 using OnlineQuiz.BLL.Managers.Quiz;
+using OnlineQuiz.BLL.Managers.Track;
 using OnlineQuiz.DAL.Data.DBHelper;
 using OnlineQuiz.DAL.Repositoryies.AdminRepositroy;
 using OnlineQuiz.DAL.Repositoryies.Base;
 using OnlineQuiz.DAL.Repositoryies.QuestionRepository;
 using OnlineQuiz.DAL.Repositoryies.QuizRepository;
+using OnlineQuiz.DAL.Repositoryies.TrackRepository;
 
 namespace OnlineQuiz.MVC
 {
@@ -37,12 +40,15 @@ namespace OnlineQuiz.MVC
 
             builder.Services.AddAutoMapper(map => map.AddProfile(new QuizMapper()));
             builder.Services.AddAutoMapper(map => map.AddProfile(new QuestionMapper()));
+            builder.Services.AddAutoMapper(map => map.AddProfile(new TrackMapper()));
 
             builder.Services.AddScoped<IQuizRepository, QuizRepository>();
             builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
+            builder.Services.AddScoped<ITrackRepository, TrackRepository>();
 
             builder.Services.AddScoped<IQuizManager, QuizManager>();
             builder.Services.AddScoped<IQuestionManager, QuestionManager>();
+            builder.Services.AddScoped<ITrackManager, TrackManager>();
             var app = builder.Build();
             
             // Configure the HTTP request pipeline.
