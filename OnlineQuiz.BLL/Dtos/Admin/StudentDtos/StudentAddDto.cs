@@ -14,7 +14,7 @@ namespace OnlineQuiz.BLL.Dtos.Admin.StudentDtos
         public string email { get; set; }
         public string password { get; set; }
         public int Age { get; set; }
-        public string ImgUrl { get; set; }
+        //public string ImgUrl { get; set; }
         public GenderType Gender { get; set; }
         public UserTypeEnum UserType { get; set; } = UserTypeEnum.Student;
         public string Adress { get; set; }

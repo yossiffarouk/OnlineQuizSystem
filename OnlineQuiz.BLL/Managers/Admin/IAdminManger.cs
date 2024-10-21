@@ -13,7 +13,7 @@ namespace OnlineQuiz.BLL.Managers.Admin
     {  
         
         // get all  student 
-       Task<IEnumerable<StudentReadDto>> GetAllStudentAsync();
+        IEnumerable<StudentReadDto> GetAllStudentAsync();
 
         // get by id or name student 
         StudentReadDto GetStudentById(string id);
@@ -32,9 +32,11 @@ namespace OnlineQuiz.BLL.Managers.Admin
 
         // get all instractour 
         IEnumerable<InstructorReadDto> GetAllInstructo();
+        IEnumerable<InstructorStatusDto> GetAllInstructorPanding();
 
         // get by id or name instractour
         InstructorReadDto GetInstructorById(string id);
+        IstrurctorUpdateDto GetInstructorByIdForUpdate(string id);
         InstructorReadDto GetInstructorByName(string name);
 
 

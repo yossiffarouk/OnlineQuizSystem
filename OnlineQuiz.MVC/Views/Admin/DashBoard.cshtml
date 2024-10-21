@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model OnlineQuiz.BLL.ViewModels.Admin.SharedStatics
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -84,13 +86,14 @@
                     <a class="nav-link" href="#"><i class="fas fa-clipboard-list"></i> Quizzes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-users"></i> Users</a>
+                    <a class="nav-link" href="/Admin/GetAllInstructors"><i class="fas fa-users"></i> Instructors</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-chart-line"></i> Reports</a>
+                    
+                    <a class="nav-link" href="/Admin/GetAllStudents"><i class="fas fa-user-graduate"></i> Students</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-cog"></i> Settings</a>
+                    <a class="nav-link" href="/Admin/NewInstructors"><i class="fas fa-cog"></i> New Instructors</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -111,7 +114,7 @@
                         <div class="card text-white bg-primary">
                             <div class="card-body">
                                 <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
-                                <div class="h5 mb-0">1500</div>
+                                <div class="h5 mb-0">@Model.NumOfStudent</div>
                                 <div class="text-uppercase">Total Students</div>
                             </div>
                         </div>
@@ -120,7 +123,7 @@
                         <div class="card text-white bg-success">
                             <div class="card-body">
                                 <div class="stat-icon"><i class="fas fa-clipboard-list"></i></div>
-                                <div class="h5 mb-0">75</div>
+                                <div class="h5 mb-0">@Model.NumOfQuiz</div>
                                 <div class="text-uppercase">Total Quizzes</div>
                             </div>
                         </div>
@@ -129,7 +132,7 @@
                         <div class="card text-white bg-info">
                             <div class="card-body">
                                 <div class="stat-icon"><i class="fas fa-chart-bar"></i></div>
-                                <div class="h5 mb-0">80%</div>
+                                <div class="h5 mb-0">@Model.NumOfAttempes</div>
                                 <div class="text-uppercase">Average Score</div>
                             </div>
                         </div>
@@ -138,7 +141,7 @@
                         <div class="card text-white bg-warning">
                             <div class="card-body">
                                 <div class="stat-icon"><i class="fas fa-users"></i></div>
-                                <div class="h5 mb-0">300</div>
+                                <div class="h5 mb-0">@Model.NumOfInstructor</div>
                                 <div class="text-uppercase">Total Users</div>
                             </div>
                         </div>
