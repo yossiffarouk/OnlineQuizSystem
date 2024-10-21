@@ -106,7 +106,17 @@ namespace OnlineQuiz.Api.Controllers
             _questionManager.DeleteQuestion(id);
             return Ok("Question deleted successfully.");
         }
+        [HttpPost("api/questions/addAsync", Name = "AddQuestionAsync")]
+        public async Task<IActionResult> AddQuestionasync([FromBody] createQuestionDto createQuestionDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
+            await _questionManager.AddQuestionAsync(createQuestionDto);
+            return Ok("Question deleted successfully.");
+        }
 
     }
 }

@@ -59,5 +59,24 @@ namespace OnlineQuiz.BLL.Managers.QuestionManager
             var option = _questionsRepository.GetOptionById(optionId);
             return option != null ? _mapper.Map<OptionDto>(option) : null; // Map to DTO if found
         }
+
+        public async Task AddQuestionAsync(createQuestionDto createQuestionDto)
+        {
+            var question = _mapper.Map<Questions>(createQuestionDto);
+
+          //handl options 
+            foreach (var optionDto in createQuestionDto.Options)
+            {
+                var option = new Option
+                {
+                    OptionText = optionDto.OptionText,
+                   
+                };
+
+                question.Options.Add(option); // Add option to the question's options list
+            }
+
+            await _questionsRepository.AddAsync(question);
+        }
     }
 }
