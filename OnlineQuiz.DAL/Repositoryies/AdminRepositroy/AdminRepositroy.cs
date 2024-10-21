@@ -35,26 +35,25 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
         
         public void DeleteInstructor(Instructor Instructor)
         {
-            _Context.Remove(Instructor);
+
+             Instructor.IsDeleted = true;
              SaveChanges();
         }
 
         public void DeleteStudent(Student student)
         {
-            _Context.Remove(student);
+            student.IsDeleted = true;
             SaveChanges();
         }
 
         public IEnumerable<Instructor> GetAllInstructo()
         {
-            return _Context.Instructors.ToList();
+            return _Context.Instructors.Where(x => x.Status != ApprovalStatus.Pending & x.IsDeleted == false).ToList();
         }
 
-        public async Task<IEnumerable<Student>> GetAllStudentAsync()
+        public IEnumerable<Student> GetAllStudentAsync()
         {
-            
-            var x = await _Context.Students.ToListAsync();
-            return x;
+            return _Context.Students.Where(x=>x.IsDeleted == false).ToList();
         }
 
         public Instructor GetInstructorById(string id)
@@ -168,6 +167,11 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
              return _Context.attempts.Count().ToString();
         }
 
-
+        public IEnumerable<Instructor> GetAllInstructorPanding()
+        {
+            return _Context.Instructors
+                .Where(x=> x.Status == ApprovalStatus.Pending)
+                .ToList();
+        }
     }
 }

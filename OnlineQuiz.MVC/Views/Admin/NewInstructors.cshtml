@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OnlineQuiz.BLL.Dtos.Admin.InstructorDtos.InstructorReadDto>
+﻿@model IEnumerable<OnlineQuiz.BLL.Dtos.Admin.InstructorDtos.InstructorStatusDto>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,8 +23,17 @@
         overflow: hidden;
     }
 
+  
+
     #main-content {
-        margin: 20px auto;
+        margin-left: 250px;
+        /* Space for the sidebar */
+        padding: 20px;
+        flex-grow: 1;
+        background-color: #f4f4f4;
+        height: 100vh;
+        overflow-y: auto;
+        /* Enable scrolling for main content */
     }
 
     header {
@@ -85,40 +94,6 @@
             background-color: #f1f1f1;
         }
 
-    button {
-        padding: 10px 15px;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-    }
-
-        button.ban {
-            background-color: red;
-        }
-
-        button.unban {
-            background-color: green;
-        }
-
-
-    .btn-ban {
-        width: 120px;
-        padding: 5px;
-        background-color: #dc3545;
-        color: white;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        margin: 10px;
-        font-size: 1.1rem;
-        text-decoration: none;
-    }
-
-        .btn-ban:hover {
-            background-color: #c82333;
-        }
-
     .btn-unban {
         width: 150px;
         padding: 5px;
@@ -143,56 +118,36 @@
     <div id="main-content">
 
         <section id="instructors">
-            <h2>All Instructors</h2>
-
-            <a class="btn-unban" href="/Admin/Add?sourcePage=InstructorPage">ADD Instructor</a>
-            <a class="btn-unban" href="/Admin/DashBoard">Back To DashBoard</a>
+            <h2>All Instructors In Panding List</h2>
+          <a class="btn-unban" href="/Admin/DashBoard">Back To DashBoard</a>
             <table id="instructor-table">
                 <thead>
-					<tr>
-						
-                        
+                    <tr>
+
+
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
-                        <th>Age</th>
                         <th>Gender</th>
                         <th>Status</th>
-                        <th>IsBanned</th>
-                        <th>Edit</th>
-                        <th>Delete</th>
-                        <th>Ban</th>
-                        <th>Unban</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var instructor in Model)
                     {
                         <tr>
-                            
+
                             <td>@instructor.UserName</td>
                             <td>@instructor.Email</td>
                             <td>@instructor.PhoneNumber</td>
-                            <td>@instructor.Age</td>
                             <td>@instructor.Gender</td>
                             <td>@instructor.Status</td>
-                            <td>@instructor.IsBanned</td>
-                            <td><a class="btn-unban" href="/Admin/Edit?id=@instructor.Id&page=InstructorPage">Edit</a></td>
                             <td>
-
-                               
-                                <form action="/Admin/DeleteInstructor/@instructor.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this instructor?');">
-                                    <input type="hidden" name="_method" value="DELETE" />
-                                    <button type="submit" class="btn-ban">Delete</button>
-                                </form>
+                                <a href="/Admin/Approve/@instructor.Id" class="btn-ban">Approve</a>
                             </td>
                             <td>
-                                <a href="/Admin/Ban?id=@instructor.Id&page=InstructorPage" class="btn-ban">Ban </a>
+                                <a href="/Admin/Deny/@instructor.Id" class="btn-unban">Deny</a>
                             </td>
-                            <td>
-                                <a href="/Admin/UnBan?id=@instructor.Id&page=InstructorPage" class="btn-unban">Unban</a>
-                            </td>
-
                         </tr>
                     }
                 </tbody>
@@ -202,5 +157,6 @@
 
     <script src="dashboard.js"></script>
 </body>
+
 
 </html>
