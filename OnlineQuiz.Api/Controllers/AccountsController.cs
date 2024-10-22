@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Routing;
 using OnlineQuiz.BLL.Dtos.Accounts;
 using OnlineQuiz.BLL.Managers.Accounts;
@@ -23,19 +24,16 @@ namespace OnlineQuiz.Api.Controllers
         [HttpPost("Register")]
         public async Task<ActionResult> Register(RegisterDto registerDto)
         {
+            //This provides the UrlHelper instance
+           var urlHelper = Url;
 
-
-
-            // This provides the UrlHelper instance
-            var urlHelper = Url;
-
-            // Pass the urlHelper to the Register method
-            var response = await _accountManager.Register(registerDto, urlHelper);
+            //Pass the urlHelper to the Register method
+           var response = await _accountManager.Register(registerDto, urlHelper);
 
             if (response.successed)
             {
 
-                // return CreatedAtAction(nameof(Register), response);
+                return CreatedAtAction(nameof(Register), response);
                 return Ok(new { message = "Register successful" });
 
             }
