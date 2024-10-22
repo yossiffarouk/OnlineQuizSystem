@@ -17,13 +17,13 @@ namespace OnlineQuiz.BLL.AutoMapper.QuestionMapper
         {
             CreateMap<Questions, QuestionDto>().ReverseMap();
             CreateMap<Questions, createQuestionDto>().ReverseMap();
-            //// Map from createQuestionDto to Questions entity
-            //CreateMap<createQuestionDto, Questions>()
-            //    .ForMember(dest => dest.Options, opt => opt.Ignore()); // Ignore Options if they're managed separately
+            // Map from createQuestionDto to Questions entity
+            CreateMap<createQuestionDto, Questions>()
+                .ForMember(dest => dest.Options, opt => opt.Ignore()); // Ignore Options if they're managed separately
 
-            //// Map from Questions entity to QuestionDto (if needed)
-            //CreateMap<Questions, QuestionDto>()
-            //    .ForMember(dest => dest.Options, opt => opt.MapFrom(src => src.Options)); // Assuming Options is a list in your DTO
+            // Map from Questions entity to QuestionDto (if needed)
+            CreateMap<Questions, QuestionDto>()
+                .ForMember(dest => dest.Options, opt => opt.MapFrom(src => src.Options)); // Assuming Options is a list in your DTO
         }
     }
 }

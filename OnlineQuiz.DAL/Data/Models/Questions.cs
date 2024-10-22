@@ -24,7 +24,7 @@ namespace OnlineQuiz.DAL.Data.Models
         public virtual ICollection<Answers> Answers { get; set; } = new HashSet<Answers>();
 
         // for Option
-        public virtual ICollection<Option> Options { get; set; } = new HashSet<Option>();
+        public virtual List<Option> Options { get; set; } = new List<Option>();
     }   
 
     }

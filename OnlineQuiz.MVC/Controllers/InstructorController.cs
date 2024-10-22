@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineQuiz.BLL.Dtos.Options;
 using OnlineQuiz.BLL.Dtos.Question;
 using OnlineQuiz.BLL.Dtos.Quiz;
 using OnlineQuiz.BLL.Dtos.Track;
@@ -55,17 +56,16 @@ namespace OnlineQuiz.MVC.Controllers
         {
             var tracks = _trackManager.GetAll().ToList();
             ViewBag.Tracks = tracks;
+
             if (ModelState.IsValid)
             {
-                _quizManager.AddQuiz(quizDto);
-                
-                var quizId = _quizContext.quizzes
-                           .OrderByDescending(q => q.Id)
-                           .Select(q => q.Id)
-                            .FirstOrDefault(); 
-               
+                // Call the manager to add the quiz and get the quizId
+                var quizId = _quizManager.AddQuizINI(quizDto);
+
+                // Redirect to the QuizQuestion action with the created quizId
                 return RedirectToAction("QuizQuestion", new { quizId });
             }
+
             return View(quizDto);
         }
 
@@ -75,33 +75,36 @@ namespace OnlineQuiz.MVC.Controllers
         [HttpGet("QuizQuestion/{quizId}")]
         public async Task<IActionResult> QuizQuestion(int quizId)
         {
-            
             var questionDto = new createQuestionDto
             {
-                QuizId = quizId 
+                QuizId = quizId,
+                Options = new List<createOptionDto> // Initialize with 4 empty options
+        {
+            new createOptionDto(),
+            new createOptionDto(),
+            new createOptionDto(),
+            new createOptionDto()
+        }
             };
 
-          
-            return View("QuizQuestion", questionDto); 
+            return View("QuizQuestion", questionDto);
         }
 
         // POST: QuizQuestion
-        [HttpPost]
+        [HttpPost("QuizQuestion")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> QuizQuestion(createQuestionDto questionDto)
+
+        public async Task<IActionResult> create(createQuestionDto questionDto)
         {
             if (ModelState.IsValid)
             {
-               
                 await _questionManager.AddQuestionAsync(questionDto);
-
-              
                 return RedirectToAction("QuizQuestion", new { quizId = questionDto.QuizId });
             }
 
-            
-            return View("QuizQuestion", questionDto); 
+            return View("QuizQuestion", questionDto);
         }
+
 
         public IActionResult GetStudents()
         {

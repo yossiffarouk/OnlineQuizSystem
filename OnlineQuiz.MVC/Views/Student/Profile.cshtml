@@ -1,4 +1,4 @@
-﻿﻿
+﻿@model OnlineQuiz.BLL.Dtos.StudentDtos.StudentDetailesDto﻿
 <!DOCTYPE html>
 <html lang="en">
 
@@ -136,6 +136,7 @@
                                 <i class="bi bi-file-earmark-text me-2"></i> My Instructors
                             </a>
                         </li>
+                     
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="bi bi-gear me-2"></i> Settings
@@ -145,58 +146,75 @@
                 </div>
             </nav>
 
-           <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
+            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Student Dashboard</h1>
-                    <a href="/Student/AttemptQuiz">
-                        <button class="btn btn-warning">
-                            <i class="bi bi-play me-2"></i> Start New Quiz
-                        </button>
-                    </a>
+                    <h1 class="h2">Student Profile</h1>
                 </div>
 
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="widget">
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-check-circle quiz-icon text-success"></i>
-                                <div class="ms-3">
-                                    <h3 class="card-title">Completed Quizzes</h3>
-                                    <p class="stat-number">10</p>
+                <div class="student-profile py-4">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-transparent text-center">
+                                        <img class="profile_img" src="@Model?.ImgUrl ??" alt="student dp">
+                                        <h3>@Model.UserName</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-0"><strong class="pr-1">Student ID:</strong>@Model.Id</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="widget">
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-star quiz-icon text-warning"></i>
-                                <div class="ms-3">
-                                    <h3 class="card-title">Average Score</h3>
-                                    <p class="stat-number">85%</p>
+                            <div class="col-lg-8">
+                                <div class="card shadow-sm">
+                                    <div class="card-header bg-transparent border-0">
+                                        <h3 class="mb-0"><i class="far fa-clone pr-1"></i>General Information</h3>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <table class="table table-bordered">
+                                            <tr>
+                                                <th width="30%">Email</th>
+                                                <td width="2%">:</td>
+                                                <td>@Model.Email</td>
+                                            </tr>
+                                            <tr>
+                                                <th width="30%">Address</th>
+                                                <td width="2%">:</td>
+                                                <td>@Model.Adress</td>
+                                            </tr>
+                                            <tr>
+                                                <th width="30%">Gender</th>
+                                                <td width="2%">:</td>
+                                                <td>@Model.Gender</td>
+                                            </tr>
+                                            <tr>
+                                                <th width="30%">Grade</th>
+                                                <td width="2%">:</td>
+                                                <td>@Model.Grade</td>
+                                            </tr>
+                                            <tr>
+                                                <th width="30%">Age</th>
+                                                <td width="2%">:</td>
+                                                <td>@Model.Age</td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="widget">
-                            <div class="d-flex align-items-center">
-                                <i class="bi bi-trophy quiz-icon text-danger"></i>
-                                <div class="ms-3">
-                                    <h3 class="card-title">Achievements</h3>
-                                    <p class="stat-number">7</p>
-                                </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
 
-            </main>  
+            </main>
 
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <a href="@Url.Action("Edit", "Student", new { id = Model.Id })" class="btn btn-warning">
+        <i class="bi bi-pencil"></i> Edit Profile
+    </a>
 </body>
 
 </html>
