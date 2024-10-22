@@ -9,7 +9,7 @@ namespace OnlineQuiz.BLL.Dtos.StudentDtos
     public class QuizDetailsForStudentDto
     {
         public int Id { get; set; }
-        public string Title { get; set; }
+        public string tittle { get; set; }
         public string Description { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ExpireDate { get; set; }

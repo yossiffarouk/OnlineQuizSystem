@@ -1,17 +1,25 @@
 
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using OnlineQuiz.BLL.AutoMapper.AdminAutoMapper;
+using OnlineQuiz.BLL.AutoMapper.Attempt;
+using OnlineQuiz.BLL.AutoMapper.OptionMapper;
 using OnlineQuiz.BLL.AutoMapper.QuestionMapper;
 using OnlineQuiz.BLL.AutoMapper.QuizMapper;
+using OnlineQuiz.BLL.AutoMapper.StudentMapper;
 using OnlineQuiz.BLL.Managers.Admin;
+using OnlineQuiz.BLL.Managers.Attempt;
 using OnlineQuiz.BLL.Managers.Base;
 using OnlineQuiz.BLL.Managers.QuestionManager;
 using OnlineQuiz.BLL.Managers.Quiz;
+using OnlineQuiz.BLL.Managers.Student;
 using OnlineQuiz.DAL.Data.DBHelper;
 using OnlineQuiz.DAL.Repositoryies.AdminRepositroy;
+using OnlineQuiz.DAL.Repositoryies.AttemptRepository;
 using OnlineQuiz.DAL.Repositoryies.Base;
 using OnlineQuiz.DAL.Repositoryies.QuestionRepository;
 using OnlineQuiz.DAL.Repositoryies.QuizRepository;
+using OnlineQuiz.DAL.Repositoryies.StudentReposatory;
 
 namespace OnlineQuiz.MVC
 {
@@ -35,14 +43,29 @@ namespace OnlineQuiz.MVC
             builder.Services.AddScoped(typeof(IRepository<,>), typeof(Repository<,>));
             builder.Services.AddScoped(typeof(IManager<,>), typeof(Manager<,>));
 
+
+            builder.Services.AddAutoMapper(typeof(Mapper)); 
+
             builder.Services.AddAutoMapper(map => map.AddProfile(new QuizMapper()));
             builder.Services.AddAutoMapper(map => map.AddProfile(new QuestionMapper()));
+    
+            builder.Services.AddAutoMapper(map => map.AddProfile(new OptionMapper()));
+            builder.Services.AddAutoMapper(map => map.AddProfile(new StudentMapper()));
+            builder.Services.AddAutoMapper(map => map.AddProfile(new AttemptMapping()));
 
             builder.Services.AddScoped<IQuizRepository, QuizRepository>();
             builder.Services.AddScoped<IQuestionsRepository, QuestionsRepository>();
+            builder.Services.AddScoped<IStudentRepo, StudentRepo>();
+            builder.Services.AddScoped<IAttemptRepository, AttemptRepository>();
+
 
             builder.Services.AddScoped<IQuizManager, QuizManager>();
             builder.Services.AddScoped<IQuestionManager, QuestionManager>();
+            builder.Services.AddScoped<IStudentManager, StudentManager>();
+
+            builder.Services.AddScoped<IAttemptManager, AttemptManager>();
+
+
             var app = builder.Build();
             
             // Configure the HTTP request pipeline.
