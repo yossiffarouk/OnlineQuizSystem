@@ -80,5 +80,13 @@ namespace OnlineQuiz.DAL.Repositoryies.QuizRepository
                 .ThenInclude(q => q.Options)
                  .FirstOrDefault(q => q.Id == quizId && !q.IsDeleted);
         }
+        public int AddQuizINT(Quizzes entity)
+        {
+            _context.Set<Quizzes>().Add(entity);
+            _context.SaveChanges();
+
+            // After saving, return the quiz ID
+            return entity.Id;
+        }
     }
 }

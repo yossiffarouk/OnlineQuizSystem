@@ -18,15 +18,15 @@ namespace OnlineQuiz.MVC.Controllers
         private readonly ITrackManager _trackManager;
         private readonly IQuizManager _quizManager;
         private readonly IQuestionManager _questionManager;
-        private readonly QuizContext _quizContext;
+       
 
-        public InstructorController(IAdminManger adminManger ,ITrackManager trackManager,IQuizManager quizManager,IQuestionManager questionManager ,QuizContext quizContext)
+        public InstructorController(IAdminManger adminManger ,ITrackManager trackManager,IQuizManager quizManager,IQuestionManager questionManager )
         {
             _adminManger = adminManger;
             _trackManager = trackManager;
             _quizManager = quizManager;
             _questionManager = questionManager;
-            _quizContext = quizContext;
+           
         }
         public IActionResult Dashboared()
         {
@@ -50,19 +50,19 @@ namespace OnlineQuiz.MVC.Controllers
         {
             var tracks = _trackManager.GetAll().ToList();
             ViewBag.Tracks = tracks;
+
             if (ModelState.IsValid)
             {
-                _quizManager.AddQuiz(quizDto);
-                
-                var quizId = _quizContext.quizzes
-                           .OrderByDescending(q => q.Id)
-                           .Select(q => q.Id)
-                            .FirstOrDefault(); 
-               
+                // Call the manager to add the quiz and get the quizId
+                var quizId = _quizManager.AddQuizINI(quizDto);
+
+                // Redirect to the QuizQuestion action with the created quizId
                 return RedirectToAction("QuizQuestion", new { quizId });
             }
+
             return View(quizDto);
         }
+
 
 
         // GET: QuizQuestion/{quizId}
