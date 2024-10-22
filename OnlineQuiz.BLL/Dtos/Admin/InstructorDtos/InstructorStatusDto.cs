@@ -11,6 +11,8 @@ namespace OnlineQuiz.BLL.Dtos.Admin.InstructorDtos
     {
         public string Id { get; set; }
         public string UserName { get; set; }
+        public string Email { get; set; }
+        public string? PhoneNumber { get; set; }
         public GenderType Gender { get; set; }
         public ApprovalStatus Status { get; set; } 
     }

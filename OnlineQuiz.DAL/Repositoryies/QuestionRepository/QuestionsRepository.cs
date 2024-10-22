@@ -68,5 +68,11 @@ namespace OnlineQuiz.DAL.Repositoryies.QuestionRepository
                 _context.SaveChanges();
             }
         }
+
+        public async Task AddAsync(Questions entity)
+        {
+            await _context.Set<Questions>().AddAsync(entity);
+            await _context.SaveChangesAsync(); 
+        }
     }
 }

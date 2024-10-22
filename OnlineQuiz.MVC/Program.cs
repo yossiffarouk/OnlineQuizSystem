@@ -7,12 +7,14 @@ using OnlineQuiz.BLL.AutoMapper.OptionMapper;
 using OnlineQuiz.BLL.AutoMapper.QuestionMapper;
 using OnlineQuiz.BLL.AutoMapper.QuizMapper;
 using OnlineQuiz.BLL.AutoMapper.StudentMapper;
+using OnlineQuiz.BLL.AutoMapper.TrackMapper;
 using OnlineQuiz.BLL.Managers.Admin;
 using OnlineQuiz.BLL.Managers.Attempt;
 using OnlineQuiz.BLL.Managers.Base;
 using OnlineQuiz.BLL.Managers.QuestionManager;
 using OnlineQuiz.BLL.Managers.Quiz;
 using OnlineQuiz.BLL.Managers.Student;
+using OnlineQuiz.BLL.Managers.Track;
 using OnlineQuiz.DAL.Data.DBHelper;
 using OnlineQuiz.DAL.Repositoryies.AdminRepositroy;
 using OnlineQuiz.DAL.Repositoryies.AttemptRepository;
@@ -20,6 +22,7 @@ using OnlineQuiz.DAL.Repositoryies.Base;
 using OnlineQuiz.DAL.Repositoryies.QuestionRepository;
 using OnlineQuiz.DAL.Repositoryies.QuizRepository;
 using OnlineQuiz.DAL.Repositoryies.StudentReposatory;
+using OnlineQuiz.DAL.Repositoryies.TrackRepository;
 
 namespace OnlineQuiz.MVC
 {
@@ -85,7 +88,7 @@ namespace OnlineQuiz.MVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=Admin}/{action=DashBoard}");
 
             app.Run();
         }

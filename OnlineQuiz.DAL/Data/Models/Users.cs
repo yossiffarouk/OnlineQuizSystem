@@ -54,7 +54,7 @@ namespace OnlineQuiz.DAL.Data.Models
 
         public bool IsBanned { get; set; } = false;
 
-        //public bool IsDeleted { get; set; } = false;
+        public bool IsDeleted { get; set; } = false;
 
     }
 

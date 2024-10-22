@@ -13,5 +13,6 @@ namespace OnlineQuiz.DAL.Repositoryies.QuestionRepository
         // Additional methods can be defined here if needed
         void DeleteOptionById(int optionId);
         Option GetOptionById(int optionId);
+        Task AddAsync(Questions entity);
     }
 }

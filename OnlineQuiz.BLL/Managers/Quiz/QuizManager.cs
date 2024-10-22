@@ -100,7 +100,14 @@ namespace OnlineQuiz.BLL.Managers.Quiz
             var finalQuizDto = _mapper.Map<FinalQuizDTO>(quiz);
             return finalQuizDto;
         }
+        public int AddQuizINI(CreatQuizDTO quizDto)
+        {
+            
+            var quizEntity = _mapper.Map<Quizzes>(quizDto);
 
-     
+            
+            return quizRepository1.AddQuizINT(quizEntity);
+        }
+
     }
 }

@@ -14,6 +14,7 @@ namespace OnlineQuiz.DAL.Repositoryies.QuizRepository
         IQueryable<Quizzes> GetAvailableQuizzes();
         IQueryable<Quizzes> GetQuizzesWithQuestions();
         Quizzes GetQuizByIdWithQuestions(int quizId);
+        int AddQuizINT(Quizzes entity);
 
     }
 }

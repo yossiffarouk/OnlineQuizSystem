@@ -1,32 +1,104 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineQuiz.BLL.Dtos.Options;
+using OnlineQuiz.BLL.Dtos.Question;
+using OnlineQuiz.BLL.Dtos.Quiz;
+using OnlineQuiz.BLL.Dtos.Track;
 using OnlineQuiz.BLL.Managers.Admin;
+using OnlineQuiz.BLL.Managers.QuestionManager;
+using OnlineQuiz.BLL.Managers.Quiz;
+using OnlineQuiz.BLL.Managers.Track;
+using OnlineQuiz.DAL.Data.DBHelper;
+using OnlineQuiz.DAL.Data.Models;
 
 namespace OnlineQuiz.MVC.Controllers
 {
     public class InstructorController : Controller
     {
         private readonly IAdminManger _adminManger;
+        private readonly ITrackManager _trackManager;
+        private readonly IQuizManager _quizManager;
+        private readonly IQuestionManager _questionManager;
+       
 
-        public InstructorController(IAdminManger adminManger)
+        public InstructorController(IAdminManger adminManger ,ITrackManager trackManager,IQuizManager quizManager,IQuestionManager questionManager )
         {
             _adminManger = adminManger;
+            _trackManager = trackManager;
+            _quizManager = quizManager;
+            _questionManager = questionManager;
+           
         }
         public IActionResult Dashboared()
         {
             //var x = _adminManger.GetAllInstructo();
             return View();
         }
+        [HttpGet]
         public IActionResult QuizCreation()
         {
 
+            List<TrackDto> tracks = _trackManager.GetAll().ToList();
+
+           
+            ViewBag.Tracks = tracks;
+
             return View();
         }
-
-        public IActionResult QuizQuestion()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult QuizCreation(CreatQuizDTO quizDto)
         {
+            var tracks = _trackManager.GetAll().ToList();
+            ViewBag.Tracks = tracks;
 
-            return View();
+            if (ModelState.IsValid)
+            {
+                // Call the manager to add the quiz and get the quizId
+                var quizId = _quizManager.AddQuizINI(quizDto);
+
+                // Redirect to the QuizQuestion action with the created quizId
+                return RedirectToAction("QuizQuestion", new { quizId });
+            }
+
+            return View(quizDto);
         }
+
+
+
+        // GET: QuizQuestion/{quizId}
+        [HttpGet("QuizQuestion/{quizId}")]
+        public async Task<IActionResult> QuizQuestion(int quizId)
+        {
+            var questionDto = new createQuestionDto
+            {
+                QuizId = quizId,
+                Options = new List<createOptionDto> // Initialize with 4 empty options
+        {
+            new createOptionDto(),
+            new createOptionDto(),
+            new createOptionDto(),
+            new createOptionDto()
+        }
+            };
+
+            return View("QuizQuestion", questionDto);
+        }
+
+        // POST: QuizQuestion
+        [HttpPost("QuizQuestion")]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> create(createQuestionDto questionDto)
+        {
+            if (ModelState.IsValid)
+            {
+                await _questionManager.AddQuestionAsync(questionDto);
+                return RedirectToAction("QuizQuestion", new { quizId = questionDto.QuizId });
+            }
+
+            return View("QuizQuestion", questionDto);
+        }
+
 
         public IActionResult GetStudents()
         {

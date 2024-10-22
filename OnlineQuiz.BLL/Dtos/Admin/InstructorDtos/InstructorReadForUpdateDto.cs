@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OnlineQuiz.BLL.Dtos.Admin.InstructorDtos
 {
-    public class IstrurctorUpdateDto
+    public class InstructorReadForUpdateDto
     {
         public string Id { get; set; }
         public string UserName { get; set; }

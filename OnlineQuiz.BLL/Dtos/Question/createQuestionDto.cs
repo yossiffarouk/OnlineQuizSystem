@@ -16,6 +16,6 @@ namespace OnlineQuiz.BLL.Dtos.Question
         public int QuizId { get; set; }
 
         // Include a list of option DTOs if needed
-        public ICollection<createOptionDto> Options { get; set; } = new HashSet<createOptionDto>();
+        public List<createOptionDto> Options { get; set; } = new List<createOptionDto>();
     }
 }
