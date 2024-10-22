@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineQuiz.BLL.Dtos.Options;
 using OnlineQuiz.BLL.Dtos.Question;
 using OnlineQuiz.BLL.Dtos.Quiz;
 using OnlineQuiz.BLL.Dtos.Track;
@@ -64,38 +65,40 @@ namespace OnlineQuiz.MVC.Controllers
         }
 
 
-
         // GET: QuizQuestion/{quizId}
         [HttpGet("QuizQuestion/{quizId}")]
         public async Task<IActionResult> QuizQuestion(int quizId)
         {
-            
             var questionDto = new createQuestionDto
             {
-                QuizId = quizId 
+                QuizId = quizId,
+                Options = new List<createOptionDto> // Initialize with 4 empty options
+        {
+            new createOptionDto(),
+            new createOptionDto(),
+            new createOptionDto(),
+            new createOptionDto()
+        }
             };
 
-          
-            return View("QuizQuestion", questionDto); 
+            return View("QuizQuestion", questionDto);
         }
 
         // POST: QuizQuestion
-        [HttpPost]
+        [HttpPost("QuizQuestion")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> QuizQuestion(createQuestionDto questionDto)
+
+        public async Task<IActionResult> create(createQuestionDto questionDto)
         {
             if (ModelState.IsValid)
             {
-               
                 await _questionManager.AddQuestionAsync(questionDto);
-
-              
                 return RedirectToAction("QuizQuestion", new { quizId = questionDto.QuizId });
             }
 
-            
-            return View("QuizQuestion", questionDto); 
+            return View("QuizQuestion", questionDto);
         }
+
 
         public IActionResult GetStudents()
         {

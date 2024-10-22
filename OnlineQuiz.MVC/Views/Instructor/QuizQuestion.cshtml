@@ -74,7 +74,7 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <h2 class="card-title mb-4">Question Information</h2>
-                        <form asp-action="Create" method="post">
+                        <form asp-action="create" method="post">
                             <div class="mb-3">
                                 <label asp-for="Tittle" class="form-label">Question Title</label>
                                 <input asp-for="Tittle" class="form-control" placeholder="Enter question title" required>
@@ -96,14 +96,18 @@
                             <div class="mb-3">
                                 <label class="form-label">Options</label>
                                 <div id="options-container">
-                                    @for (int i = 0; i < 4; i++)
+                                    @for (int i = 0; i < Model.Options.Count; i++)
                                     {
                                         <div class="mb-2">
-                                            <input type="text" name="Options[@i].OptionText" class="form-control" placeholder="Option @(i + 1)" required />
+                                            <input asp-for="@Model.Options[i].OptionText" class="form-control" placeholder="Option @(i + 1)" required />
                                         </div>
                                     }
                                 </div>
                             </div>
+
+
+
+
 
                             <button type="submit" class="btn btn-dark-orange w-100">Create Question</button>
                         </form>
