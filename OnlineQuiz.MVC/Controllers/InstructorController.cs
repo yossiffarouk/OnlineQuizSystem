@@ -3,8 +3,10 @@ using OnlineQuiz.BLL.Dtos.Question;
 using OnlineQuiz.BLL.Dtos.Quiz;
 using OnlineQuiz.BLL.Dtos.Track;
 using OnlineQuiz.BLL.Managers.Admin;
+using OnlineQuiz.BLL.Managers.Instructor;
 using OnlineQuiz.BLL.Managers.QuestionManager;
 using OnlineQuiz.BLL.Managers.Quiz;
+using OnlineQuiz.BLL.Managers.Student;
 using OnlineQuiz.BLL.Managers.Track;
 using OnlineQuiz.DAL.Data.DBHelper;
 using OnlineQuiz.DAL.Data.Models;
@@ -18,14 +20,18 @@ namespace OnlineQuiz.MVC.Controllers
         private readonly IQuizManager _quizManager;
         private readonly IQuestionManager _questionManager;
         private readonly QuizContext _quizContext;
+        private readonly IStudentManager _StudentManager;
+        private readonly IInstructorManger _InstructorManger;
 
-        public InstructorController(IAdminManger adminManger ,ITrackManager trackManager,IQuizManager quizManager,IQuestionManager questionManager ,QuizContext quizContext)
+        public InstructorController(IAdminManger adminManger ,ITrackManager trackManager,IQuizManager quizManager,IQuestionManager questionManager ,QuizContext quizContext , IStudentManager studentManager ,IInstructorManger instructorManger)
         {
             _adminManger = adminManger;
             _trackManager = trackManager;
             _quizManager = quizManager;
             _questionManager = questionManager;
             _quizContext = quizContext;
+            _StudentManager = studentManager;
+            _InstructorManger = instructorManger;
         }
         public IActionResult Dashboared()
         {
@@ -99,9 +105,33 @@ namespace OnlineQuiz.MVC.Controllers
 
         public IActionResult GetStudents()
         {
-
-            return View();
+             var students = _StudentManager.GetAll();
+            return View(students);
         }
+        [HttpGet]
+        [Route("Instructor/AddStudentToInstructor/{Id}")]
+        public IActionResult AddStudentToInstructor(string Id)
+        {
+            var x = "8aa20076-192d-40e6-9e39-2714b2940214";
+            _InstructorManger.AddStudentToInstructorAsync(Id, x);
+            return RedirectToAction("GetStudents");
 
+        }
+        [Route("Instructor/MyStudents/{Id}")]
+        public IActionResult MyStudents(string Id)
+        {
+            var students = _StudentManager.GetStudentsWithInstructor(Id);
+            return View(students);
+
+        }
+        [HttpGet]
+        [Route("Instructor/DeleteStudentFromInstructor/{Id}")]
+        public IActionResult DeleteStudentFromInstructor(string Id)
+        {
+            var x = "8aa20076-192d-40e6-9e39-2714b2940214";
+            _InstructorManger.RemoveStudentFromInstructorAsync(Id, x);
+            return RedirectToAction("MyStudents", new { Id = "8aa20076-192d-40e6-9e39-2714b2940214" });
+
+        }
     }
 }

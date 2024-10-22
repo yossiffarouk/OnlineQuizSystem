@@ -11,6 +11,7 @@ namespace OnlineQuiz.BLL.Managers.Student
     public interface IStudentManager 
     {
         IQueryable<StudentReadDto> GetAll();
+        IEnumerable<StudentReadDto> GetStudentsWithInstructor(string instructorId);
         StudentReadDto GetById(string id);
         void Add(StudentAddDto Studententity);
         void Update(StudentUpdateDto Studententity);
