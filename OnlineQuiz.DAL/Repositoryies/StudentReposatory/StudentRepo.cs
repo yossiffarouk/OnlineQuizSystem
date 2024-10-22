@@ -34,5 +34,16 @@ namespace OnlineQuiz.DAL.Repositoryies.StudentReposatory
                     .Include(s => s.StudentInstructors)
                     .FirstOrDefault(s => s.Id == studentId);
         }
+
+        public IEnumerable<StudentInstructor> GetStudentsWithInstructor(string InstructorId)
+        {
+            var x = _quizContext.StudentInstructors
+                             .Include(si => si.Student) 
+                             // Include the Student entity
+                             .Where(si => si.InstructorId == InstructorId)
+                          
+                             .ToList();
+            return x;
+        }
     }
 }

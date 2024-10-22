@@ -21,5 +21,6 @@ namespace OnlineQuiz.BLL.Managers.Quiz
         IQueryable<FinalQuizDTO> GetQuizzesWithQuestionsAndOptions();
         FinalQuizDTO GetQuizByIdWithQuestions(int quizId);
         FinalQuizDTO GetQuizWithShuffledQuestions(int quizId);
+        int AddQuizINI(CreatQuizDTO quizDto);
     }
 }

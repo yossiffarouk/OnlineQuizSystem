@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@model OnlineQuiz.BLL.Dtos.Quiz.CreatQuizDTO
+
+@{
+    ViewData["Title"] = "Quiz Creation";
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -68,51 +74,78 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <h2 class="card-title mb-4">Quiz Information</h2>
-                        <form id="quizForm">
+                        <form asp-action="QuizCreation" method="post">
                             <div class="mb-3">
-                                <label for="quizTitle" class="form-label">Title</label>
-                                <input type="text" class="form-control" id="quizTitle" placeholder="Enter quiz title" required>
+                                <label asp-for="Tittle" class="form-label">Quiz Title</label>
+                                <input asp-for="Tittle" class="form-control" placeholder="Enter quiz title" required>
+                                <span asp-validation-for="Tittle" class="text-danger"></span>
                             </div>
+
                             <div class="mb-3">
-                                <label for="quizDescription" class="form-label">Description</label>
-                                <textarea class="form-control" id="quizDescription" rows="3" placeholder="Enter description" required></textarea>
+                                <label asp-for="Description" class="form-label">Description</label>
+                                <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter description" required></textarea>
+                                <span asp-validation-for="Description" class="text-danger"></span>
                             </div>
+
                             <div class="mb-3">
-                                <label for="quizDegree" class="form-label">Quiz Degree</label>
-                                <input type="number" class="form-control" id="quizDegree" placeholder="Enter quiz degree" min="1" required>
+                                <label asp-for="QuizDegree" class="form-label">Quiz Degree</label>
+                                <input asp-for="QuizDegree" type="number" class="form-control" placeholder="Enter quiz degree" min="1" required>
+                                <span asp-validation-for="QuizDegree" class="text-danger"></span>
                             </div>
+
                             <div class="mb-3">
-                                <label for="expireDate" class="form-label">Expire Date</label>
-                                <input type="datetime-local" class="form-control" id="expireDate" required>
+                                <label asp-for="ExpireDate" class="form-label">Expire Date</label>
+                                <input asp-for="ExpireDate" type="datetime-local" class="form-control" required>
+                                <span asp-validation-for="ExpireDate" class="text-danger"></span>
                             </div>
+
                             <div class="mb-3">
-                                <label for="isAvailable" class="form-label">Is Available</label>
-                                <select class="form-select" id="isAvailable" required>
+                                <label asp-for="IsAvailable" class="form-label">Is Available</label>
+                                <select asp-for="IsAvailable" class="form-select" required>
                                     <option value="">Select</option>
-                                    <option value="yes">Yes</option>
-                                    <option value="no">No</option>
+                                    <option value="true">Yes</option>
+                                    <option value="false">No</option>
                                 </select>
+                                <span asp-validation-for="IsAvailable" class="text-danger"></span>
                             </div>
+
                             <div class="mb-3">
-                                <label for="examTime" class="form-label">Exam Time (in minutes)</label>
-                                <input type="number" class="form-control" id="examTime" placeholder="Enter exam time" min="1" required>
+                                <label asp-for="ExamTime" class="form-label">Exam Time (in minutes)</label>
+                                <input asp-for="ExamTime" type="number" class="form-control" placeholder="Enter exam time" min="1" required>
+                                <span asp-validation-for="ExamTime" class="text-danger"></span>
                             </div>
+
                             <div class="mb-3">
-                                <label for="trackId" class="form-label">Track ID</label>
-                                <input type="text" class="form-control" id="trackId" placeholder="Enter track ID" required>
+                                <label asp-for="TracksId" class="form-label">Track</label>
+                                <select asp-for="TracksId" class="form-select" required>
+                                    <option value="">Select a track</option>
+                                    @foreach (var track in ViewBag.Tracks)
+                                    {
+                                        <option value="@track.Id">@track.Name</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="TracksId" class="text-danger"></span>
                             </div>
+
                             <div class="mb-3">
-                                <label for="instructorId" class="form-label">Instructor ID</label>
-                                <input type="text" class="form-control" id="instructorId" placeholder="Enter instructor ID" required>
+                                <label asp-for="InstructorId" class="form-label">Instructor ID</label>
+                                <input asp-for="InstructorId" class="form-control" placeholder="Enter instructor ID" required>
+                                <span asp-validation-for="InstructorId" class="text-danger"></span>
                             </div>
+
                             <button type="submit" class="btn btn-dark-orange w-100">Save Quiz Info</button>
-                 
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-  </body>
+
     <!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bun"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+</body>
+</html>

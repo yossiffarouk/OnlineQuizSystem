@@ -34,11 +34,9 @@ namespace OnlineQuiz.BLL.Managers.Admin
         //
 
 
-        public async Task<IEnumerable<StudentReadDto>> GetAllStudentAsync()
+        public IEnumerable<StudentReadDto> GetAllStudentAsync()
         {
-            var y = await _IAdminRepositroy.GetAllStudentAsync();
-            var x = _IMapper.Map<IEnumerable<StudentReadDto>>(y);
-            return  x;
+           return _IMapper.Map<IEnumerable<StudentReadDto>>(_IAdminRepositroy.GetAllStudentAsync());
 
         }
 
@@ -66,7 +64,7 @@ namespace OnlineQuiz.BLL.Managers.Admin
         public void UpdateStudent(StudentUpdateDto StudentUpdateDto)
         {
             _IAdminRepositroy.UpdateStudent( _IMapper.Map(StudentUpdateDto, _IAdminRepositroy.GetStudentById(StudentUpdateDto.Id)));
-            //aw SaveChanges();
+            // SaveChanges();
         }
 
 
@@ -92,7 +90,10 @@ namespace OnlineQuiz.BLL.Managers.Admin
         {
             return _IMapper.Map<InstructorReadDto>(_IAdminRepositroy.GetInstructorById(id));
         }
-
+        public IstrurctorUpdateDto GetInstructorByIdForUpdate(string id)
+        {
+            return _IMapper.Map<IstrurctorUpdateDto>(_IAdminRepositroy.GetInstructorById(id));
+        }
         public InstructorReadDto GetInstructorByName(string name)
         {
             return _IMapper.Map<InstructorReadDto>(_IAdminRepositroy.GetInstructorByName(name));
@@ -195,6 +196,11 @@ namespace OnlineQuiz.BLL.Managers.Admin
         public string NumOfAttempes()
         {
             return _IAdminRepositroy.NumOfAttempes();
+        }
+
+        public IEnumerable<InstructorStatusDto> GetAllInstructorPanding()
+        {
+            return _IMapper.Map<List<InstructorStatusDto>>(_IAdminRepositroy.GetAllInstructorPanding());
         }
     }
 }

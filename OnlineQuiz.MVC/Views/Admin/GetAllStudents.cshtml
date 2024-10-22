@@ -23,53 +23,11 @@
         overflow: hidden;
     }
 
-    #sidebar {
-        width: 250px;
-        background-color: #333;
-        color: #fff;
-        padding: 20px;
-        position: fixed;
-        /* Make sidebar static during scroll */
-        left: 0;
-        top: 0;
-        height: 100%;
-        /* Full height of the viewport */
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    }
 
-        #sidebar h2 {
-            margin-bottom: 30px;
-            font-size: 24px;
-            text-align: center;
-        }
-
-        #sidebar ul {
-            list-style-type: none;
-        }
-
-            #sidebar ul li {
-                margin: 20px 0;
-            }
-
-                #sidebar ul li a {
-                    color: #fff;
-                    text-decoration: none;
-                    font-size: 18px;
-                }
-
-                    #sidebar ul li a:hover {
-                        text-decoration: underline;
-                    }
 
     #main-content {
-        margin-left: 250px;
-        /* Space for the sidebar */
-        padding: 20px;
-        flex-grow: 1;
-        background-color: #f4f4f4;
-        height: 100vh;
-        overflow-y: auto;
-        /* Enable scrolling for main content */
+        margin:20px auto ;
+      
     }
 
     header {
@@ -145,34 +103,59 @@
         button.unban {
             background-color: green;
         }
+
+
+    .btn-ban {
+        width: 120px;
+        padding: 5px;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        font-size: 1.1rem;
+        text-decoration: none;
+    }
+
+        .btn-ban:hover {
+            background-color: #c82333;
+        }
+
+    .btn-unban {
+        width: 150px;
+        padding: 5px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        font-size: 1.1rem;
+        text-decoration:none;
+    }
+
+        .btn-unban:hover {
+            background-color: #218838;
+        }
+
+
 </style>
 <body>
-    <!-- Sidebar -->
-    <div id="sidebar">
-        <h2>Admin Dashboard</h2>
-        <ul>
-            <li><a href="/Admin/DashBoard">Statistics</a></li>
-            <li><a href="/Admin/GetAllStudents">All Students</a></li>
-            <li><a href="/Admin/GetAllInstructors">All Instructors</a></li>
-            <li><a href="/Admin/GetAllInstructors">Ban User/li>
-            <li><a href="/Admin/GetAllInstructors">UNBan User</a></li>
-            <li><a href="/Admin/GetAllInstructors">Approve Instructor</a></li>
-            <li><a href="/Admin/GetAllInstructors">Deny Instructor</a></li>
-        </ul>
-    </div>
+   
 
     <!-- Main content area -->
     <div id="main-content">
        
         
-        
+     
         <section id="students">
             <h2>All Students</h2>
-            <a>Add Student</a>
+            <a class="btn-unban" href="/Admin/Add?sourcePage=StudentPage">ADD Student</a>
+            <a class="btn-unban" href="/Admin/DashBoard">Back To DashBoard</a>
             <table id="student-table">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>PhoneNumber</th>
@@ -181,22 +164,35 @@
                         <th>IsBanned</th>
                         <th>Edit</th>
                         <th>Delete</th>
+                        <th>Ban Student</th>
+                        <th>UnBan Student</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var student in Model)
                     {
                         <tr>
-                            <td>@student.Id</td>
+                            
                             <td>@student.UserName</td>
                             <td>@student.Email</td>
                             <td>@student.PhoneNumber</td>
                             <td>@student.Age</td>
                             <td>@student.Gender</td>
                             <td>@student.IsBanned</td>
-                            <td><a src="">Edit</a></td>
-                            <td><a src="">Delete</a></td>
-                            
+                            <td><a class="btn-unban" href="/Admin/Edit/@student.Id">Edit</a></td>
+                            <td>
+                                <form action="/Admin/DeleteStudent/@student.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this Student?');">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    <button type="submit" class="btn-ban">Delete </button>
+                                </form>
+                            </td>
+                            <td>
+                                <a href="/Admin/Ban?id=@student.Id&page=StudentPage" class="btn-ban">Ban</a>
+                            </td>
+                            <td>
+                                <a href="/Admin/UnBan?id=@student.Id&page=StudentPage" class="btn-unban">Unban</a>
+                            </td>
+                           
                         </tr>
                     }
                 </tbody>

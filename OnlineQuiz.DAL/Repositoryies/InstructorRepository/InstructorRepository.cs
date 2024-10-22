@@ -26,8 +26,8 @@ namespace OnlineQuiz.DAL.Repositoryies.InstructorRepository
         // Add student to instructor
         public async Task AddStudentToInstructorAsync(string studentId, string instructorId)
         {
-            var student = await _context.Students.FindAsync(studentId);
-            var instructor = await _context.Instructors.FindAsync(instructorId);
+            var student =  _context.Students.FirstOrDefault(a=>a.Id==studentId);
+            var instructor = _context.Instructors.FirstOrDefault(a => a.Id == instructorId);
 
             if (student == null || instructor == null)
                 throw new Exception("Student or Instructor not found");
@@ -45,8 +45,8 @@ namespace OnlineQuiz.DAL.Repositoryies.InstructorRepository
         // Remove student from instructor
         public async Task RemoveStudentFromInstructorAsync(string studentId, string instructorId)
         {
-            var studentInstructor = await _context.StudentInstructors
-                .FirstOrDefaultAsync(si => si.StudentId == studentId && si.InstructorId == instructorId);
+            var studentInstructor =  _context.StudentInstructors
+                .FirstOrDefault(si => si.StudentId == studentId && si.InstructorId == instructorId);
 
             if (studentInstructor == null)
                 throw new Exception("The relationship does not exist");

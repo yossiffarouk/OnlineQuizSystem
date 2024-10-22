@@ -17,5 +17,6 @@ namespace OnlineQuiz.BLL.Managers.QuestionManager
         void DeleteQuestion(int id);
         void DeleteOption(int optionId);
         OptionDto GetOptionById(int optionId);
+        Task AddQuestionAsync(createQuestionDto createquestionDto);
     }
 }

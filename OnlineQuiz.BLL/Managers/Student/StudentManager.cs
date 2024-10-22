@@ -66,5 +66,21 @@ namespace OnlineQuiz.BLL.Managers.Student
             var Query = _mapper.ProjectTo<StudentReadPaginatedDto>(_studentRepo.GetAll());
             return await QuerableExtentions.ToPagintedListAsync(Query, pageNumber, pageSize);
         }
+
+        public IEnumerable<StudentReadDto> GetStudentsWithInstructor(string instructorId)
+        {
+           var student = _studentRepo.GetStudentsWithInstructor(instructorId);
+            var ReadDto = student.Select(x => new StudentReadDto
+            {
+                Id = x.Student.Id,
+                UserName = x.Student.UserName,
+                Email = x.Student.Email,
+                PhoneNumber =x.Student.PhoneNumber,
+                Grade =x.Student.Grade,
+                ImgUrl = x.Student.ImgUrl
+
+            });
+            return ReadDto ;
+        }
     }
 }
