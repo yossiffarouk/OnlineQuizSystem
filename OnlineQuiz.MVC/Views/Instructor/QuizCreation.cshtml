@@ -1,5 +1,6 @@
 ﻿@model OnlineQuiz.BLL.Dtos.Quiz.CreatQuizDTO
 
+
 @{
     ViewData["Title"] = "Quiz Creation";
 }
@@ -129,7 +130,7 @@
 
                             <div class="mb-3">
                                 <label asp-for="InstructorId" class="form-label">Instructor ID</label>
-                                <input asp-for="InstructorId" class="form-control" placeholder="Enter instructor ID" required>
+                                <input asp-for="InstructorId" class="form-control" placeholder="Enter instructor ID" value="@ViewBag.instructorid" required>
                                 <span asp-validation-for="InstructorId" class="text-danger"></span>
                             </div>
 

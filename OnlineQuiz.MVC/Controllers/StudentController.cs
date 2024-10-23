@@ -101,6 +101,11 @@ namespace OnlineQuiz.MVC.Controllers
             var availableQuizzes = _quizManager.GetAvailableQuizzes().ToList();
 
             return View(availableQuizzes);
+            //var instructorid = "e55085e8-fcee-4b86-a129-cbcf439efc6f";
+            //var studentid = "daeaabdd-a583-474c-beaa-b512dabbd15d";
+            //var _studentId2 = "d62d5afb-8343-479a-a03d-048723215ea1";
+            //var availableQuizzes = _quizManager.GetAvailableQuizzesEnrolled("_studentId2").ToList();
+            //return View(availableQuizzes);
         }
         public IActionResult GetQuestions()
         {
