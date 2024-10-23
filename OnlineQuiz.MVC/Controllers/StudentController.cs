@@ -30,10 +30,9 @@ namespace OnlineQuiz.MVC.Controllers
         {
             return View();
         }
+       
         public IActionResult Profile()
         {
-            // Fetch the student ID from the claims (after login)
-            // string studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             string studentId = "bbcd3d4d-21b3-4fed-962f-aaacab9db911";
 
@@ -52,13 +51,12 @@ namespace OnlineQuiz.MVC.Controllers
 
             return View(studentDetails); // Pass the student data to the view
         }
+
+
         public IActionResult MyInstractors()
         {
-            // Fetch the student ID from the claims (after login)
-            // string studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             string studentId = "bbcd3d4d-21b3-4fed-962f-aaacab9db911";
-
             if (string.IsNullOrEmpty(studentId))
             {
                 return NotFound(); // Handle missing student ID
@@ -74,11 +72,10 @@ namespace OnlineQuiz.MVC.Controllers
 
             return View(studentDetails); // Pass the student data to the view
         }
+
+
         public IActionResult MyQuizzes()
         {
-            // Fetch the student ID from the claims (after login)
-           // string studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
             string studentId = "bbcd3d4d-21b3-4fed-962f-aaacab9db911";
 
             if (string.IsNullOrEmpty(studentId))
@@ -96,33 +93,14 @@ namespace OnlineQuiz.MVC.Controllers
 
             return View(studentDetails); // Pass the student data to the view
         }
-        public IActionResult AttemptQuiz()
-        {
-            var availableQuizzes = _quizManager.GetAvailableQuizzes().ToList();
-
-            return View(availableQuizzes);
-        }
-        public IActionResult GetQuestions()
-        {
-            return View();
-        }
-
-        public IActionResult PastQuizzes()
-        {
-            return View();
-        }
 
 
-
-        
         // Fetch student details for editing
         [HttpGet]
         public IActionResult Edit()
         {
-            // Fetch studentId from the current logged-in user
-            //   string studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            string studentId = "bbcd3d4d-21b3-4fed-962f-aaacab9db911";
 
+            string studentId = "bbcd3d4d-21b3-4fed-962f-aaacab9db911";
             if (string.IsNullOrEmpty(studentId))
             {
                 return NotFound("Student ID is missing.");
@@ -135,12 +113,6 @@ namespace OnlineQuiz.MVC.Controllers
             {
                 return NotFound("Student not found.");
             }
-
-            // Map StudentReadDto to Student entity
-           // var studentEntity = _mapper.Map<Student>(studentReaddto);
-
-            // Map changes from StudentUpdateDto to Student entity
-          //  _mapper.Map(StudentUpdateDto, studentEntity);
 
             var studentUpdateDto = _mapper.Map<StudentUpdateDto>(studentReaddto);
             return View("Edit", studentUpdateDto); // Pass the DTO to the view
@@ -171,6 +143,31 @@ namespace OnlineQuiz.MVC.Controllers
                 return View(studentUpdateDto);
             }
         }
+
+
+
+
+
+        public IActionResult AttemptQuiz()
+        {
+            var availableQuizzes = _quizManager.GetAvailableQuizzes().ToList();
+
+            return View(availableQuizzes);
+        }
+        public IActionResult GetQuestions()
+        {
+            return View();
+        }
+
+        public IActionResult PastQuizzes()
+        {
+            return View();
+        }
+
+
+
+        
+
 
         
     }
