@@ -35,6 +35,9 @@ namespace OnlineQuiz.BLL.AutoMapper.StudentMapper
             CreateMap<Attempts, AttemptDetailsDto>()
                 .ForMember(dest => dest.QuizDetailsForStudentdto, opt => opt
                 .MapFrom(src => src.Quiz));
+
+            CreateMap<StudentReadDto, StudentUpdateDto>().ReverseMap();
+
         }
     }
 }
