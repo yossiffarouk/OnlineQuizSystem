@@ -17,6 +17,9 @@ namespace OnlineQuiz.BLL.Dtos.StudentDtos
         public string Grade { get; set; }
         public string ImgUrl { get; set; }
 
+        public string Adress { get; set; }
+        public int Age { get; set; }
+
 
     }
 }
