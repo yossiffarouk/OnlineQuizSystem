@@ -11,6 +11,7 @@ using OnlineQuiz.BLL.Managers.Student;
 using OnlineQuiz.BLL.Managers.Track;
 using OnlineQuiz.DAL.Data.DBHelper;
 using OnlineQuiz.DAL.Data.Models;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace OnlineQuiz.MVC.Controllers
 {
@@ -45,8 +46,9 @@ namespace OnlineQuiz.MVC.Controllers
 
             List<TrackDto> tracks = _trackManager.GetAll().ToList();
 
-           
+
             ViewBag.Tracks = tracks;
+            ViewBag.instructorid = "88481588-48fb-463f-92d3-3178376565e0";
 
             return View();
         }
@@ -94,7 +96,7 @@ namespace OnlineQuiz.MVC.Controllers
         [HttpPost("QuizQuestion")]
         [ValidateAntiForgeryToken]
 
-        public async Task<IActionResult> create(createQuestionDto questionDto)
+        public async Task<IActionResult> Create(createQuestionDto questionDto, string action)
         {
             if (ModelState.IsValid)
             {

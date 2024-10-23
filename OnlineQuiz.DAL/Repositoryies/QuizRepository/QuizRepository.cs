@@ -88,5 +88,30 @@ namespace OnlineQuiz.DAL.Repositoryies.QuizRepository
             // After saving, return the quiz ID
             return entity.Id;
         }
+        public IQueryable<Quizzes> GetAvailableQuizzesEnrolled(string studentId)
+        {
+            //// Get all available quizzes
+            //var availableQuizzes = _context.Set<Quizzes>()
+            //    .Where(q => q.IsAvailable && !q.IsDeleted);
+
+            //// Get quizzes taught by instructors that the student is enrolled with
+            //var enrolledQuizzes = from quiz in _context.Set<Quizzes>()
+            //                      join si in _context.Set<StudentInstructor>()
+            //                      on quiz.InstructorId equals si.InstructorId
+            //                      where si.StudentId == studentId
+            //                      select quiz;
+
+            //// Combine both results
+            //var result = availableQuizzes.Union(enrolledQuizzes);
+
+            //return result;
+
+            return _context.Set<Quizzes>()
+        .Where(q => q.IsAvailable && !q.IsDeleted &&
+                    q.Instructor.StudentInstructors.Any(si => si.StudentId == studentId)); // Filter quizzes where the student is enrolled
+        //.Include(q => q.Instructor) // Include the Instructor entity
+        //.ThenInclude(i => i.StudentInstructors) // Include the StudentInstructors entity
+        //.ThenInclude(si => si.Student); // Include the Student entity
+        }
     }
 }
