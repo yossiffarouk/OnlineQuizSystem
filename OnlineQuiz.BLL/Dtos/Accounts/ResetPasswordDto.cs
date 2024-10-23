@@ -14,9 +14,11 @@ namespace OnlineQuiz.BLL.Dtos.Accounts
         [EmailAddress(ErrorMessage = "Invalid Email Format")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
         [DataType(DataType.Password)]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{5,}$",
+       ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, and one number.")]
         [StringLength(100, ErrorMessage = "Password must be at least 6 characters long", MinimumLength = 6)]
+        [Required(ErrorMessage = "Password is required")]
         public string NewPassword { get; set; }
 
         [Required(ErrorMessage = "Password confirmation is required")]

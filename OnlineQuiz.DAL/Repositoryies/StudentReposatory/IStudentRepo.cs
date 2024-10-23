@@ -11,6 +11,7 @@ namespace OnlineQuiz.DAL.Repositoryies.StudentReposatory
     public interface IStudentRepo :IRepository<Student,string>
     {
         IQueryable<Student> GetStudentsByGrade(string grade);
+        IEnumerable<StudentInstructor> GetStudentsWithInstructor(string InstructorId);
         public Student GetByIdWithDetails(string studentId);
     }
 }

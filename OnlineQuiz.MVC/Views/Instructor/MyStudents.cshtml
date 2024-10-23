@@ -1,4 +1,4 @@
-﻿@model IQueryable< OnlineQuiz.BLL.Dtos.StudentDtos.StudentReadDto>
+﻿@model IEnumerable< OnlineQuiz.BLL.Dtos.StudentDtos.StudentReadDto>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -119,15 +119,15 @@
                                 <button class="btn btn-outline-secondary" type="button"><i class="bi bi-search"></i></button>
                             </div>
                             <a class="btn btn-primary" href="/Instructor/Dashboared">
-                                 Back To DashBoard
-							</a>
+                                Back To DashBoard
+                            </a>
                         </div>
-                        
+
                         <div class="table-responsive">
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                       
+
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Phone</th>
@@ -137,29 +137,29 @@
                                 </thead>
                                 @foreach (var student in Model)
                                 {
-                                <tbody id="studentTableBody">
-                                    <!-- Sample Student Rows -->
-                                    <tr>
-                                       
-                                        <td id="Names">
+                                    <tbody id="studentTableBody">
+                                        <!-- Sample Student Rows -->
+                                        <tr>
+
+                                            <td>
                                                 @student.UserName
-                                        </td>
-                                        <td>@student.Email</td>
+                                            </td>
+                                            <td>@student.Email</td>
                                             <td>@student.PhoneNumber</td>
-                                        <td>@student.Grade</td>
-                                       
-                                        <td>
-                                                <a class="btn btn-sm btn-outline-primary me-1" href="/Instructor/AddStudentToInstructor/@student.Id"> <i class="bi bi-pencil"></i> </a>
-                                               @* <button class="btn btn-sm btn-outline-primary me-1" href="/Instructor/AddNewStudentToInstructor"><i class="bi bi-pencil"></i>a</button> *@
-                                            @* <button class="btn btn-sm btn-outline-danger" href=""><i class="bi bi-trash"></i></button> *@
-                                        </td>
-                                    </tr>
-                                  
-                                </tbody>
+                                            <td>@student.Grade</td>
+
+                                            <td>
+                                                <a class="btn btn-sm btn-outline-danger" href="/Instructor/DeleteStudentFromInstructor/@student.Id"> <i class="bi bi-trash"></i> </a>
+                                                @* <button class="btn btn-sm btn-outline-primary me-1" href=""><i class="bi bi-pencil"></i></button> *@
+                                                @* <button class="btn btn-sm btn-outline-danger" href="DeleteStudentFromInstructor"><i class="bi bi-trash"></i></button> *@
+                                            </td>
+                                        </tr>
+
+                                    </tbody>
                                 }
                             </table>
                         </div>
-                        
+
                     </div>
                 </div>
             </div>

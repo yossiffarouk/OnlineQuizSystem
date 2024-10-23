@@ -119,23 +119,57 @@
     </style>
 </head>
 
+@model LoginDto
 <body>
     <div class="form-container mx-auto">
         <p class="title">Login</p>
-        <form class="form" action="/login" method="POST">
-            <div class="input-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="email" placeholder="Enter Email">
+        <!-- Error Message Section -->
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
             </div>
+        }
+        <form class="form" asp-action="Login" asp-controller="Home" method="post">
+
+
+            <!-- Email Input -->
             <div class="input-group">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" placeholder="Enter Password">
-                <div class="forgot">
-                    <a href="#">Forgot Password?</a>
-                </div>
+                <label asp-for="@Model.Email">Email</label>
+                <input asp-for="@Model.Email" placeholder="Enter Email" required>
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <!-- Password Input -->
+            <div class="input-group">
+                <label asp-for="@Model.Password">Password</label>
+                <input asp-for="@Model.Password" placeholder="Enter Password" required>
+                <span asp-validation-for="Password" class="text-danger"></span>
+
+            
+
+            </div>
+            <!-- Remember Me Checkbox -->
+          
+                <label asp-for="@Model.RememberMe">Remember Me</label>
+                <input asp-for="@Model.RememberMe" type="checkbox">
+     
+
+            <div class="forgot">
+                <a asp-action="ForgotPassword" asp-controller="Home">Forgot Password?</a>
             </div>
             <button type="submit" class="sign">Sign in</button>
         </form>
+        @section Scripts {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+        }
 
         <div class="social-message">
             <div class="line"></div>
@@ -155,7 +189,7 @@
             </button>
         </div>
 
-        <p class="signup">Don't have an account? <a href="#">Sign up</a></p>
+        <p class="signup">Don't have an account? <a asp-action="Register" asp-controller="Home">Sign up</a></p>
     </div>
 
     <!-- Bootstrap JS -->
