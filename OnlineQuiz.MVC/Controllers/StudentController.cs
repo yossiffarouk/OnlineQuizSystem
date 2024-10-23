@@ -7,6 +7,8 @@ using OnlineQuiz.BLL.AutoMapper.StudentMapper;
 using OnlineQuiz.MVC.Models;
 using System.Security.Claims;
 using OnlineQuiz.BLL.Dtos.StudentDtos;
+using OnlineQuiz.DAL.Data.Models;
+
 
 namespace OnlineQuiz.MVC.Controllers
 {
@@ -112,6 +114,7 @@ namespace OnlineQuiz.MVC.Controllers
 
 
 
+        
         // Fetch student details for editing
         [HttpGet]
         public IActionResult Edit()
@@ -126,17 +129,21 @@ namespace OnlineQuiz.MVC.Controllers
             }
 
             // Fetch student details for edit
-            var student = _studentManager.GetById(studentId);
+            var studentReaddto = _studentManager.GetById(studentId);
 
-            if (student == null)
+            if (studentReaddto == null)
             {
                 return NotFound("Student not found.");
             }
 
-            // Map to StudentUpdateDto for editing
-          //  var studentUpdateDto = _mapper.Map<StudentUpdateDto>(student);
+            // Map StudentReadDto to Student entity
+           // var studentEntity = _mapper.Map<Student>(studentReaddto);
 
-            return View("Edit", student); // Pass the DTO to the view
+            // Map changes from StudentUpdateDto to Student entity
+          //  _mapper.Map(StudentUpdateDto, studentEntity);
+
+            var studentUpdateDto = _mapper.Map<StudentUpdateDto>(studentReaddto);
+            return View("Edit", studentUpdateDto); // Pass the DTO to the view
         }
 
         // Handle post-back from the form after edit
@@ -164,6 +171,8 @@ namespace OnlineQuiz.MVC.Controllers
                 return View(studentUpdateDto);
             }
         }
+
+        
     }
 }
         

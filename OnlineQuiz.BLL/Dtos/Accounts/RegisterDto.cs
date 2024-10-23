@@ -11,19 +11,24 @@ namespace OnlineQuiz.BLL.Dtos.Accounts
     public class RegisterDto
     {
        
-            [Required(ErrorMessage = "Username is required")]
-            [StringLength(80, ErrorMessage = "Username must be between 5 and 80 characters", MinimumLength = 5)]
-            public string UserName { get; set; }
+         
+            [StringLength(80, ErrorMessage = "Username must be between 5 and 30 characters", MinimumLength = 5)]
+        [Required(ErrorMessage = "Username is required")]
+        public string UserName { get; set; }
 
             [Required(ErrorMessage = "Email is required")]
             [DataType(DataType.EmailAddress)]
             [EmailAddress(ErrorMessage = "Invalid Email Format")]
             public string Email { get; set; }
 
-            [Required(ErrorMessage = "Password is required")]
+
+
             [DataType(DataType.Password)]
-            [StringLength(100, ErrorMessage = "Password must be at least 6 characters long", MinimumLength = 6)]
-            public string Password { get; set; }
+            [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{5,}$",
+            ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, and one number.")]
+           [StringLength(100, ErrorMessage = "Password must be at least 6 characters long", MinimumLength = 6)]
+           [Required(ErrorMessage = "Password is required")]
+             public string Password { get; set; }
 
             [Required(ErrorMessage = "Password confirmation is required")]
             [DataType(DataType.Password)]
@@ -38,9 +43,10 @@ namespace OnlineQuiz.BLL.Dtos.Accounts
             public int Age { get; set; }
 
         [Required(ErrorMessage = "Gender is required")]
-        public GenderType Gender { get; set; } 
+        public GenderType Gender { get; set; }
 
-        public string Address { get; set; } = "Egypt";
+        [Required(ErrorMessage = "Address is required")]
+        public string Address { get; set; } 
 
 
            

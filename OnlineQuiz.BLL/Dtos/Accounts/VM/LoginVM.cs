@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace OnlineQuiz.BLL.Dtos.Accounts
+namespace OnlineQuiz.BLL.Dtos.Accounts.VM
 {
-   public class LoginResponce
+    public class LoginVM
     {
-        public string Token { get; set; }
+      
         public bool successed { get; set; } = false;
         public List<string> Errors { get; set; } = new List<string>();
         public string PropName { get; set; } = string.Empty;
+        public string RedirectUrl { get; set; } = "/Home/Login";
     }
 }

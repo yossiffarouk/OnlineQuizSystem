@@ -1,0 +1,116 @@
+﻿@model VerifyEmailVM
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Verify Your Email</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 0 15px;
+        }
+
+        nav {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .form-container {
+            background-color: #fff;
+            width: 100%;
+            max-width: 900px;
+            padding: 40px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .message-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .message-container p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        button.verify {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #f77f00;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .signup {
+            text-align: center;
+            font-size: 1rem;
+            margin-top: 20px;
+        }
+
+        .signup a {
+            color: #f77f00;
+            text-decoration: none;
+        }
+
+        .signup a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <p class="title">Verify Your Email</p>
+        @if (!string.IsNullOrEmpty(Model.Message))
+        {
+            <div class="alert alert-success" role="alert">
+                @Model.Message
+            </div>
+        }
+        <div class="message-container">
+            <p>Please check your email and click the verification link to complete your registration.</p>
+           
+        </div>
+        <form method="post" asp-action="ResendConfirmationEmail" asp-controller="Home">
+            <input type="hidden" asp-for="UserId" />
+            <button type="submit" class="verify">Resend Verification Email</button>
+        </form>
+        <p class="signup">Already verified? <a asp-action="Login" asp-controller="Home">Sign In</a></p>
+    </div>
+</body>
+
+</html>

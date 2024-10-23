@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Email Confirmed</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 0 15px;
+        }
+
+        .form-container {
+            background-color: #fff;
+            width: 100%;
+            max-width: 900px;
+            padding: 40px;
+            margin-top: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .message {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .signup {
+            margin-top: 20px;
+            font-size: 1rem;
+        }
+
+            .signup a {
+                color: #f77f00;
+                text-decoration: none;
+            }
+
+                .signup a:hover {
+                    text-decoration: underline;
+                }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <p class="title">Email Confirmed</p>
+        <p class="message">Thank you! Your email has been successfully confirmed.</p>
+        <p class="signup">Go to <a asp-action="Login" asp-controller="Home">Sign In</a></p>
+    </div>
+</body>
+
+</html>

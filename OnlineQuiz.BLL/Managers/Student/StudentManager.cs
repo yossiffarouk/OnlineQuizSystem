@@ -40,8 +40,7 @@ namespace OnlineQuiz.BLL.Managers.Student
         {
             var StudentModel = _studentRepo.GetById(Studententity.Id);
             _studentRepo.Update
-                (_mapper.Map<StudentUpdateDto,OnlineQuiz.DAL.Data.Models.Student>
-                (Studententity,StudentModel));
+                (_mapper.Map<StudentUpdateDto,OnlineQuiz.DAL.Data.Models.Student>(Studententity,StudentModel));
         }
         public void DeleteById(string id)
         {
