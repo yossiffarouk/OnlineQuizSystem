@@ -1,5 +1,6 @@
 ﻿using OnlineQuiz.BLL.Dtos.Options;
 using OnlineQuiz.BLL.Dtos.Question;
+using OnlineQuiz.DAL.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,7 @@ namespace OnlineQuiz.BLL.Managers.QuestionManager
         void DeleteOption(int optionId);
         OptionDto GetOptionById(int optionId);
         Task AddQuestionAsync(createQuestionDto createquestionDto);
+        void savechanges();
+    
     }
 }

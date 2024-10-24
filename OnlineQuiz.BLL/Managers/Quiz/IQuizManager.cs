@@ -22,5 +22,7 @@ namespace OnlineQuiz.BLL.Managers.Quiz
         FinalQuizDTO GetQuizByIdWithQuestions(int quizId);
         FinalQuizDTO GetQuizWithShuffledQuestions(int quizId);
         int AddQuizINI(CreatQuizDTO quizDto);
+        IQueryable<Quizzes> GetAvailableQuizzesEnrolled(string studentId);
+        IEnumerable<Quizzes> GetQuizzesByInstructorId(string instructorId);
     }
 }

@@ -75,42 +75,37 @@
                     <div class="card-body">
                         <h2 class="card-title mb-4">Question Information</h2>
                         <form asp-action="create" method="post">
+                            <input type="hidden" name="QuizId" value="@Model.QuizId" />
                             <div class="mb-3">
                                 <label asp-for="Tittle" class="form-label">Question Title</label>
                                 <input asp-for="Tittle" class="form-control" placeholder="Enter question title" required>
                                 <span asp-validation-for="Tittle" class="text-danger"></span>
                             </div>
 
-                            <div class="mb-3">
-                                <label asp-for="CorrectAnswer" class="form-label">Correct Answer</label>
-                                <input asp-for="CorrectAnswer" class="form-control" placeholder="Enter the correct answer" required>
-                                <span asp-validation-for="CorrectAnswer" class="text-danger"></span>
-                            </div>
-
-                            <div class="mb-3">
+                       @*      <div class="mb-3">
                                 <label asp-for="QuizId" class="form-label">Quiz ID</label>
                                 <input asp-for="QuizId" class="form-control" placeholder="Enter Quiz ID" required>
                                 <span asp-validation-for="QuizId" class="text-danger"></span>
-                            </div>
+                            </div> *@
 
                             <div class="mb-3">
                                 <label class="form-label">Options</label>
                                 <div id="options-container">
                                     @for (int i = 0; i < Model.Options.Count; i++)
                                     {
-                                        <div class="mb-2">
+                                        <div class="input-group mb-2">
                                             <input asp-for="@Model.Options[i].OptionText" class="form-control" placeholder="Option @(i + 1)" required />
+                                            <div class="input-group-text">
+                                                <input type="radio" asp-for="@Model.CorrectAnswer" name="CorrectAnswer" value="@Model.Options[i].OptionText" required />
+                                            </div>
                                         </div>
                                     }
                                 </div>
                             </div>
 
-
-
-
-
                             <button type="submit" class="btn btn-dark-orange w-100">Create Question</button>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -120,8 +115,5 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
-
 </body>
 </html>

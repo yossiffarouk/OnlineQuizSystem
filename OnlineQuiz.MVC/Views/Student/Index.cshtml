@@ -105,7 +105,7 @@
 
     </style>
 </head>
-
+@model StudentDashboardVM
 <body>
 
     <div class="container-fluid">
@@ -117,7 +117,7 @@
                 <div class="position-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Profile", "Student")">
+                            <a class="nav-link" asp-controller="Student" asp-action="Profile" >
                                 <i class="bi bi-bar-chart me-2"></i> Profile
                             </a>
                         </li>
@@ -127,20 +127,16 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("MyQuizzes", "Student")">
+                            <a class="nav-link" asp-controller="Student" asp-action="MyQuizzes" >
                                 <i class="bi bi-book me-2"></i> My Quizzes
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("MyInstractors", "Student")">
+                            <a class="nav-link" asp-controller="Student" asp-action="MyInstractors" >
                                 <i class="bi bi-file-earmark-text me-2"></i> My Instructors
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <i class="bi bi-gear me-2"></i> Settings
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
             </nav>

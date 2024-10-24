@@ -78,5 +78,10 @@ namespace OnlineQuiz.BLL.Managers.QuestionManager
 
             await _questionsRepository.AddAsync(question);
         }
+
+        public void savechanges()
+        {
+            _questionsRepository.savechanges(); 
+        }
     }
 }

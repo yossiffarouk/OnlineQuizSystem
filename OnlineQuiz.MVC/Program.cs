@@ -116,7 +116,7 @@ namespace OnlineQuiz.MVC
             //Identity
             builder.Services.AddIdentity<Users, CustomRole>(options =>
             {
-                options.Password.RequireNonAlphanumeric = true;
+                //options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 5;

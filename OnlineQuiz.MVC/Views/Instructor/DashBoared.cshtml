@@ -108,7 +108,7 @@
             }
     </style>
 </head>
-
+@model InstructorDashboardVM
 <body>
     <div class="container-fluid">
         <div class="row">
@@ -154,9 +154,11 @@
             <!-- Main content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">User Name</h1>
-                    <a class="btn btn-primary" href="/Instructor/QuizCreation">
-                        <i class="fas fa-plus me-2"></i> Create New Quiz
+                    <h1 class="h2">@Model.Name</h1>
+                    <a asp-controller="Instructor" asp-action="QuizCreation"
+                       asp-route-instructorId="@Model.Id"
+                       class="btn btn-primary">
+                        Create Quiz
                     </a>
                 </div>
 

@@ -109,5 +109,14 @@ namespace OnlineQuiz.BLL.Managers.Quiz
             return quizRepository1.AddQuizINT(quizEntity);
         }
 
+        public IQueryable<Quizzes> GetAvailableQuizzesEnrolled(string studentId)
+        {
+           return quizRepository1.GetAvailableQuizzesEnrolled(studentId);
+        }
+        public IEnumerable<Quizzes> GetQuizzesByInstructorId(string instructorId)
+        {
+            // Call the repository method
+            return quizRepository1.GetQuizzesByInstructorId(instructorId);
+        }
     }
 }
