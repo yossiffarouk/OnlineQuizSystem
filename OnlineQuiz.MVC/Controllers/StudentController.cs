@@ -174,8 +174,8 @@ namespace OnlineQuiz.MVC.Controllers
 
         public IActionResult AttemptQuiz()
         {
-            var availableQuizzes = _quizManager.GetAvailableQuizzes().ToList();
-
+            var studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var availableQuizzes = _quizManager.GetAvailableQuizzesEnrolled(studentId).ToList();
             return View(availableQuizzes);
             //var instructorid = "e55085e8-fcee-4b86-a129-cbcf439efc6f";
             //var studentid = "daeaabdd-a583-474c-beaa-b512dabbd15d";
