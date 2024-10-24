@@ -19,6 +19,7 @@ namespace OnlineQuiz.BLL.Managers.Student
         IQueryable<StudentReadDto> GetStudentsByGrade(string grade);
         public StudentDetailesDto GetByIdWithDetails(string studentId);
         public Task<PagintedResult<StudentReadPaginatedDto>> GetPaginatedStudentsAsync(int pageNumber, int pageSize);
+        IEnumerable<StudentReadDto> GetStudentsToAdd(string instructorId);
 
     }
 }

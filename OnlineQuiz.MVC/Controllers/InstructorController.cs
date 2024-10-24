@@ -134,19 +134,20 @@ namespace OnlineQuiz.MVC.Controllers
             return View("QuizQuestion", questionDto);
         }
 
-
-        public IActionResult GetStudents()
+        [Route("/Instructor/GetStudents/{id}")]
+        public IActionResult GetStudents(string id)
         {
-             var students = _StudentManager.GetAll();
+             var students = _StudentManager.GetStudentsToAdd(id);
             return View(students);
         }
         [HttpGet]
         [Route("Instructor/AddStudentToInstructor/{Id}")]
         public IActionResult AddStudentToInstructor(string Id)
         {
-            var x = "8aa20076-192d-40e6-9e39-2714b2940214";
-            _InstructorManger.AddStudentToInstructorAsync(Id, x);
-            return RedirectToAction("GetStudents");
+
+            var instructorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            _InstructorManger.AddStudentToInstructorAsync(Id, instructorId);
+            return RedirectToAction("GetStudents", new {id = instructorId });
 
         }
         [Route("Instructor/MyStudents/{Id}")]
@@ -160,9 +161,9 @@ namespace OnlineQuiz.MVC.Controllers
         [Route("Instructor/DeleteStudentFromInstructor/{Id}")]
         public IActionResult DeleteStudentFromInstructor(string Id)
         {
-            var x = "8aa20076-192d-40e6-9e39-2714b2940214";
-            _InstructorManger.RemoveStudentFromInstructorAsync(Id, x);
-            return RedirectToAction("MyStudents", new { Id = "8aa20076-192d-40e6-9e39-2714b2940214" });
+            var instructorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            _InstructorManger.RemoveStudentFromInstructorAsync(Id, instructorId);
+            return RedirectToAction("MyStudents", new { Id = instructorId });
 
         }
     }
