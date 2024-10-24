@@ -235,9 +235,11 @@ namespace OnlineQuiz.BLL.Managers.Accounts
                 #region Claims
                 List<Claim> claims = new List<Claim>()
                 {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()), // User ID as Subject
-                new Claim(JwtRegisteredClaimNames.Email, user.Email), // User email
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())// Token identifie
+                     new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()), // User ID
+                    new Claim(ClaimTypes.Email, user.Email), // User email
+                    new Claim(ClaimTypes.Name, user.UserName), // Username
+
+   
                 };
                 var UserRoles = await _userManager.GetRolesAsync(user);
                 foreach (var role in UserRoles)

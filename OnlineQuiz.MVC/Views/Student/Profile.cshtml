@@ -1,4 +1,4 @@
-﻿@model OnlineQuiz.BLL.Dtos.StudentDtos.StudentDetailesDto﻿
+﻿@model OnlineQuiz.BLL.Dtos.StudentDtos.StudentDetailesDto
 <!DOCTYPE html>
 <html lang="en">
 
@@ -102,7 +102,6 @@
         h2 {
             color: #ffffff;
         }
-
     </style>
 </head>
 
@@ -136,7 +135,6 @@
                                 <i class="bi bi-file-earmark-text me-2"></i> My Instructors
                             </a>
                         </li>
-                     
                         <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="bi bi-gear me-2"></i> Settings
@@ -157,7 +155,7 @@
                             <div class="col-lg-4">
                                 <div class="card shadow-sm">
                                     <div class="card-header bg-transparent text-center">
-                                        <img class="profile_img" src="@Model?.ImgUrl ??" alt="student dp">
+                                        <img class="profile_img" src="@Model?.ImgUrl" alt="student dp">
                                         <h3>@Model.UserName</h3>
                                     </div>
                                     <div class="card-body">
@@ -206,15 +204,19 @@
                     </div>
                 </div>
 
+                <!-- Centered Edit Profile Button -->
+                <div class="text-center mt-4">
+                    <a href="@Url.Action("Edit", "Student", new { id = Model.Id })" class="btn btn-warning btn-lg">
+                        <i class="bi bi-pencil"></i> Edit Profile
+                    </a>
+                </div>
+
             </main>
 
         </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <a href="@Url.Action("Edit", "Student", new { id = Model.Id })" class="btn btn-warning">
-        <i class="bi bi-pencil"></i> Edit Profile
-    </a>
 </body>
 
 </html>

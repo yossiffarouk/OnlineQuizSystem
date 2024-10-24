@@ -8,6 +8,8 @@ using OnlineQuiz.MVC.Models;
 using System.Security.Claims;
 using OnlineQuiz.BLL.Dtos.StudentDtos;
 using OnlineQuiz.DAL.Data.Models;
+using OnlineQuiz.BLL.Dtos.Instructor.VM;
+using OnlineQuiz.BLL.Dtos.Track;
 
 
 namespace OnlineQuiz.MVC.Controllers
@@ -26,16 +28,35 @@ namespace OnlineQuiz.MVC.Controllers
             _studentManager = studentManager;
             _mapper = mapper;
         }
+
         public IActionResult Index()
         {
-            return View();
+            var StudentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
+            var name = User.FindFirst(ClaimTypes.Name)?.Value;
+
+
+            if (string.IsNullOrEmpty(StudentId))
+            {
+                return Unauthorized();
+            }
+
+            var model = new StudentDashboardVM
+            {
+                Id = StudentId,
+                Email = email,
+                Name = name
+            };
+
+            return View(model);
         }
+
+        [HttpGet]
         public IActionResult Profile()
         {
+            var studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             // Fetch the student ID from the claims (after login)
             // string studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            string studentId = "bbcd3d4d-21b3-4fed-962f-aaacab9db911";
 
             if (string.IsNullOrEmpty(studentId))
             {
@@ -51,13 +72,14 @@ namespace OnlineQuiz.MVC.Controllers
             }
 
             return View(studentDetails); // Pass the student data to the view
+
         }
+        [HttpGet]
         public IActionResult MyInstractors()
         {
             // Fetch the student ID from the claims (after login)
             // string studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            string studentId = "bbcd3d4d-21b3-4fed-962f-aaacab9db911";
+            var studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrEmpty(studentId))
             {
@@ -74,12 +96,13 @@ namespace OnlineQuiz.MVC.Controllers
 
             return View(studentDetails); // Pass the student data to the view
         }
+
         public IActionResult MyQuizzes()
         {
             // Fetch the student ID from the claims (after login)
-           // string studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            // string studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            string studentId = "bbcd3d4d-21b3-4fed-962f-aaacab9db911";
+            var studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrEmpty(studentId))
             {
@@ -96,38 +119,16 @@ namespace OnlineQuiz.MVC.Controllers
 
             return View(studentDetails); // Pass the student data to the view
         }
-        public IActionResult AttemptQuiz()
-        {
-            var availableQuizzes = _quizManager.GetAvailableQuizzes().ToList();
 
-            return View(availableQuizzes);
-            //var instructorid = "e55085e8-fcee-4b86-a129-cbcf439efc6f";
-            //var studentid = "daeaabdd-a583-474c-beaa-b512dabbd15d";
-            //var _studentId2 = "d62d5afb-8343-479a-a03d-048723215ea1";
-            //var availableQuizzes = _quizManager.GetAvailableQuizzesEnrolled("_studentId2").ToList();
-            //return View(availableQuizzes);
-        }
-        public IActionResult GetQuestions()
-        {
-            return View();
-        }
-
-        public IActionResult PastQuizzes()
-        {
-            return View();
-        }
-
-
-
-        
+       
         // Fetch student details for editing
         [HttpGet]
         public IActionResult Edit()
         {
             // Fetch studentId from the current logged-in user
             //   string studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            string studentId = "bbcd3d4d-21b3-4fed-962f-aaacab9db911";
 
+            var studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (string.IsNullOrEmpty(studentId))
             {
                 return NotFound("Student ID is missing.");
@@ -177,7 +178,28 @@ namespace OnlineQuiz.MVC.Controllers
             }
         }
 
-        
+        public IActionResult AttemptQuiz()
+        {
+            var availableQuizzes = _quizManager.GetAvailableQuizzes().ToList();
+
+            return View(availableQuizzes);
+            //var instructorid = "e55085e8-fcee-4b86-a129-cbcf439efc6f";
+            //var studentid = "daeaabdd-a583-474c-beaa-b512dabbd15d";
+            //var _studentId2 = "d62d5afb-8343-479a-a03d-048723215ea1";
+            //var availableQuizzes = _quizManager.GetAvailableQuizzesEnrolled("_studentId2").ToList();
+            //return View(availableQuizzes);
+        }
+
+        public IActionResult GetQuestions()
+        {
+            return View();
+        }
+
+        public IActionResult PastQuizzes()
+        {
+            return View();
+        }
+
     }
 }
         
