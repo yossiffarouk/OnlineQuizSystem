@@ -43,7 +43,49 @@ namespace OnlineQuiz.DAL.Data.DBHelper
                     Adress = "Mansura",
                     Gender = 0,
                     UserType = UserTypeEnum.Admin,
+                    EmailConfirmed = true,
                 });
+            modelBuilder.Entity<Tracks>().HasData(new Tracks
+            {
+                Id = 2,
+                Name = "Bio",
+                IsDeleted = false,
+            },
+            new Tracks
+            {
+                Id = 3,
+                Name = "Math",
+                IsDeleted = false,
+            },
+             new Tracks
+             {
+                 Id = 4,
+                 Name = "Chemstry",
+                 IsDeleted = false,
+             },
+              new Tracks
+              {
+
+                  Id = 5,
+                  Name = "Peograming",
+                  IsDeleted = false,
+              },
+               new Tracks
+               {
+
+                   Id = 6,
+                   Name = "statics",
+                   IsDeleted = false,
+               },
+                  new Tracks
+                  {
+
+                      Id = 7,
+                      Name = "arbic",
+                      IsDeleted = false,
+                  }
+
+            );
 
             // ins with students
             modelBuilder.Entity<StudentInstructor>()
