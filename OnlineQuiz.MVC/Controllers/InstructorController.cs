@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using OnlineQuiz.BLL.Dtos.Accounts;
 using OnlineQuiz.BLL.Dtos.Instructor.VM;
 using OnlineQuiz.BLL.Dtos.Options;
 using OnlineQuiz.BLL.Dtos.Question;
@@ -38,6 +40,7 @@ namespace OnlineQuiz.MVC.Controllers
             _StudentManager = studentManager;
             _InstructorManger = instructorManger;
         }
+        [Authorize(Roles =Roles.Instructor)]
         public IActionResult Dashboared()
         {
 
@@ -60,6 +63,7 @@ namespace OnlineQuiz.MVC.Controllers
 
             return View(model); 
         }
+        [Authorize(Roles = Roles.Instructor)]
         [HttpGet]
         public IActionResult QuizCreation(string instructorId)
         {
@@ -73,8 +77,9 @@ namespace OnlineQuiz.MVC.Controllers
             return View();
         }
         
-        [ValidateAntiForgeryToken]
+       
         [HttpPost]
+        [Authorize(Roles = Roles.Instructor)]
         public IActionResult QuizCreation(CreatQuizDTO quizDto , string instructorId)
         {
             if (!ModelState.IsValid)
@@ -99,7 +104,7 @@ namespace OnlineQuiz.MVC.Controllers
         }
 
 
-
+        [Authorize(Roles = Roles.Instructor)]
         // GET: QuizQuestion/{quizId}
         [HttpGet("QuizQuestion/{quizId}")]
         public async Task<IActionResult> QuizQuestion(int quizId)
@@ -121,7 +126,8 @@ namespace OnlineQuiz.MVC.Controllers
 
         // POST: QuizQuestion
         [HttpPost("QuizQuestion")]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
+        [Authorize(Roles = Roles.Instructor)]
 
         public async Task<IActionResult> Create(createQuestionDto questionDto, string action)
         {
@@ -133,23 +139,26 @@ namespace OnlineQuiz.MVC.Controllers
 
             return View("QuizQuestion", questionDto);
         }
-
-
-        public IActionResult GetStudents()
+        [Authorize(Roles = Roles.Instructor)]
+        [Route("/Instructor/GetStudents/{id}")]
+        public IActionResult GetStudents(string id)
         {
-             var students = _StudentManager.GetAll();
+             var students = _StudentManager.GetStudentsToAdd(id);
             return View(students);
         }
         [HttpGet]
         [Route("Instructor/AddStudentToInstructor/{Id}")]
+        [Authorize(Roles = Roles.Instructor)]
         public IActionResult AddStudentToInstructor(string Id)
         {
-            var x = "75438877-c75a-45a4-adac-b3eeefffa195";
-            _InstructorManger.AddStudentToInstructorAsync(Id, x);
-            return RedirectToAction("GetStudents");
+
+            var instructorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            _InstructorManger.AddStudentToInstructorAsync(Id, instructorId);
+            return RedirectToAction("GetStudents", new {id = instructorId });
 
         }
         [Route("Instructor/MyStudents/{Id}")]
+        [Authorize(Roles = Roles.Instructor)]
         public IActionResult MyStudents(string Id)
         {
             var students = _StudentManager.GetStudentsWithInstructor(Id);
@@ -158,14 +167,16 @@ namespace OnlineQuiz.MVC.Controllers
         }
         [HttpGet]
         [Route("Instructor/DeleteStudentFromInstructor/{Id}")]
+        [Authorize(Roles = Roles.Instructor)]
         public IActionResult DeleteStudentFromInstructor(string Id)
         {
-            var x = "8aa20076-192d-40e6-9e39-2714b2940214";
-            _InstructorManger.RemoveStudentFromInstructorAsync(Id, x);
-            return RedirectToAction("MyStudents", new { Id = "8aa20076-192d-40e6-9e39-2714b2940214" });
+            var instructorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            _InstructorManger.RemoveStudentFromInstructorAsync(Id, instructorId);
+            return RedirectToAction("MyStudents", new { Id = instructorId });
 
         }
         [HttpGet]
+        [Authorize(Roles = Roles.Instructor)]
         public IActionResult QuizOfInstructor()
         {
             var instructorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;

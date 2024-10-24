@@ -27,6 +27,7 @@ namespace OnlineQuiz.Api.Controllers
 
         [HttpGet]
         [Route("GetAllStudents")]
+      
         public IActionResult GetAllStudents()
         {
             var students = _iAdminManger.GetAllStudentAsync();

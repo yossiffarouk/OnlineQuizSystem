@@ -15,6 +15,8 @@ using OnlineQuiz.BLL.Dtos.Attempt;
 using OnlineQuiz.BLL.Dtos.Attempts;
 using OnlineQuiz.BLL.Dtos.Quiz;
 using OnlineQuiz.BLL.Dtos.Answer;
+using OnlineQuiz.BLL.Dtos.Accounts;
+using Microsoft.AspNetCore.Authorization;
 
 
 namespace OnlineQuiz.MVC.Controllers
@@ -35,7 +37,7 @@ namespace OnlineQuiz.MVC.Controllers
             _mapper = mapper;
             _AnswersManager = AnswersManager;
         }
-
+        [Authorize (Roles = Roles.Student)]
         public IActionResult Index()
         {
             var StudentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -59,6 +61,7 @@ namespace OnlineQuiz.MVC.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = Roles.Student)]
         public IActionResult Profile()
         {
             var studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -82,6 +85,7 @@ namespace OnlineQuiz.MVC.Controllers
 
         }
         [HttpGet]
+        [Authorize(Roles = Roles.Student)]
         public IActionResult MyInstractors()
         {
             // Fetch the student ID from the claims (after login)
@@ -103,7 +107,7 @@ namespace OnlineQuiz.MVC.Controllers
 
             return View(studentDetails); // Pass the student data to the view
         }
-
+        [Authorize(Roles = Roles.Student)]
         public IActionResult MyQuizzes()
         {
             // Fetch the student ID from the claims (after login)
@@ -130,6 +134,7 @@ namespace OnlineQuiz.MVC.Controllers
        
         // Fetch student details for editing
         [HttpGet]
+        [Authorize(Roles = Roles.Student)]
         public IActionResult Edit()
         {
             // Fetch studentId from the current logged-in user
@@ -155,6 +160,7 @@ namespace OnlineQuiz.MVC.Controllers
 
         // Handle post-back from the form after edit
         [HttpPost]
+        [Authorize(Roles = Roles.Student)]
         public IActionResult Edit(StudentUpdateDto studentUpdateDto)
         {
             if (!ModelState.IsValid)
@@ -178,7 +184,7 @@ namespace OnlineQuiz.MVC.Controllers
                 return View(studentUpdateDto);
             }
         }
-
+        [Authorize(Roles = Roles.Student)]
         public IActionResult AttemptQuiz()
         {
             var studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -187,19 +193,20 @@ namespace OnlineQuiz.MVC.Controllers
             
         }
 
-        public IActionResult GetQuestions()
-        {
-            return View();
-        }
+        //public IActionResult GetQuestions()
+        //{
+        //    return View();
+        //}
 
-        public IActionResult PastQuizzes()
-        {
-            return View();
-        }
+        //public IActionResult PastQuizzes()
+        //{
+        //    return View();
+        //}
         [HttpGet]
+        [Authorize(Roles = Roles.Student)]
         public IActionResult GetQuestions(StartQuizAttemptDto startQuiz)
         {
-            //var StudentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var StudentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             //startQuiz.StudentId = StudentId;
             startQuiz.StudentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             List<QuesstionDto> startquiz = _attemptManager.StartQuizAttempt(startQuiz);
@@ -214,6 +221,7 @@ namespace OnlineQuiz.MVC.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = Roles.Student)]
         public IActionResult SaveChanges(int attemptid, List<AnswerDto> answers)
         {
 

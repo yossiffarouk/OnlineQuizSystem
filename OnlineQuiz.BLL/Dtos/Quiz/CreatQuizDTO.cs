@@ -24,7 +24,7 @@ namespace OnlineQuiz.BLL.Dtos.Quiz
         [Required(ErrorMessage = "Expire date is required.")]
         public DateTime ExpireDate { get; set; }
 
-        public bool IsAvailable { get; set; }
+        public bool IsAvailable { get; set; } = true;
 
         [Range(1, 120, ErrorMessage = "Exam time must be between 1 and 120 minutes.")]
         public int ExamTime { get; set; }

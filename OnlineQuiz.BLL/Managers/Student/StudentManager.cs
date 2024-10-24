@@ -13,18 +13,18 @@ using System.Threading.Tasks;
 
 namespace OnlineQuiz.BLL.Managers.Student
 {
-    public class StudentManager :IStudentManager
+    public class StudentManager : IStudentManager
     {
         private readonly IStudentRepo _studentRepo;
         private readonly IMapper _mapper;
-        public StudentManager(IStudentRepo studentRepo,IMapper mapper)
+        public StudentManager(IStudentRepo studentRepo, IMapper mapper)
         {
             _studentRepo = studentRepo;
             _mapper = mapper;
         }
         public IQueryable<StudentReadDto> GetAll()
         {
-          return  _mapper.ProjectTo<StudentReadDto>(_studentRepo.GetAll());
+            return _mapper.ProjectTo<StudentReadDto>(_studentRepo.GetAll());
         }
         public StudentReadDto GetById(string id)
         {
@@ -34,17 +34,17 @@ namespace OnlineQuiz.BLL.Managers.Student
         public void Add(StudentAddDto Studententity)
         {
             var student = _mapper.Map<OnlineQuiz.DAL.Data.Models.Student>(Studententity);
-            _studentRepo.Add(student);     
+            _studentRepo.Add(student);
         }
         public void Update(StudentUpdateDto Studententity)
         {
             var StudentModel = _studentRepo.GetById(Studententity.Id);
             _studentRepo.Update
-                (_mapper.Map<StudentUpdateDto,OnlineQuiz.DAL.Data.Models.Student>(Studententity,StudentModel));
+                (_mapper.Map<StudentUpdateDto, OnlineQuiz.DAL.Data.Models.Student>(Studententity, StudentModel));
         }
         public void DeleteById(string id)
         {
-             _studentRepo.DeleteById(id);
+            _studentRepo.DeleteById(id);
         }
         public IQueryable<StudentReadDto> GetStudentsByGrade(string grade)
         {
@@ -68,18 +68,23 @@ namespace OnlineQuiz.BLL.Managers.Student
 
         public IEnumerable<StudentReadDto> GetStudentsWithInstructor(string instructorId)
         {
-           var student = _studentRepo.GetStudentsWithInstructor(instructorId);
+            var student = _studentRepo.GetStudentsWithInstructor(instructorId);
             var ReadDto = student.Select(x => new StudentReadDto
             {
                 Id = x.Student.Id,
                 UserName = x.Student.UserName,
                 Email = x.Student.Email,
-                PhoneNumber =x.Student.PhoneNumber,
-                Grade =x.Student.Grade,
+                PhoneNumber = x.Student.PhoneNumber,
+                Grade = x.Student.Grade,
                 ImgUrl = x.Student.ImgUrl
 
             });
-            return ReadDto ;
+            return ReadDto;
+        }
+
+        public IEnumerable<StudentReadDto> GetStudentsToAdd(string instructorId)
+        {
+            return _mapper.Map<IEnumerable<StudentReadDto>>(_studentRepo.GetStudentsToAdd(instructorId));
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OnlineQuiz.BLL.Dtos.Accounts;
 using OnlineQuiz.BLL.Dtos.Admin.InstructorDtos;
 using OnlineQuiz.BLL.Dtos.Admin.Roles;
 using OnlineQuiz.BLL.Dtos.Admin.Share;
@@ -24,6 +26,7 @@ namespace OnlineQuiz.MVC.Controllers
             _mapper = mapper;
         }
         // get dashbored and show static for admin
+
         public IActionResult DashBoard()
         {
             SharedStatics statics = new SharedStatics()
@@ -35,31 +38,31 @@ namespace OnlineQuiz.MVC.Controllers
             };
             return View(statics);
         }
-
+    
         public IActionResult ManageRoles()
         {
             return View("ManageRoles");
         }
 
 
-
+      
         public IActionResult AddRole()
         {
             return View("AddRole");
         }
-
+      
         public IActionResult DeleteRole()
         {
             var model = new DeleteOrRestoreRole();
             return View(model);
         }
-
+  
         public IActionResult RestoreRole()
         {
             var model = new DeleteOrRestoreRole();
             return View(model);
         }
-
+   
         public IActionResult AddRoleToUser()
         {
             var model = new AddRoleToUser();
@@ -80,7 +83,7 @@ namespace OnlineQuiz.MVC.Controllers
 
 
 
-
+    
         // get all student and instructor section ------------------------------------
         public IActionResult GetAllStudents()
         {
@@ -88,6 +91,7 @@ namespace OnlineQuiz.MVC.Controllers
             var students = _manger.GetAllStudentAsync();
             return View(students);
         }
+
         public IActionResult GetAllInstructors()
         {
             //Instructors
@@ -97,6 +101,7 @@ namespace OnlineQuiz.MVC.Controllers
 
         // ban and unban ------------------------
         [HttpPost]
+       
         public IActionResult Ban(string id,string page)
         {
           
@@ -129,6 +134,7 @@ namespace OnlineQuiz.MVC.Controllers
         //------------------------------------------------------
         // delete student
         [Route("Admin/DeleteStudent/{id}")]
+     
         public IActionResult DeleteStudent(string id)
         {
 
@@ -138,6 +144,7 @@ namespace OnlineQuiz.MVC.Controllers
         // delete instructor
        
         [Route("Admin/DeleteInstructor/{id}")]
+ 
         public IActionResult DeleteInstructor(string id)
         {
 
@@ -148,6 +155,7 @@ namespace OnlineQuiz.MVC.Controllers
         //  instructor panding --------------------------------------------------------
         [HttpGet]
         [Route("Admin/NewInstructors")]
+
         public IActionResult NewInstructors()
         {
           var pandininstructors =  _manger.GetAllInstructorPanding();
@@ -157,6 +165,7 @@ namespace OnlineQuiz.MVC.Controllers
         // approve and deny methodes for instructors --------------------------------
         [HttpGet]
         [Route("Admin/Approve/{id}")]
+   
         public IActionResult Approve(string id)
         {
 
@@ -165,6 +174,7 @@ namespace OnlineQuiz.MVC.Controllers
         }
         [HttpGet]
         [Route("Admin/Deny/{id}")]
+
         public IActionResult Deny(string id)
         {
 
@@ -175,6 +185,7 @@ namespace OnlineQuiz.MVC.Controllers
         // add section ------------------------
 
         [HttpGet]
+
         public IActionResult Add(string sourcePage)
         {
             
@@ -188,6 +199,7 @@ namespace OnlineQuiz.MVC.Controllers
             }
         }
         [HttpPost]
+
         public IActionResult Add(InstructorAddDto InstructorAddDto)
         {
             _manger.AddInstructor(InstructorAddDto);
@@ -204,6 +216,7 @@ namespace OnlineQuiz.MVC.Controllers
 
 
         [HttpGet]
+
         public IActionResult Edit(string id , string page)
         {if (page == "InstructorPage")
             
@@ -221,6 +234,7 @@ namespace OnlineQuiz.MVC.Controllers
 
         [HttpPost]
         [Route("Admin/EditInstructor/{id}")]
+
         public IActionResult EditInstructor(string id , IstrurctorUpdateDto IstrurctorUpdateDto)
         {
             if (id== IstrurctorUpdateDto.Id)
@@ -232,6 +246,7 @@ namespace OnlineQuiz.MVC.Controllers
         }
         [HttpPost]
         [Route("Admin/EditStudent/{id}")]
+ 
         public IActionResult EditStudent(string id, StudentUpdateDto StudentUpdateDto)
         {
 
@@ -241,6 +256,7 @@ namespace OnlineQuiz.MVC.Controllers
 
         [HttpGet]
         [Route("Admin/GetAllQuizzes")]
+     
         public IActionResult GetAllQuizzes()
         {
 
@@ -249,6 +265,7 @@ namespace OnlineQuiz.MVC.Controllers
         }
         [HttpPost]
         [Route("Admin/DeleteQuiz/{id}")]
+
         public IActionResult DeleteQuiz(int id)
         {
 

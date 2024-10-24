@@ -45,5 +45,12 @@ namespace OnlineQuiz.DAL.Repositoryies.StudentReposatory
                              .ToList();
             return x;
         }
+
+        public IEnumerable<Student> GetStudentsToAdd(string instructorId)
+        {
+            var x = _quizContext.Students
+        .Where(s => s.StudentInstructors.All(si => si.InstructorId != instructorId)).ToList();
+            return x;
+        }
     }
 }
