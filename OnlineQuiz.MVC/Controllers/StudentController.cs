@@ -142,12 +142,6 @@ namespace OnlineQuiz.MVC.Controllers
                 return NotFound("Student not found.");
             }
 
-            // Map StudentReadDto to Student entity
-           // var studentEntity = _mapper.Map<Student>(studentReaddto);
-
-            // Map changes from StudentUpdateDto to Student entity
-          //  _mapper.Map(StudentUpdateDto, studentEntity);
-
             var studentUpdateDto = _mapper.Map<StudentUpdateDto>(studentReaddto);
             return View("Edit", studentUpdateDto); // Pass the DTO to the view
         }
