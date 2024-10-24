@@ -25,10 +25,7 @@ namespace OnlineQuiz.DAL.Data.DBHelper
             optionsBuilder.UseLazyLoadingProxies(true);
         }
         // this method hash pass for admin add by admin - note better use fazwy algrothim for hash password
-        private string HashPassword(string password)
-        {
-            return Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(password));
-        }
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -87,6 +84,22 @@ namespace OnlineQuiz.DAL.Data.DBHelper
 
             );
 
+            modelBuilder.Entity<Admin>().HasData(
+           new Admin
+               {
+          Id = Guid.NewGuid().ToString(), // Ensure to set the Id for IdentityUser
+          UserName = "Yossif Farouk",
+          Email = "yossif155farouk@gmail.com",
+          NormalizedEmail = "YOSSIF155FAROUK@GMAIL.COM", // Optional, but recommended
+          NormalizedUserName = "YOSSIF FAROUK", // Optional, but recommended
+          EmailConfirmed = true, // Set to true if the email is confirmed
+          PasswordHash = "ZX12zx12#", // Replace with a hashed password in production
+          Adress = "Mansoura",
+          Gender = GenderType.Male, // Use enum for gender
+          UserType = UserTypeEnum.Admin,
+          IsBanned = false,
+          IsDeleted = false
+      });
             // ins with students
             modelBuilder.Entity<StudentInstructor>()
                         .HasKey(si => new { si.StudentId, si.InstructorId }); // Composite key
@@ -119,6 +132,7 @@ namespace OnlineQuiz.DAL.Data.DBHelper
         public virtual DbSet<Users> users { get; set; }
         public  DbSet<Student> Students { get; set; }
         public virtual DbSet<Instructor> Instructors { get; set; }
+        public DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Quizzes> quizzes { get; set; }
         public virtual DbSet<Questions> questions { get; set; }
         public virtual DbSet<Answers> answers { get; set; }

@@ -81,11 +81,14 @@ namespace OnlineQuiz.DAL.Data.Models
         public virtual ICollection<Quizzes> quizzes { get; set; } = new HashSet<Quizzes>();
 
     }
+    public class Admin : Users
+    {
+    }
 
 
 
 
 
 
-}
+    }
 

@@ -208,7 +208,7 @@ namespace OnlineQuiz.MVC.Controllers
         {
             var StudentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             //startQuiz.StudentId = StudentId;
-            startQuiz.StudentId = StudentId;
+            startQuiz.StudentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             List<QuesstionDto> startquiz = _attemptManager.StartQuizAttempt(startQuiz);
             QuizReadByIdDto quiz = _attemptManager.GetQuizById(startQuiz.QuizId);
             QuizDto quizDto = _quizManager.GetQuizById(startQuiz.QuizId);
