@@ -113,5 +113,14 @@ namespace OnlineQuiz.DAL.Repositoryies.QuizRepository
         //.ThenInclude(i => i.StudentInstructors) // Include the StudentInstructors entity
         //.ThenInclude(si => si.Student); // Include the Student entity
         }
+
+        // Method to get quizzes by instructor ID
+        public IEnumerable<Quizzes> GetQuizzesByInstructorId(string instructorId)
+        {
+            return _context.quizzes
+                .Where(q => q.InstructorId == instructorId && !q.IsDeleted)
+                .Include(q => q.Tracks)   // If you want to include related entities like Tracks
+                .ToList();
+        }
     }
 }

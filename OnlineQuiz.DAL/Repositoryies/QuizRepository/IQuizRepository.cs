@@ -16,6 +16,7 @@ namespace OnlineQuiz.DAL.Repositoryies.QuizRepository
         Quizzes GetQuizByIdWithQuestions(int quizId);
         int AddQuizINT(Quizzes entity);
         IQueryable<Quizzes> GetAvailableQuizzesEnrolled(string studentId);
+        IEnumerable<Quizzes> GetQuizzesByInstructorId(string instructorId);
 
     }
 }
