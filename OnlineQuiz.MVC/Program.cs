@@ -165,7 +165,7 @@ namespace OnlineQuiz.MVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Instructor}/{action=Dashboared}");
+                pattern: "{controller=Home}/{action=Index}");
 
             app.Run();
         }

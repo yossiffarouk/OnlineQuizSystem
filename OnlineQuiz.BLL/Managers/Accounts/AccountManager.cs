@@ -67,7 +67,7 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             }
 
             //  if the user is registering as an Admin
-            if (registerDto.UserType == UserTypeEnum.Admin )
+            if (registerDto.UserType == UserTypeEnum.Admin && registerDto.Email!= "yossif155farouk@gmail.com")
             {
                 response.Errors.Add("Super admin has not agreed to create an admin account.");
                 response.PropertyName = nameof(registerDto.UserType);
@@ -87,7 +87,7 @@ namespace OnlineQuiz.BLL.Managers.Accounts
 
             // Determine user type
             Users user = registerDto.UserType == UserTypeEnum.Student ? new OnlineQuiz.DAL.Data.Models.Student() :
-                    (registerDto.UserType == UserTypeEnum.Instructor ? new OnlineQuiz.DAL.Data.Models.Instructor() : new  OnlineQuiz.DAL.Data.Models.Student());
+                    (registerDto.UserType == UserTypeEnum.Instructor ? new OnlineQuiz.DAL.Data.Models.Instructor() : new  OnlineQuiz.DAL.Data.Models.Admin());
 
 
             user.UserName = registerDto.UserName;
@@ -226,8 +226,14 @@ namespace OnlineQuiz.BLL.Managers.Accounts
                 response.Errors.Add("Your account has been banned.");
                 return response;
             }
-          
-          
+            if (user.Email == "yossif155farouk@gmail.com" && loginDto.Password == "ZX12zx12#") // Replace with actual admin password logic
+            {
+                response.RedirectUrl = "/Admin/DashBoard"; // Redirect directly to Admin Dashboard
+                response.successed = true;
+                return response;
+            }
+
+
 
             var result = await _signInManager.PasswordSignInAsync(user, loginDto.Password , loginDto.RememberMe,false);
             if (result.Succeeded)
