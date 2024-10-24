@@ -227,7 +227,7 @@ namespace OnlineQuiz.BLL.Managers.Accounts
                 return response;
             }
             if (user.Email == "yossif155farouk@gmail.com" && loginDto.Password == "ZX12zx12#") // Replace with actual admin password logic
-            {
+            {     
                 response.RedirectUrl = "/Admin/DashBoard"; // Redirect directly to Admin Dashboard
                 response.successed = true;
                 return response;
