@@ -64,6 +64,32 @@
         .container {
             margin-top: 50px;
         }
+
+        .btn-home {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #007bff; /* Blue background */
+            color: #fff; /* White text */
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+            .btn-home:hover {
+                background-color: #0056b3; /* Darker blue on hover */
+                transform: translateY(-2px); /* Slight lift on hover */
+            }
+
+            .btn-home:active {
+                transform: translateY(0); /* Reset transform on click */
+                background-color: #004085; /* Even darker blue when pressed */
+            }
+
     </style>
 </head>
 <body>
@@ -104,6 +130,7 @@
                             </div>
 
                             <button type="submit" class="btn btn-dark-orange w-100">Create Question</button>
+                            <a class="btn-home" href="/home/index">Back To HomePage</a>
                         </form>
 
                     </div>

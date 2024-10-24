@@ -1,0 +1,223 @@
+﻿@using OnlineQuiz.DAL.Data.Models
+@model IEnumerable<Quizzes>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    #main-content {
+        margin: 20px auto;
+    }
+
+    header {
+        background-color: #333;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    section {
+        background-color: #fff;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    .stat-card {
+        display: inline-block;
+        margin: 20px;
+        padding: 20px;
+        background-color: #eee;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 200px;
+    }
+
+        .stat-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+    }
+
+        table th,
+        table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        table tr:hover {
+            background-color: #f1f1f1;
+        }
+
+    button {
+        padding: 10px 15px;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+        button.ban {
+            background-color: red;
+        }
+
+        button.unban {
+            background-color: green;
+        }
+
+
+    .btn-ban {
+        width: 120px;
+        padding: 5px;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        font-size: 1.1rem;
+        text-decoration: none;
+    }
+
+        .btn-ban:hover {
+            background-color: #c82333;
+        }
+
+    .btn-unban {
+        width: 150px;
+        padding: 5px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        font-size: 1.1rem;
+        text-decoration: none;
+    }
+
+        .btn-unban:hover {
+            background-color: #218838;
+        }
+</style>
+
+<body>
+    <!-- Main content area -->
+    <div id="main-content">
+        <section id="instructors">
+            <h2>All Quizzes</h2>
+
+
+
+     
+            <a class="btn-unban" href="/instructor/dashboared">Back To DashBoard</a>
+            <br />
+            <br />
+            <!-- Add search box to filter instructors -->
+            <input type="text" id="searchInput" placeholder="Search by quiz name..." onkeyup="filterInstructors()" style="width: 40%; padding: 10px; margin-bottom: 20px;">
+            <table id="instructor-table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>ExamTime</th>
+                        <th>CreatedDate</th>
+                        <th>ExpireDate</th>
+                        <th>IsAvailable</th>
+                        <th>QuizDegree</th>
+                       
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var quiz in Model)
+                    {
+                        <tr>
+
+                            <td>@quiz.Tittle</td>
+                            <td>@quiz.Description</td>
+                            <td>@quiz.ExamTime</td>
+                            <td>@quiz.CreatedDate</td>
+
+                            <td>@quiz.ExpireDate</td>
+                            <td>@quiz.IsAvailable</td>
+                            <td>@quiz.QuizDegree</td>
+
+                      @*       <td>
+                                <form action="/Admin/DeleteQuiz/@quiz.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this Quiz?');">
+                                    <input type="hidden" name="_method" value="DELETE" />
+                                    <button type="submit" class="btn-ban">Delete</button>
+                                </form>
+                            </td> *@
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <script>
+        // Function to filter instructors by name
+        function filterInstructors() {
+            // Get the search input field
+            var input = document.getElementById("searchInput");
+            var filter = input.value.toLowerCase();
+
+            // Get all rows from the instructor table
+            var table = document.getElementById("instructor-table");
+            var rows = table.getElementsByTagName("tr");
+
+            // Loop through all table rows and hide those that don't match the search query
+            for (var i = 1; i < rows.length; i++) {
+                var td = rows[i].getElementsByTagName("td")[0]; // Get the 'Name' column (index 0)
+                if (td) {
+                    var txtValue = td.textContent || td.innerText;
+                    if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

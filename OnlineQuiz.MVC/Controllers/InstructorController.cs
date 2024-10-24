@@ -165,5 +165,12 @@ namespace OnlineQuiz.MVC.Controllers
             return RedirectToAction("MyStudents", new { Id = "8aa20076-192d-40e6-9e39-2714b2940214" });
 
         }
+        [HttpGet]
+        public IActionResult QuizOfInstructor()
+        {
+            var instructorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            var quizzes = _quizManager.GetQuizzesByInstructorId(instructorId);
+            return View(quizzes);
+        }
     }
 }
