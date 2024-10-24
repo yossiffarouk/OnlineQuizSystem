@@ -10,6 +10,11 @@ using OnlineQuiz.BLL.Dtos.StudentDtos;
 using OnlineQuiz.DAL.Data.Models;
 using OnlineQuiz.BLL.Dtos.Instructor.VM;
 using OnlineQuiz.BLL.Dtos.Track;
+using OnlineQuiz.BLL.Managers.Answer;
+using OnlineQuiz.BLL.Dtos.Attempt;
+using OnlineQuiz.BLL.Dtos.Attempts;
+using OnlineQuiz.BLL.Dtos.Quiz;
+using OnlineQuiz.BLL.Dtos.Answer;
 
 
 namespace OnlineQuiz.MVC.Controllers
@@ -20,13 +25,15 @@ namespace OnlineQuiz.MVC.Controllers
         private readonly IAttemptManager _attemptManager;
         private readonly IStudentManager _studentManager;
         private readonly IMapper _mapper;
+        private readonly IAnswersManager _AnswersManager;
 
-        public StudentController(IQuizManager quizManager,IAttemptManager attemptManager,IStudentManager studentManager,IMapper mapper)
+        public StudentController(IAnswersManager AnswersManager, IQuizManager quizManager,IAttemptManager attemptManager,IStudentManager studentManager,IMapper mapper)
         {
             _quizManager = quizManager;
             _attemptManager = attemptManager;
             _studentManager = studentManager;
             _mapper = mapper;
+            _AnswersManager = AnswersManager;
         }
 
         public IActionResult Index()
@@ -177,11 +184,7 @@ namespace OnlineQuiz.MVC.Controllers
             var studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             var availableQuizzes = _quizManager.GetAvailableQuizzesEnrolled(studentId).ToList();
             return View(availableQuizzes);
-            //var instructorid = "e55085e8-fcee-4b86-a129-cbcf439efc6f";
-            //var studentid = "daeaabdd-a583-474c-beaa-b512dabbd15d";
-            //var _studentId2 = "d62d5afb-8343-479a-a03d-048723215ea1";
-            //var availableQuizzes = _quizManager.GetAvailableQuizzesEnrolled("_studentId2").ToList();
-            //return View(availableQuizzes);
+            
         }
 
         public IActionResult GetQuestions()
@@ -192,6 +195,34 @@ namespace OnlineQuiz.MVC.Controllers
         public IActionResult PastQuizzes()
         {
             return View();
+        }
+        [HttpGet]
+        public IActionResult GetQuestions(StartQuizAttemptDto startQuiz)
+        {
+            //var StudentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            //startQuiz.StudentId = StudentId;
+            startQuiz.StudentId = "aaa26a9f-3443-4879-8d5c-6f78b90ea548";
+            List<QuesstionDto> startquiz = _attemptManager.StartQuizAttempt(startQuiz);
+            QuizReadByIdDto quiz = _attemptManager.GetQuizById(startQuiz.QuizId);
+            QuizDto quizDto = _quizManager.GetQuizById(startQuiz.QuizId);
+            ViewData["Time"]=quizDto.ExamTime;
+            ViewData["QuizTitle"] = quiz.Title;
+            ViewData["attemptid"] = startquiz.First().attemptid;
+            
+
+            return View(startquiz); // Pass the student data to the view
+        }
+
+        [HttpPost]
+        public IActionResult SaveChanges(int attemptid, List<AnswerDto> answers)
+        {
+
+            _attemptManager.SubmitQuizAttempt(attemptid, answers);
+            var attempt = _attemptManager.GetById(attemptid);
+            FinalQuizDTO quiz = _quizManager.GetQuizByIdWithQuestions(attempt.QuizId);
+            GetResultAttemptDto score = _attemptManager.GetResults(attemptid);
+            ResultDto result = _AnswersManager.GetResult(answers, quiz, score);
+            return View("GetResult", result);
         }
 
     }

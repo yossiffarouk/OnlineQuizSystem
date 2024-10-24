@@ -59,7 +59,8 @@ namespace OnlineQuiz.BLL.Managers.Attempt
             };
 
             _attempt.StartQuizAttempt(attempt);
-            return GetQuestionsByQuizId(quiz.Id);
+            int attemptid = attempt.Id;
+            return GetQuestionsByQuizId(quiz.Id , attemptid);
         }
 
         public void DeleteById(int id)
@@ -206,7 +207,7 @@ namespace OnlineQuiz.BLL.Managers.Attempt
             _attempt.Update(attempts);
         }
 
-        public List<QuesstionDto> GetQuestionsByQuizId(int quizId)
+        public List<QuesstionDto> GetQuestionsByQuizId(int quizId, int attemptid)
         {
             IEnumerable<Questions> questions = _attempt.questions(quizId).ToList();
             if (questions != null)
@@ -225,7 +226,8 @@ namespace OnlineQuiz.BLL.Managers.Attempt
                         options = question.Options.Select(option => new OptionsDto
                         {
                             Text = option.OptionText
-                        }).ToList()
+                        }).ToList(),
+                        attemptid = attemptid
                     });
                 }
                 return questionDtos;

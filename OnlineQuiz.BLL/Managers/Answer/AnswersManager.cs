@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using OnlineQuiz.BLL.Dtos.Answer;
+using OnlineQuiz.BLL.Dtos.Attempt;
+using OnlineQuiz.BLL.Dtos.Quiz;
 using OnlineQuiz.BLL.Dtos.Track;
 using OnlineQuiz.DAL.Data.DBHelper;
 using OnlineQuiz.DAL.Data.Models;
@@ -35,7 +37,16 @@ namespace OnlineQuiz.BLL.Managers.Answer
 
             _answerRepository.Add(answer);
         }
-
+        public ResultDto GetResult(List<AnswerDto> answers, FinalQuizDTO quiz, GetResultAttemptDto score)
+        {
+            var result = new ResultDto
+            {
+                Answers = answers,
+                quiz = quiz,
+                Score = score
+            };
+            return result;
+        }
         public List<Answers> GetUserAnswers(int attemptId)
         {
             return _answerRepository.GetAnswersByAttemptId(attemptId);

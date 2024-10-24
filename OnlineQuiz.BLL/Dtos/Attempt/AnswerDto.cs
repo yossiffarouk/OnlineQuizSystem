@@ -9,6 +9,7 @@ namespace OnlineQuiz.BLL.Dtos.Attempt
     public class AnswerDto
     {
         public int QuestionId { get; set; }
+        public int AttemptId { get; set; }
         public string SubmittedAnswer { get; set; }
     }
 }
