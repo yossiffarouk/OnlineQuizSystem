@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using OnlineQuiz.BLL.Dtos.Admin.InstructorDtos;
+using OnlineQuiz.BLL.Dtos.Admin.Roles;
 using OnlineQuiz.BLL.Dtos.Admin.Share;
 using OnlineQuiz.BLL.Dtos.Admin.StudentDtos;
 using OnlineQuiz.BLL.Managers.Admin;
@@ -31,6 +32,52 @@ namespace OnlineQuiz.MVC.Controllers
             };
             return View(statics);
         }
+
+        public IActionResult ManageRoles()
+        {
+            return View("ManageRoles");
+        }
+
+
+
+        public IActionResult AddRole()
+        {
+            return View("AddRole");
+        }
+
+        public IActionResult DeleteRole()
+        {
+            var model = new DeleteOrRestoreRole();
+            return View(model);
+        }
+
+        public IActionResult RestoreRole()
+        {
+            var model = new DeleteOrRestoreRole();
+            return View(model);
+        }
+
+        public IActionResult AddRoleToUser()
+        {
+            var model = new AddRoleToUser();
+            return View(model);
+        }
+
+        public IActionResult DeleteRoleFromUser()
+        {
+            var model = new AddRoleToUser();
+            return View(model);
+        }
+
+
+
+
+
+
+
+
+
+
         // get all student and instructor section ------------------------------------
         public IActionResult GetAllStudents()
         {

@@ -1,0 +1,123 @@
+﻿
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restore Role</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 600px; /* Set max width */
+            background-color: white;
+            padding: 30px; /* Set padding */
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 28px; /* Set title font size */
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: black;
+        }
+
+        .input-group {
+            margin-bottom: 20px; /* Set margin */
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px; /* Set margin */
+            color: black;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px; /* Set padding */
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px; /* Set font size */
+        }
+
+        .restore-btn {
+            width: 100%;
+            background-color: darkgreen;
+            color: white;
+            border: none;
+            padding: 12px; /* Set padding */
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px; /* Set font size */
+        }
+
+        .restore-btn:hover {
+            background-color: #005700; /* Darker shade on hover */
+        }
+
+        .alert {
+            margin-top: 15px;
+        }
+    </style>
+</head>
+@model DeleteOrRestoreRole
+
+<body>
+    <div class="form-container mx-auto">
+        <p class="title">Restore Role</p>
+        <!-- Error Message Section -->
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                </ul>
+            </div>
+        }
+
+        <form class="form" asp-action="RestoreRole" asp-controller="Role" method="post">
+            <!-- Role ID Input -->
+            <div class="input-group">
+                <label asp-for="@Model.RoleId">Role ID</label>
+                <input asp-for="@Model.RoleId" placeholder="Enter Role ID" required>
+                <span asp-validation-for="RoleId" class="text-danger"></span>
+            </div>
+
+            <p>Are you sure you want to restore the role with ID: <strong>@Model.RoleId</strong>?</p>
+
+            <button type="submit" class="restore-btn">Restore Role</button>
+        </form>
+
+        @section Scripts {
+            @{
+                await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            }
+        }
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

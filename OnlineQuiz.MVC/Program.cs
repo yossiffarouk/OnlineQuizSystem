@@ -116,7 +116,7 @@ namespace OnlineQuiz.MVC
             //Identity
             builder.Services.AddIdentity<Users, CustomRole>(options =>
             {
-                options.Password.RequireNonAlphanumeric = true;
+                //options.Password.RequireNonAlphanumeric = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 5;
@@ -165,7 +165,7 @@ namespace OnlineQuiz.MVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Admin}/{action=DashBoard}");
+                pattern: "{controller=Home}/{action=Index}");
 
             app.Run();
         }

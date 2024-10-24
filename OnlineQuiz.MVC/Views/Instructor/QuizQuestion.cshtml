@@ -75,17 +75,18 @@
                     <div class="card-body">
                         <h2 class="card-title mb-4">Question Information</h2>
                         <form asp-action="create" method="post">
+                            <input type="hidden" name="QuizId" value="@Model.QuizId" />
                             <div class="mb-3">
                                 <label asp-for="Tittle" class="form-label">Question Title</label>
                                 <input asp-for="Tittle" class="form-control" placeholder="Enter question title" required>
                                 <span asp-validation-for="Tittle" class="text-danger"></span>
                             </div>
 
-                            <div class="mb-3">
+                       @*      <div class="mb-3">
                                 <label asp-for="QuizId" class="form-label">Quiz ID</label>
                                 <input asp-for="QuizId" class="form-control" placeholder="Enter Quiz ID" required>
                                 <span asp-validation-for="QuizId" class="text-danger"></span>
-                            </div>
+                            </div> *@
 
                             <div class="mb-3">
                                 <label class="form-label">Options</label>

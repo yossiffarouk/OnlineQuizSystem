@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OnlineQuiz.BLL.Dtos.Instructor.VM;
 using OnlineQuiz.BLL.Dtos.Options;
 using OnlineQuiz.BLL.Dtos.Question;
 using OnlineQuiz.BLL.Dtos.Quiz;
@@ -12,6 +13,8 @@ using OnlineQuiz.BLL.Managers.Track;
 using OnlineQuiz.DAL.Data.DBHelper;
 using OnlineQuiz.DAL.Data.Models;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
 
 namespace OnlineQuiz.MVC.Controllers
 {
@@ -37,25 +40,48 @@ namespace OnlineQuiz.MVC.Controllers
         }
         public IActionResult Dashboared()
         {
-            //var x = _adminManger.GetAllInstructo();
-            return View();
+
+            var instructorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value; 
+            var email = User.FindFirst(ClaimTypes.Email)?.Value; 
+            var name = User.FindFirst(ClaimTypes.Name)?.Value; 
+
+
+            if (string.IsNullOrEmpty(instructorId))
+            {
+                return Unauthorized(); 
+            }
+
+            var model = new InstructorDashboardVM
+            {
+                Id = instructorId,
+                Email = email,
+                Name = name
+            };
+
+            return View(model); 
         }
         [HttpGet]
-        public IActionResult QuizCreation()
+        public IActionResult QuizCreation(string instructorId)
         {
 
             List<TrackDto> tracks = _trackManager.GetAll().ToList();
 
 
             ViewBag.Tracks = tracks;
-            ViewBag.instructorid = "88481588-48fb-463f-92d3-3178376565e0";
-
+            ViewBag.instructorid = instructorId;
+       
             return View();
         }
-        [HttpPost]
+        
         [ValidateAntiForgeryToken]
-        public IActionResult QuizCreation(CreatQuizDTO quizDto)
+        [HttpPost]
+        public IActionResult QuizCreation(CreatQuizDTO quizDto , string instructorId)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                // Log the errors or return to the view with error messages
+            }
             var tracks = _trackManager.GetAll().ToList();
             ViewBag.Tracks = tracks;
 
@@ -65,7 +91,8 @@ namespace OnlineQuiz.MVC.Controllers
                 var quizId = _quizManager.AddQuizINI(quizDto);
 
                 // Redirect to the QuizQuestion action with the created quizId
-                return RedirectToAction("QuizQuestion", new { quizId });
+                return RedirectToAction("QuizQuestion", new { quizId, instructorId });
+                
             }
 
             return View(quizDto);
