@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using OnlineQuiz.BLL.Dtos.Answer;
+using OnlineQuiz.BLL.Dtos.Attempt;
 using OnlineQuiz.BLL.Dtos.Track;
 using OnlineQuiz.DAL.Data.Models;
 using System;

@@ -11,6 +11,7 @@ namespace OnlineQuiz.BLL.Dtos.Attempts
     {
         public int Id { get; set; }
         public string Tittle { get; set; }
+        public int attemptid { get; set; }
         public List<OptionsDto> options { get; set; }
     }
 }

@@ -105,10 +105,10 @@ namespace OnlineQuiz.DAL.Repositoryies.QuizRepository
             //var result = availableQuizzes.Union(enrolledQuizzes);
 
             //return result;
-
-            return _context.Set<Quizzes>()
+             return _context.Set<Quizzes>()
         .Where(q => q.IsAvailable && !q.IsDeleted &&
-                    q.Instructor.StudentInstructors.Any(si => si.StudentId == studentId)); // Filter quizzes where the student is enrolled
+                    q.Instructor.StudentInstructors.Any(si => si.StudentId == studentId));
+            // Filter quizzes where the student is enrolled
         //.Include(q => q.Instructor) // Include the Instructor entity
         //.ThenInclude(i => i.StudentInstructors) // Include the StudentInstructors entity
         //.ThenInclude(si => si.Student); // Include the Student entity

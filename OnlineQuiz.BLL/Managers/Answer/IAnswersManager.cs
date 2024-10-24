@@ -1,4 +1,6 @@
 ﻿using OnlineQuiz.BLL.Dtos.Answer;
+using OnlineQuiz.BLL.Dtos.Attempt;
+using OnlineQuiz.BLL.Dtos.Quiz;
 using OnlineQuiz.BLL.Managers.Base;
 using OnlineQuiz.DAL.Data.Models;
 using System;
@@ -16,6 +18,7 @@ namespace OnlineQuiz.BLL.Managers.Answer
         List<string> GetCorrectAnswers(int quizId);
         string AnswerExist(int answerid);
         void correctanswer(AnswerDto answer);
+        public ResultDto GetResult(List<AnswerDto> answers, FinalQuizDTO quiz, GetResultAttemptDto score);
     }
 
 }

@@ -144,7 +144,7 @@ namespace OnlineQuiz.MVC.Controllers
         [Route("Instructor/AddStudentToInstructor/{Id}")]
         public IActionResult AddStudentToInstructor(string Id)
         {
-            var x = "8aa20076-192d-40e6-9e39-2714b2940214";
+            var x = "75438877-c75a-45a4-adac-b3eeefffa195";
             _InstructorManger.AddStudentToInstructorAsync(Id, x);
             return RedirectToAction("GetStudents");
 

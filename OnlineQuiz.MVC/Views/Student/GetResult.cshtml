@@ -1,0 +1,196 @@
+﻿@using OnlineQuiz.BLL.Dtos.Attempt
+@using OnlineQuiz.BLL.Dtos.Attempts
+@using OnlineQuiz.BLL.Dtos.Quiz
+@using OnlineQuiz.BLL.Managers.Attempt
+@using OnlineQuiz.DAL.Data.Models
+@using OnlineQuiz.BLL.Dtos.Answer 
+@model ResultDto
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Results</title>
+    <style>
+        :root {
+            --primary-color: #391560;
+            --primary: #F0F3F8;
+            --secondary: #391560;
+            --tertiary: #b12166;
+            --action: #f77f00;
+            --fontcolor: black;
+            --headingcolor: rgb(7, 10, 17);
+        }
+
+        body {
+            background-color: var(--primary);
+            color: var(--fontcolor);
+            font-family: 'Arial', sans-serif;
+        }
+
+        .quiz-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+            .quiz-header h1 {
+                margin: 0;
+                font-size: 2rem;
+            }
+
+        .score-summary {
+            display: flex;
+            justify-content: space-around;
+            background-color: var(--action);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+
+        .score-item {
+            text-align: center;
+        }
+
+            .score-item h2 {
+                font-size: 1.5rem;
+                margin: 0;
+            }
+
+            .score-item p {
+                font-size: 2rem;
+                font-weight: bold;
+                margin: 0.5rem 0 0;
+            }
+
+        .question-container {
+            background-color: var(--primary);
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .question-result {
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .correct {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        .incorrect {
+            background-color: var(--tertiary);
+            color: white;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--headingcolor);
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .option {
+            padding: 0.8rem;
+            border: 2px solid var(--secondary);
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+            .option.correct {
+                background-color: #4CAF50;
+                color: white;
+            }
+
+            .option.incorrect {
+                background-color: var(--tertiary);
+                color: white;
+            }
+
+            .option.selected {
+                background-color: var(--secondary);
+                color: white;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-container">
+            <div class="quiz-header">
+                <h1>Quiz Results</h1>
+            </div>
+
+            <div class="score-summary">
+            <div class="score-item">
+                <h2>Total Questions</h2>
+                <p>@Model.Score.TotalAnswers</p>
+            </div>
+            <div class="score-item">
+                <h2>Correct Answers</h2>
+                <p>@Model.Score.CorrectAnswers</p>
+            </div>
+            <div class="score-item">
+                <h2>Score</h2>
+                <p>@(((Model.Score.CorrectAnswers / (double)Model.Score.TotalAnswers) * 100).ToString("F2"))%</p>
+
+            </div>
+            
+        </div>
+
+            
+            
+                @foreach( var question in Model.quiz.Questions )
+                {
+                   
+
+                var submittedAnswer = Model.Answers.FirstOrDefault(a => a.QuestionId == question.Id)?.SubmittedAnswer;
+
+            <div class="question-container">
+                <div class="question-text">
+                    <strong>Question :</strong> @question.Tittle?
+                </div>
+
+                <div class="options-container">
+                        @foreach (var option in question.Options)
+                        {
+                        <div class="option @((option.OptionText == question.CorrectAnswer) ? "correct" : (option.OptionText == submittedAnswer) ? "selected" : "")">
+                                @option.OptionText
+                        </div>
+                        }
+                </div>
+
+                <div class="question-result @(submittedAnswer == question.CorrectAnswer ? "correct" : "incorrect")">
+                        @(submittedAnswer == question.CorrectAnswer ? "Correct Answer!" : "Incorrect Answer")
+                </div>
+            </div>
+             
+                }
+               
+                
+           
+    </div>
+</body>
+</html>
+

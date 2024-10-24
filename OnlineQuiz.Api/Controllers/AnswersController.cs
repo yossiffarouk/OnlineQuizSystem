@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using OnlineQuiz.BLL.Dtos.Answer;
+using OnlineQuiz.BLL.Dtos.Attempt;
 using OnlineQuiz.BLL.Managers.Answer;
+using OnlineQuiz.BLL.Managers.Attempt;
 using OnlineQuiz.BLL.Managers.Base;
 using OnlineQuiz.BLL.Managers.Track;
 using OnlineQuiz.DAL.Data.DBHelper;
@@ -20,7 +22,7 @@ namespace OnlineQuiz.Api.Controllers
         }
 
         [HttpPost("submit")]
-        public IActionResult SubmitAnswer([FromBody] SubmitAnswerRequest request)
+        public IActionResult SubmitAnswer(AnswerDto request)
         {
 
             _answerManager.SubmitAnswer(request.AttemptId, request.QuestionId, request.SubmittedAnswer);
@@ -61,14 +63,6 @@ namespace OnlineQuiz.Api.Controllers
         }
     }
 
-    public class SubmitAnswerRequest
-    {
-        public int AttemptId { get; set; }
-        public int QuestionId { get; set; }
-        public required string SubmittedAnswer { get; set; }
-       
-
-    }
 
 }
 
