@@ -1,5 +1,4 @@
-﻿@model IEnumerable<OnlineQuiz.BLL.Dtos.Admin.InstructorDtos.InstructorReadDto>
-
+﻿@model IEnumerable<OnlineQuiz.BLL.Dtos.Quiz.QuizDto>;
 <!DOCTYPE html>
 <html lang="en">
 
@@ -141,62 +140,51 @@
     <!-- Main content area -->
     <div id="main-content">
         <section id="instructors">
-            <h2>All Instructors</h2>
+            <h2>All Quizzes</h2>
 
-            
+
 
             <a class="btn-unban" href="/Admin/Add?sourcePage=InstructorPage">ADD Instructor</a>
             <a class="btn-unban" href="/Admin/DashBoard">Back To DashBoard</a>
             <br />
             <br />
             <!-- Add search box to filter instructors -->
-            <input type="text" id="searchInput" placeholder="Search by instructor name..." onkeyup="filterInstructors()" style="width: 40%; padding: 10px; margin-bottom: 20px;">
+            <input type="text" id="searchInput" placeholder="Search by quiz name..." onkeyup="filterInstructors()" style="width: 40%; padding: 10px; margin-bottom: 20px;">
             <table id="instructor-table">
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Phone</th>
-                        <th>Age</th>
-                        <th>Gender</th>
-                        <th>Status</th>
-                        <th>IsBanned</th>
-                        <th>Edit</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>ExamTime</th>
+                        <th>CreatedDate</th>
+                        <th>ExpireDate</th>
+                        <th>IsAvailable</th>
+                        <th>QuizDegree</th>
                         <th>Delete</th>
-                        <th>Ban</th>
-                        <th>Unban</th>
+
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var instructor in Model)
+                    @foreach (var quiz in Model)
                     {
                         <tr>
-                            <td>@instructor.UserName</td>
-                            <td>@instructor.Email</td>
-                            <td>@instructor.PhoneNumber</td>
-                            <td>@instructor.Age</td>
-                            <td>@instructor.Gender</td>
-                            <td>@instructor.Status</td>
-                            <td>@instructor.IsBanned</td>
-                            <td><a class="btn-unban" href="/Admin/Edit?id=@instructor.Id&page=InstructorPage">Edit</a></td>
+                            
+                            <td>@quiz.Tittle</td>
+                            <td>@quiz.Description</td>
+                            <td>@quiz.ExamTime</td>
+                            <td>@quiz.CreatedDate</td>
+
+                            <td>@quiz.ExpireDate</td>
+                            <td>@quiz.IsAvailable</td>
+                            <td>@quiz.QuizDegree</td>
+                           
                             <td>
-                                <form action="/Admin/DeleteInstructor/@instructor.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this instructor?');">
+                                <form action="/Admin/DeleteQuiz/@quiz.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this Quiz?');">
                                     <input type="hidden" name="_method" value="DELETE" />
                                     <button type="submit" class="btn-ban">Delete</button>
                                 </form>
                             </td>
-                            <td>
-                                <form action="/Admin/Ban?id=@instructor.Id&page=InstructorPage" method="post" onsubmit="return confirm('Are you sure you want to Ban this instructor?');">
-                                    <input type="hidden" name="_method" value="Ban" />
-                                    <button type="submit" class="btn-ban">Ban </button>
-                                </form>
-                            </td>
-                            <td>
-                                <form action="/Admin/UnBan?id=@instructor.Id&page=InstructorPage" method="post" onsubmit="return confirm('Are you sure you want to UnBan this instructor?');">
-                                    <input type="hidden" name="_method" value="UnBan" />
-                                    <button type="submit" class="btn-unban">UnBan </button>
-                                </form>
-                            </td>
+                           
                         </tr>
                     }
                 </tbody>

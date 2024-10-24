@@ -60,7 +60,10 @@ namespace OnlineQuiz.BLL.Managers.Admin
             _IAdminRepositroy.AddStudent(_IMapper.Map<OnlineQuiz.DAL.Data.Models.Student>(StudentAddDto));
             //SaveChanges();
         }
-
+        public StudentUpdateDto GetStudentByIdForUpdate(string id)
+        {
+            return _IMapper.Map<StudentUpdateDto>(_IAdminRepositroy.GetStudentById(id));
+        }
         public void UpdateStudent(StudentUpdateDto StudentUpdateDto)
         {
             _IAdminRepositroy.UpdateStudent( _IMapper.Map(StudentUpdateDto, _IAdminRepositroy.GetStudentById(StudentUpdateDto.Id)));
