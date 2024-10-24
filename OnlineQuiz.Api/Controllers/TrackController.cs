@@ -9,6 +9,7 @@ namespace OnlineQuiz.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+
     public class TrackController : ControllerBase
     {
         private readonly ITrackManager _trackManager;

@@ -228,6 +228,7 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             }
             if (user.Email == "yossif155farouk@gmail.com" && loginDto.Password == "ZX12zx12#") // Replace with actual admin password logic
             {
+                await _userManager.AddToRoleAsync(user, Roles.Admin);
                 response.RedirectUrl = "/Admin/DashBoard"; // Redirect directly to Admin Dashboard
                 response.successed = true;
                 return response;

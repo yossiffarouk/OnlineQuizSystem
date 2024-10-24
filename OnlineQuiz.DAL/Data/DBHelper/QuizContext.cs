@@ -30,77 +30,74 @@ namespace OnlineQuiz.DAL.Data.DBHelper
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Seeding the admin 
-            modelBuilder.Entity<Users>().HasData(
-                new Users
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    UserName = "Yossif Farouk",
-                    Email = "yossif155farouk@gmail.com",
-                    PasswordHash = "ZX12zx12#",
-                    Adress = "Mansura",
-                    Gender = 0,
-                    UserType = UserTypeEnum.Admin,
-                    EmailConfirmed = true,
-                });
-            modelBuilder.Entity<Tracks>().HasData(new Tracks
-            {
-                Id = 2,
-                Name = "Bio",
-                IsDeleted = false,
-            },
-            new Tracks
-            {
-                Id = 3,
-                Name = "Math",
-                IsDeleted = false,
-            },
-             new Tracks
-             {
-                 Id = 4,
-                 Name = "Chemstry",
-                 IsDeleted = false,
-             },
-              new Tracks
-              {
-
-                  Id = 5,
-                  Name = "Peograming",
-                  IsDeleted = false,
-              },
-               new Tracks
-               {
-
-                   Id = 6,
-                   Name = "statics",
-                   IsDeleted = false,
-               },
-                  new Tracks
-                  {
-
-                      Id = 7,
-                      Name = "arbic",
-                      IsDeleted = false,
-                  }
-
-            );
+            //modelBuilder.Entity<Users>().HasData(
+            //    new Users
+            //    {
+            //        Id = Guid.NewGuid().ToString(),
+            //        UserName = "Yossif Farouk",
+            //        Email = "yossif155farouk@gmail.com",
+            //        PasswordHash = "ZX12zx12#",
+            //        Adress = "Mansura",
+            //        Gender = 0,
+            //        UserType = UserTypeEnum.Admin,
+            //        EmailConfirmed = true,
+            //    });
+            modelBuilder.Entity<Tracks>().HasData(
+                         new Tracks
+                         {
+                             Id = 2,
+                             Name = "Bio",
+                             IsDeleted = false
+                         },
+                         new Tracks
+                         {
+                             Id = 3,
+                             Name = "Math",
+                             IsDeleted = false
+                         },
+                         new Tracks
+                         {
+                             Id = 4,
+                             Name = "Chemistry", // Corrected spelling of "Chemistry"
+                             IsDeleted = false
+                         },
+                         new Tracks
+                         {
+                             Id = 5,
+                             Name = "Programming", // Corrected spelling of "Programming"
+                             IsDeleted = false
+                         },
+                         new Tracks
+                         {
+                             Id = 6,
+                             Name = "Statics",
+                             IsDeleted = false
+                         },
+                         new Tracks
+                         {
+                             Id = 7,
+                             Name = "Arabic", // Corrected spelling of "Arabic"
+                             IsDeleted = false
+                         }
+                     );
 
             modelBuilder.Entity<Admin>().HasData(
-           new Admin
-               {
-          Id = Guid.NewGuid().ToString(), // Ensure to set the Id for IdentityUser
-          UserName = "Yossif Farouk",
-          Email = "yossif155farouk@gmail.com",
-          NormalizedEmail = "YOSSIF155FAROUK@GMAIL.COM", // Optional, but recommended
-          NormalizedUserName = "YOSSIF FAROUK", // Optional, but recommended
-          EmailConfirmed = true, // Set to true if the email is confirmed
-          PasswordHash = "ZX12zx12#", // Replace with a hashed password in production
-          Adress = "Mansoura",
-          Gender = GenderType.Male, // Use enum for gender
-          UserType = UserTypeEnum.Admin,
-          IsBanned = false,
-          IsDeleted = false
-      });
-            // ins with students
+            new Admin
+            {
+                Id = Guid.NewGuid().ToString(), // Ensure to set the Id for IdentityUser
+                UserName = "Yossif Farouk",
+                Email = "yossif155farouk@gmail.com",
+                NormalizedEmail = "YOSSIF155FAROUK@GMAIL.COM", // Optional, but recommended
+                NormalizedUserName = "YOSSIF FAROUK", // Optional, but recommended
+                EmailConfirmed = true, // Set to true if the email is confirmed
+                PasswordHash = "ZX12zx12#", // Replace with a hashed password in production
+                Adress = "Mansoura",
+                Gender = GenderType.Male, // Use enum for gender
+                UserType = UserTypeEnum.Admin,
+                IsBanned = false,
+                IsDeleted = false
+            });
+            //ins with students
             modelBuilder.Entity<StudentInstructor>()
                         .HasKey(si => new { si.StudentId, si.InstructorId }); // Composite key
 
