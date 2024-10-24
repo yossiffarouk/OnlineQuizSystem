@@ -23,6 +23,7 @@ namespace OnlineQuiz.BLL.Managers.Admin
         // add student 
         public void AddStudent(StudentAddDto StudentAddDto);
         // edit student 
+        StudentUpdateDto GetStudentByIdForUpdate(string id);
         public void UpdateStudent(StudentUpdateDto StudentUpdateDto);
 
         // delete student 
@@ -36,13 +37,14 @@ namespace OnlineQuiz.BLL.Managers.Admin
 
         // get by id or name instractour
         InstructorReadDto GetInstructorById(string id);
-        IstrurctorUpdateDto GetInstructorByIdForUpdate(string id);
+        
         InstructorReadDto GetInstructorByName(string name);
 
 
         // add instractour  
         public void AddInstructor(InstructorAddDto InstructorAddDto);
         // edit instractour 
+        IstrurctorUpdateDto GetInstructorByIdForUpdate(string id);
         public void UpdateInstructor(IstrurctorUpdateDto IstrurctorUpdateDto);
 
         // delete instractour 

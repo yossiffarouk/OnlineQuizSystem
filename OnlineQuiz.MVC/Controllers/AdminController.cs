@@ -4,6 +4,7 @@ using OnlineQuiz.BLL.Dtos.Admin.InstructorDtos;
 using OnlineQuiz.BLL.Dtos.Admin.Share;
 using OnlineQuiz.BLL.Dtos.Admin.StudentDtos;
 using OnlineQuiz.BLL.Managers.Admin;
+using OnlineQuiz.BLL.Managers.Quiz;
 using OnlineQuiz.BLL.ViewModels.Admin;
 
 namespace OnlineQuiz.MVC.Controllers
@@ -11,12 +12,14 @@ namespace OnlineQuiz.MVC.Controllers
     public class AdminController : Controller
     {
         private readonly IAdminManger _manger;
+        private readonly IQuizManager _quizManager;
 
         public IMapper _mapper { get; }
 
-        public AdminController(IAdminManger manger , IMapper mapper)
+        public AdminController(IAdminManger manger, IQuizManager quizManager , IMapper mapper)
         {
            _manger = manger;
+            _quizManager = quizManager;
             _mapper = mapper;
         }
         // get dashbored and show static for admin
@@ -46,7 +49,7 @@ namespace OnlineQuiz.MVC.Controllers
         }
 
         // ban and unban ------------------------
-        [HttpGet]
+        [HttpPost]
         public IActionResult Ban(string id,string page)
         {
           
@@ -60,8 +63,8 @@ namespace OnlineQuiz.MVC.Controllers
             }
         }
 
-        [HttpGet]
-        
+        [HttpPost]
+
         public IActionResult UnBan(string id, string page)
         {
             _manger.UnbanUserAsync(id);
@@ -110,16 +113,16 @@ namespace OnlineQuiz.MVC.Controllers
         public IActionResult Approve(string id)
         {
 
-            var x = _manger.ApproveInstructorAsync(id);
-            return Ok(x);
+            _manger.ApproveInstructorAsync(id);
+            return RedirectToAction("NewInstructors");
         }
         [HttpGet]
         [Route("Admin/Deny/{id}")]
         public IActionResult Deny(string id)
         {
 
-            var x = _manger.DenyInstructorAsync(id);
-            return Ok(x);
+             _manger.DenyInstructorAsync(id);
+            return RedirectToAction("NewInstructors");
         }
 
         // add section ------------------------
@@ -163,13 +166,14 @@ namespace OnlineQuiz.MVC.Controllers
             }
         else 
             {
-               
-                return View("EditStudent");
+               var x = _manger.GetStudentByIdForUpdate(id);
+                return View("EditStudent",x);
 
             }   
         }
 
         [HttpPost]
+        [Route("Admin/EditInstructor/{id}")]
         public IActionResult EditInstructor(string id , IstrurctorUpdateDto IstrurctorUpdateDto)
         {
             if (id== IstrurctorUpdateDto.Id)
@@ -180,6 +184,7 @@ namespace OnlineQuiz.MVC.Controllers
            return NoContent();
         }
         [HttpPost]
+        [Route("Admin/EditStudent/{id}")]
         public IActionResult EditStudent(string id, StudentUpdateDto StudentUpdateDto)
         {
 
@@ -187,5 +192,21 @@ namespace OnlineQuiz.MVC.Controllers
             return RedirectToAction("GetAllStudents");
         }
 
+        [HttpGet]
+        [Route("Admin/GetAllQuizzes")]
+        public IActionResult GetAllQuizzes()
+        {
+
+            var x =_quizManager.GetAllQuizzes();
+            return View(x);
+        }
+        [HttpPost]
+        [Route("Admin/DeleteQuiz/{id}")]
+        public IActionResult DeleteQuiz(int id)
+        {
+
+             _quizManager.DeleteQuiz(id);
+            return RedirectToAction("GetAllQuizzes");
+        }
     }
 }

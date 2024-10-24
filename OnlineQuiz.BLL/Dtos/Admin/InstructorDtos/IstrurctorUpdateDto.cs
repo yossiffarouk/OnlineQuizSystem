@@ -15,9 +15,9 @@ namespace OnlineQuiz.BLL.Dtos.Admin.InstructorDtos
         public string email { get; set; }
         //public string password { get; set; }
         public int Age { get; set; }
-        public string ImgUrl { get; set; }
+        //public string ImgUrl { get; set; }
         public GenderType Gender { get; set; }
         public string Adress { get; set; }
-        public ApprovalStatus Status { get; set; }
+        public ApprovalStatus Status { get; set; } = ApprovalStatus.Approved;
     }
 }

@@ -48,7 +48,7 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
 
         public IEnumerable<Instructor> GetAllInstructo()
         {
-            return _Context.Instructors.Where(x => x.Status != ApprovalStatus.Pending & x.IsDeleted == false).ToList();
+            return _Context.Instructors.Where(x => x.Status == ApprovalStatus.Approved & x.IsDeleted == false).ToList();
         }
 
         public IEnumerable<Student> GetAllStudentAsync()
@@ -84,6 +84,10 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
 
         public void UpdateInstructor(Instructor Instructor)
         {
+            if(Instructor.Status == ApprovalStatus.Denied)
+            {
+                Instructor.IsDeleted = true;
+            }
              SaveChanges();
         }
 
@@ -118,6 +122,7 @@ namespace OnlineQuiz.DAL.Repositoryies.AdminRepositroy
             if (instructor != null)
             {
                 instructor.Status = ApprovalStatus.Denied;
+                instructor.IsDeleted = true;
                 _Context.Update(instructor);
                 _Context.SaveChanges();
             }

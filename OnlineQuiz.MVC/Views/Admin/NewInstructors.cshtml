@@ -26,7 +26,7 @@
   
 
     #main-content {
-        margin-left: 250px;
+        margin: 20px auto;
         /* Space for the sidebar */
         padding: 20px;
         flex-grow: 1;
@@ -94,6 +94,23 @@
             background-color: #f1f1f1;
         }
 
+    .btn-ban {
+        width: 120px;
+        padding: 5px;
+        background-color: #dc3545;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        font-size: 1.1rem;
+        text-decoration: none;
+    }
+
+        .btn-ban:hover {
+            background-color: #c82333;
+        }
+
     .btn-unban {
         width: 150px;
         padding: 5px;
@@ -120,6 +137,10 @@
         <section id="instructors">
             <h2>All Instructors In Panding List</h2>
           <a class="btn-unban" href="/Admin/DashBoard">Back To DashBoard</a>
+          <br />
+          <br />
+            <!-- Add search box to filter instructors -->
+            <input type="text" id="searchInput" placeholder="Search by instructor name..." onkeyup="filterInstructors()" style="width: 40%; padding: 10px; margin-bottom: 20px;">
             <table id="instructor-table">
                 <thead>
                     <tr>
@@ -130,6 +151,8 @@
                         <th>Phone</th>
                         <th>Gender</th>
                         <th>Status</th>
+                        <th>Approve</th>
+                        <th>Deny</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -156,6 +179,31 @@
     </div>
 
     <script src="dashboard.js"></script>
+    <script>
+        // Function to filter instructors by name
+        function filterInstructors() {
+            // Get the search input field
+            var input = document.getElementById("searchInput");
+            var filter = input.value.toLowerCase();
+
+            // Get all rows from the instructor table
+            var table = document.getElementById("instructor-table");
+            var rows = table.getElementsByTagName("tr");
+
+            // Loop through all table rows and hide those that don't match the search query
+            for (var i = 1; i < rows.length; i++) {
+                var td = rows[i].getElementsByTagName("td")[0]; // Get the 'Name' column (index 0)
+                if (td) {
+                    var txtValue = td.textContent || td.innerText;
+                    if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        }
+    </script>
 </body>
 
 
