@@ -104,15 +104,14 @@ namespace OnlineQuiz.MVC.Controllers
         }
 
 
-        [Authorize(Roles = Roles.Instructor)]
-        // GET: QuizQuestion/{quizId}
         [HttpGet("QuizQuestion/{quizId}")]
+        [Authorize(Roles = Roles.Instructor)]
         public async Task<IActionResult> QuizQuestion(int quizId)
         {
             var questionDto = new createQuestionDto
             {
                 QuizId = quizId,
-                Options = new List<createOptionDto> // Initialize with 4 empty options
+                Options = new List<createOptionDto>
         {
             new createOptionDto(),
             new createOptionDto(),
@@ -124,21 +123,23 @@ namespace OnlineQuiz.MVC.Controllers
             return View("QuizQuestion", questionDto);
         }
 
-        // POST: QuizQuestion
         [HttpPost("QuizQuestion")]
-        //[ValidateAntiForgeryToken]
         [Authorize(Roles = Roles.Instructor)]
-
-        public async Task<IActionResult> Create(createQuestionDto questionDto, string action)
+        public async Task<IActionResult> Create(createQuestionDto questionDto)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                await _questionManager.AddQuestionAsync(questionDto);
-                return RedirectToAction("QuizQuestion", new { quizId = questionDto.QuizId });
+                // If model state is invalid, return the view with the model to display validation errors.
+                return View("QuizQuestion", questionDto);
             }
 
-            return View("QuizQuestion", questionDto);
+            // Add question and redirect to the QuizQuestion GET endpoint with quizId as parameter
+            await _questionManager.AddQuestionAsync(questionDto);
+
+            // Redirect back to the GET method to clear the form and show a fresh form
+            return RedirectToAction("QuizQuestion", new { quizId = questionDto.QuizId });
         }
+
         [Authorize(Roles = Roles.Instructor)]
         [Route("/Instructor/GetStudents/{id}")]
         public IActionResult GetStudents(string id)
