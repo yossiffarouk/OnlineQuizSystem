@@ -66,30 +66,25 @@
         }
 
         .btn-home {
-            display: inline-block;
             padding: 12px 25px;
-            background-color: #007bff; /* Blue background */
-            color: #fff; /* White text */
+            background-color: #007bff;
+            color: #fff;
             border: none;
             border-radius: 5px;
-            font-size: 1.1rem;
             font-weight: bold;
             text-decoration: none;
-            text-align: center;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
         }
 
             .btn-home:hover {
-                background-color: #0056b3; /* Darker blue on hover */
-                transform: translateY(-2px); /* Slight lift on hover */
+                background-color: #0056b3;
+                transform: translateY(-2px);
             }
 
             .btn-home:active {
-                transform: translateY(0); /* Reset transform on click */
-                background-color: #004085; /* Even darker blue when pressed */
+                background-color: #004085;
             }
-
     </style>
 </head>
 <body>
@@ -100,19 +95,17 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <h2 class="card-title mb-4">Question Information</h2>
-                        <form asp-action="create" method="post">
+                        <form asp-action="Create" method="post" id="create-question-form">
                             <input type="hidden" name="QuizId" value="@Model.QuizId" />
+
+                            <!-- Validation summary -->
+                            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
                             <div class="mb-3">
                                 <label asp-for="Tittle" class="form-label">Question Title</label>
                                 <input asp-for="Tittle" class="form-control" placeholder="Enter question title" required>
                                 <span asp-validation-for="Tittle" class="text-danger"></span>
                             </div>
-
-                       @*      <div class="mb-3">
-                                <label asp-for="QuizId" class="form-label">Quiz ID</label>
-                                <input asp-for="QuizId" class="form-control" placeholder="Enter Quiz ID" required>
-                                <span asp-validation-for="QuizId" class="text-danger"></span>
-                            </div> *@
 
                             <div class="mb-3">
                                 <label class="form-label">Options</label>
@@ -122,25 +115,64 @@
                                         <div class="input-group mb-2">
                                             <input asp-for="@Model.Options[i].OptionText" class="form-control" placeholder="Option @(i + 1)" required />
                                             <div class="input-group-text">
-                                                <input type="radio" asp-for="@Model.CorrectAnswer" name="CorrectAnswer" value="@Model.Options[i].OptionText" required />
+                                                <input type="checkbox" class="correct-answer-checkbox" data-option="@Model.Options[i].OptionText" />
                                             </div>
                                         </div>
                                     }
+                                    <span asp-validation-for="CorrectAnswer" class="text-danger"></span>
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-dark-orange w-100">Create Question</button>
-                            <a class="btn-home" href="/home/index">Back To HomePage</a>
-                        </form>
+                            <!-- Hidden field for the selected correct answer -->
+                            <input type="hidden" name="CorrectAnswer" id="correctAnswer" required />
 
+                            <div class="d-flex justify-content-between">
+                                <a class="btn-home" href="/instructor/dashBoared">Back To Dashboard</a>
+                                <button type="submit" class="btn btn-dark-orange">Create Question</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // JavaScript to allow only one checkbox to be selected at a time
+        document.querySelectorAll('.correct-answer-checkbox').forEach((checkbox) => {
+            checkbox.addEventListener('change', function () {
+                if (this.checked) {
+                    document.querySelectorAll('.correct-answer-checkbox').forEach((cb) => {
+                        if (cb !== this) cb.checked = false;
+                    });
+                }
+            });
+        });
+
+        // Handling form submission
+        document.getElementById('create-question-form').addEventListener('submit', function (event) {
+            const checkboxes = document.querySelectorAll('.correct-answer-checkbox');
+            let selectedAnswer = '';
+            let answerFound = false; // To check if an answer is selected
+
+            checkboxes.forEach((checkbox) => {
+                if (checkbox.checked) {
+                    // Get the associated option text from the corresponding input
+                    const input = checkbox.closest('.input-group').querySelector('input[type="text"]');
+                    selectedAnswer = input.value; // Get the input value
+                    answerFound = true; // Set flag if an answer is found
+                }
+            });
+
+            if (!answerFound) {
+                event.preventDefault(); // Prevent form submission if no checkbox is selected
+                alert('Please select one correct answer.'); // Show alert if no checkbox is selected
+            } else {
+                // Set the hidden input value to the selected answer
+                document.getElementById('correctAnswer').value = selectedAnswer; // Set the value to the hidden field
+            }
+        });
+    </script>
 </body>
 </html>

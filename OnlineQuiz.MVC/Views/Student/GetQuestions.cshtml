@@ -51,16 +51,16 @@
             transition: all 0.3s ease;
         }
 
-        .btn-option:hover,
-        .btn-option:focus {
-            background-color: var(--secondary);
-            color: white;
-        }
+            .btn-option:hover,
+            .btn-option:focus {
+                background-color: var(--secondary);
+                color: white;
+            }
 
-        .btn-option.selected {
-            background-color: var(--tertiary);
-            color: white;
-        }
+            .btn-option.selected {
+                background-color: var(--tertiary);
+                color: white;
+            }
 
         .btn-action {
             background-color: var(--action);
@@ -68,10 +68,10 @@
             border: none;
         }
 
-        .btn-action:hover,
-        .btn-action:focus {
-            background-color: var(--tertiary);
-        }
+            .btn-action:hover,
+            .btn-action:focus {
+                background-color: var(--tertiary);
+            }
 
         .progress {
             height: 10px;
@@ -125,16 +125,16 @@
                                     @foreach (var option in Model[i].options)
                                     {
                                         <div class="options-container">
-                                        <div class="form-check">
-                                            <input type="checkbox" class="form-check-input"
-                                                   id="option-@Model[i].Id-@option.Text"
-                                                   name="answers[@i].SubmittedAnswer"
-                                                   value="@option.Text"
-                                                   onclick="selectOption(@Model[i].Id, '@option.Text', this)" />
-                                            <label class="form-check-label btn btn-option btn-lg" for="option-@Model[i].Id-@option.Text">
-                                                @option.Text
-                                            </label>
-                                        </div>
+                                            <div class="form-check">
+                                                <input type="radio" class="form-check-input"
+                                                       id="option-@Model[i].Id-@option.Text"
+                                                       name="answers[@i].SubmittedAnswer"
+                                                       value="@option.Text"
+                                                       onclick="selectOption(@Model[i].Id, '@option.Text', this)" />
+                                                <label class="form-check-label btn btn-option btn-lg" for="option-@Model[i].Id-@option.Text">
+                                                    @option.Text
+                                                </label>
+                                            </div>
                                         </div>
                                     }
                                 </div>
@@ -165,21 +165,11 @@
         const totalQuestions = @Model.Count;
         const progressBar = document.querySelector('.progress-bar');
 
-        function selectOption(questionId, optionText, checkbox) {
-            // If checkbox is checked, add to userAnswers
-            if (checkbox.checked) {
-                if (!userAnswers[questionId]) {
-                    userAnswers[questionId] = [];
-                }
-                userAnswers[questionId].push(optionText);
-            } else {
-                // If unchecked, remove from userAnswers
-                userAnswers[questionId] = userAnswers[questionId].filter(answer => answer !== optionText);
-            }
+        function selectOption(questionId, optionText, radio) {
+            userAnswers[questionId] = [optionText];
 
-            // Mark selected option visually
             document.querySelectorAll(`.question-container[data-question-id="${questionId}"] .btn-option`).forEach(label => {
-                const input = label.previousElementSibling; // Get the checkbox
+                const input = label.previousElementSibling; // Get the radio input
                 if (input.checked) {
                     label.classList.add('selected');
                 } else {
