@@ -93,6 +93,7 @@ namespace OnlineQuiz.BLL.Managers.Admin
         {
             return _IMapper.Map<InstructorReadDto>(_IAdminRepositroy.GetInstructorById(id));
         }
+
         public IstrurctorUpdateDto GetInstructorByIdForUpdate(string id)
         {
             return _IMapper.Map<IstrurctorUpdateDto>(_IAdminRepositroy.GetInstructorById(id));

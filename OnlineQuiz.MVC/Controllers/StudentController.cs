@@ -17,6 +17,7 @@ using OnlineQuiz.BLL.Dtos.Quiz;
 using OnlineQuiz.BLL.Dtos.Answer;
 using OnlineQuiz.BLL.Dtos.Accounts;
 using Microsoft.AspNetCore.Authorization;
+using OnlineQuiz.BLL.Managers.Accounts;
 
 
 namespace OnlineQuiz.MVC.Controllers
@@ -27,16 +28,105 @@ namespace OnlineQuiz.MVC.Controllers
         private readonly IAttemptManager _attemptManager;
         private readonly IStudentManager _studentManager;
         private readonly IMapper _mapper;
+        private readonly IAccountManager _accountManager;
         private readonly IAnswersManager _AnswersManager;
 
-        public StudentController(IAnswersManager AnswersManager, IQuizManager quizManager,IAttemptManager attemptManager,IStudentManager studentManager,IMapper mapper)
+        public StudentController(IAnswersManager AnswersManager, IQuizManager quizManager,IAttemptManager attemptManager,IStudentManager studentManager,IMapper mapper ,
+            IAccountManager accountManager)
         {
             _quizManager = quizManager;
             _attemptManager = attemptManager;
             _studentManager = studentManager;
             _mapper = mapper;
+            _accountManager = accountManager;
             _AnswersManager = AnswersManager;
         }
+
+
+
+        //[HttpPost]
+        //public async Task<IActionResult> UploadProfileImage(IFormFile profileImage)
+        //{
+        //    // Validate the uploaded file
+        //    if (profileImage == null || profileImage.Length == 0)
+        //    {
+        //        ModelState.AddModelError("ImageUpload", "Please select an image file.");
+        //        return View(); // Return to the view with an error message
+        //    }
+
+        //    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+        //    // Check if userId is not null or empty
+        //    if (string.IsNullOrEmpty(userId))
+        //    {
+        //        ModelState.AddModelError("User", "User not found. Please try logging in again.");
+        //        return View(); // Return to the view with an error message
+        //    }
+
+        //    // Define allowed file extensions
+        //    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+        //    var extension = Path.GetExtension(profileImage.FileName).ToLower();
+
+        //    // Validate file type
+        //    if (!allowedExtensions.Contains(extension))
+        //    {
+        //        ModelState.AddModelError("ImageUpload", "Invalid file type. Only JPG, PNG, and GIF files are allowed.");
+        //        return View(); // Return to the view with an error message
+        //    }
+
+        //    // Optimize file size (e.g., limit to 2MB)
+        //    if (profileImage.Length > 2 * 1024 * 1024)
+        //    {
+        //        ModelState.AddModelError("ImageUpload", "File size exceeds 2MB limit. Please upload a smaller image.");
+        //        return View(); // Return to the view with an error message
+        //    }
+
+        //    try
+        //    {
+        //        // Upload the profile image asynchronously
+        //        _studentManager.UploadProfileImageAsync(profileImage, userId);
+        //        TempData["SuccessMessage"] = "Profile image uploaded successfully."; // Use TempData for success message
+        //        return RedirectToAction("Profile"); // Redirect to profile page
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ModelState.AddModelError("ImageUpload", $"Error uploading image: {ex.Message}");
+        //        return View(); // Return with error if any issues occur
+        //    }
+        //}
+
+
+
+
+
+
+
+        //LogOut
+
+        [Authorize(Roles = Roles.Student)]
+        [HttpGet]
+        public IActionResult LogoutConfirmation()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = Roles.Student)]
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _accountManager.Logout();
+            return RedirectToAction("Login", "Home");
+        }
+
+        [Authorize(Roles = Roles.Student)]
+        [HttpPost]
+        public IActionResult CancelLogout()
+        {
+            return RedirectToAction("Index", "Student"); // Redirect to the dashboard
+        }
+
+
+
         [Authorize (Roles = Roles.Student)]
         public IActionResult Index()
         {
@@ -84,6 +174,7 @@ namespace OnlineQuiz.MVC.Controllers
             return View(studentDetails); // Pass the student data to the view
 
         }
+
         [HttpGet]
         [Authorize(Roles = Roles.Student)]
         public IActionResult MyInstractors()
@@ -107,6 +198,7 @@ namespace OnlineQuiz.MVC.Controllers
 
             return View(studentDetails); // Pass the student data to the view
         }
+
         [Authorize(Roles = Roles.Student)]
         public IActionResult MyQuizzes()
         {
@@ -184,6 +276,7 @@ namespace OnlineQuiz.MVC.Controllers
                 return View(studentUpdateDto);
             }
         }
+
         [Authorize(Roles = Roles.Student)]
         public IActionResult AttemptQuiz()
         {
@@ -202,6 +295,7 @@ namespace OnlineQuiz.MVC.Controllers
         //{
         //    return View();
         //}
+
         [HttpGet]
         [Authorize(Roles = Roles.Student)]
         public IActionResult GetQuestions(StartQuizAttemptDto startQuiz)

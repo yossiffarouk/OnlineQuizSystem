@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,7 +19,8 @@ namespace OnlineQuiz.BLL.Dtos.Accounts
         public string RoleName { get; set; }
         public int UsersCount { get; set; }
         public List<UserInfo> Users { get; set; }
-       
+        public List<GetAllRolesDto> Roles { get; set; }
+
     }
 
     public class UserInfo
@@ -27,5 +29,6 @@ namespace OnlineQuiz.BLL.Dtos.Accounts
         public string UserName { get; set; }
         public string Email { get; set; }
     }
+   
 
 }

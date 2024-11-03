@@ -82,9 +82,10 @@ namespace OnlineQuiz.MVC
             builder.Services.AddAutoMapper(map => map.AddProfile(new OptionMapper()));
             builder.Services.AddAutoMapper(map => map.AddProfile(new StudentMapper()));
             builder.Services.AddAutoMapper(map => map.AddProfile(new AttemptMapping()));
-            builder.Services.AddAutoMapper(map => map.AddProfile(new AdminMapper()));
+            builder.Services.AddAutoMapper(cfg => cfg.AddProfile<AdminMapper>());
             builder.Services.AddAutoMapper(map => map.AddProfile(new InstructorMapper()));
             builder.Services.AddAutoMapper(map => map.AddProfile(new AnswerMapper()));
+            
 
 
             //Repositories
@@ -121,6 +122,8 @@ namespace OnlineQuiz.MVC
                 options.Password.RequireUppercase = true;
                 options.Password.RequiredLength = 5;
                 options.SignIn.RequireConfirmedEmail = true;
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ ";
+                
             })
                .AddEntityFrameworkStores<QuizContext>()
                .AddDefaultTokenProviders();
@@ -130,19 +133,34 @@ namespace OnlineQuiz.MVC
            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {
-                    options.LoginPath = "/Home/Login";  // Specify the login path (UnAuthorize)
-                    options.AccessDeniedPath = "/Home/Login";  // Specify the access denied path (Not Take Permissiopn)
+                    options.LoginPath = "/Home/Login"; // Path to your login page
+                    options.AccessDeniedPath = "/Account/AccessDenied"; 
                     options.ExpireTimeSpan = TimeSpan.FromDays(5);  // Set cookie expiration time
                    
                 });
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdminRole", policy => policy.RequireRole(Roles.Admin));
+            });
 
             var app = builder.Build();
 
-            // Call the SeedRoles method
+            // Call the SeedRoles and SeedAdminUser methods
             using (var scope = app.Services.CreateScope())
             {
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<CustomRole>>();
-                await SeedRolesDtocs.SeedRoles(roleManager);
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Users>>();
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+                try
+                {
+                    await SeedRolesDtocs.SeedRoles(roleManager, logger);
+                    await SeedAdminUserdtos.SeedAdminUser(userManager, roleManager, logger);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError($"An error occurred while seeding the database: {ex.Message}");
+                }
             }
 
 

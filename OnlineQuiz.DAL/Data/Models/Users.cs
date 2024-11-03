@@ -83,6 +83,7 @@ namespace OnlineQuiz.DAL.Data.Models
     }
     public class Admin : Users
     {
+
     }
 
 

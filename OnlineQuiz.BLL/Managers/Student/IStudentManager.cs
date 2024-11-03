@@ -1,4 +1,5 @@
-﻿using OnlineQuiz.BLL.Dtos.StudentDtos;
+﻿using Microsoft.AspNetCore.Http;
+using OnlineQuiz.BLL.Dtos.StudentDtos;
 using OnlineQuiz.BLL.Wrapper;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ namespace OnlineQuiz.BLL.Managers.Student
         public StudentDetailesDto GetByIdWithDetails(string studentId);
         public Task<PagintedResult<StudentReadPaginatedDto>> GetPaginatedStudentsAsync(int pageNumber, int pageSize);
         IEnumerable<StudentReadDto> GetStudentsToAdd(string instructorId);
+       string UploadProfileImageAsync(IFormFile profileImage, string userId);
+        Task<int> SaveChangesAsync();
 
     }
 }

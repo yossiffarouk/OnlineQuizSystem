@@ -1,0 +1,125 @@
+﻿@model RoleResponce<UserRoleInfo>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users in Role</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+            button:hover {
+                background-color: #0056b3;
+            }
+
+        label {
+            margin-right: 10px;
+        }
+
+        /* Styles for the select dropdown to make it larger */
+        select {
+            padding: 10px;
+            font-size: 16px; /* Increase font size */
+            width: 250px; /* Set width to make it larger */
+            margin-right: 10px; /* Space between select and button */
+        }
+    </style>
+</head>
+<body>
+    <h1> Users in Role</h1>
+
+    @if (Model.Errors.Any())
+    {
+        <div class="error-message">
+            <ul>
+                @foreach (var error in Model.Errors)
+                {
+                    <li>@error</li>
+                }
+            </ul>
+        </div>
+    }
+
+    <form method="post">
+        <label for="roleId">Select Role:</label>
+        <select name="roleId" id="roleId" required>
+            <option value="">--Select Role--</option>
+            @* Assuming Roles is a property in Model.Data that contains all roles *@
+            @foreach (var role in Model.Data?.Roles ?? new List<GetAllRolesDto>())
+            {
+                <option value="@role.RoleId">@role.RoleName</option>
+            }
+        </select>
+        <button type="submit">Show Users</button>
+    </form>
+
+    @if (Model.successed && Model.Data.UsersCount > 0)
+    {
+        <h2>Users in @Model.Data.RoleName: (Count: @Model.Data.UsersCount)</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>User ID</th>
+                    <th>User Name</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model.Data.Users)
+                {
+                    <tr>
+                        <td>@user.UserId</td>
+                        <td>@user.UserName</td>
+                        <td>@user.Email</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else if (Model.successed && Model.Data.UsersCount == 0)
+    {
+        <p>No users found for the selected role.</p>
+    }
+</body>
+</html>

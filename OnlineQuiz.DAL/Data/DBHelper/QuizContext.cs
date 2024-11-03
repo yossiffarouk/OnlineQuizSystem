@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace OnlineQuiz.DAL.Data.DBHelper
 {
@@ -29,19 +30,7 @@ namespace OnlineQuiz.DAL.Data.DBHelper
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Seeding the admin 
-            //modelBuilder.Entity<Users>().HasData(
-            //    new Users
-            //    {
-            //        Id = Guid.NewGuid().ToString(),
-            //        UserName = "Yossif Farouk",
-            //        Email = "yossif155farouk@gmail.com",
-            //        PasswordHash = "ZX12zx12#",
-            //        Adress = "Mansura",
-            //        Gender = 0,
-            //        UserType = UserTypeEnum.Admin,
-            //        EmailConfirmed = true,
-            //    });
+    
             modelBuilder.Entity<Tracks>().HasData(
                          new Tracks
                          {
@@ -81,23 +70,36 @@ namespace OnlineQuiz.DAL.Data.DBHelper
                          }
                      );
 
-            modelBuilder.Entity<Admin>().HasData(
-            new Admin
-            {
-                Id = Guid.NewGuid().ToString(), // Ensure to set the Id for IdentityUser
-                UserName = "Yossif Farouk",
-                Email = "yossif155farouk@gmail.com",
-                NormalizedEmail = "YOSSIF155FAROUK@GMAIL.COM", // Optional, but recommended
-                NormalizedUserName = "YOSSIF FAROUK", // Optional, but recommended
-                EmailConfirmed = true, // Set to true if the email is confirmed
-                PasswordHash = "ZX12zx12#", // Replace with a hashed password in production
-                Adress = "Mansoura",
-                Gender = GenderType.Male, // Use enum for gender
-                UserType = UserTypeEnum.Admin,
-                IsBanned = false,
-                IsDeleted = false
-            });
-            //ins with students
+            //var adminUserId = Guid.NewGuid().ToString();
+            //modelBuilder.Entity<Admin>().HasData(
+            //new Admin
+            //{
+            //    Id = adminUserId, // Ensure to set the Id for IdentityUser
+            //    UserName = "Yossif Farouk",
+            //    Email = "yossif155farouk@gmail.com",
+            //    NormalizedEmail = "YOSSIF155FAROUK@GMAIL.COM", // Optional, but recommended
+            //    NormalizedUserName = "YOSSIF FAROUK", // Optional, but recommended
+            //    EmailConfirmed = true, // Set to true if the email is confirmed
+            //    PasswordHash = "ZX12zx12#", // Replace with a hashed password in production
+            //    Adress = "Mansoura",
+            //    Gender = GenderType.Male, // Use enum for gender
+            //    UserType = UserTypeEnum.Admin,
+            //    IsBanned = false,
+            //    IsDeleted = false
+            //});
+
+            //modelBuilder.Entity<IdentityUserRole<string>>().HasData(
+            //new IdentityUserRole<string>
+            //  {
+            //         UserId = adminUserId,
+            //         RoleId = adminRoleId // This will be replaced by the actual ID after migration
+            //  }
+            //);
+
+
+
+            #region instructors  with students
+            //instructors  with students
             modelBuilder.Entity<StudentInstructor>()
                         .HasKey(si => new { si.StudentId, si.InstructorId }); // Composite key
 
@@ -109,7 +111,8 @@ namespace OnlineQuiz.DAL.Data.DBHelper
             modelBuilder.Entity<StudentInstructor>()
                 .HasOne(si => si.Instructor)
                 .WithMany(i => i.StudentInstructors)
-                .HasForeignKey(si => si.InstructorId);
+                .HasForeignKey(si => si.InstructorId); 
+            #endregion
 
 
             base.OnModelCreating(modelBuilder);
@@ -129,7 +132,7 @@ namespace OnlineQuiz.DAL.Data.DBHelper
         public virtual DbSet<Users> users { get; set; }
         public  DbSet<Student> Students { get; set; }
         public virtual DbSet<Instructor> Instructors { get; set; }
-        public DbSet<Admin> Admins { get; set; }
+        public virtual DbSet<Admin> Admins { get; set; }
         public virtual DbSet<Quizzes> quizzes { get; set; }
         public virtual DbSet<Questions> questions { get; set; }
         public virtual DbSet<Answers> answers { get; set; }

@@ -52,5 +52,12 @@ namespace OnlineQuiz.DAL.Repositoryies.StudentReposatory
         .Where(s => s.StudentInstructors.All(si => si.InstructorId != instructorId)).ToList();
             return x;
         }
+
+        public Task<int> SaveChangesAsync()
+        {
+            
+              return  _quizContext.SaveChangesAsync();
+            
+        }
     }
 }

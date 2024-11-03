@@ -31,7 +31,10 @@ namespace OnlineQuiz.BLL.Managers.Instructor
 
         }
 
-
+        public InstructorReadDto GetInsById(string id)
+        {
+            return _mapper.Map<InstructorReadDto>(_iInstructorRepository.GetInsById(id));
+        }
 
 
 

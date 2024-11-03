@@ -19,8 +19,9 @@ namespace OnlineQuiz.BLL.AutoMapper.AdminAutoMapper
            CreateMap<Student, StudentUpdateDto>().ReverseMap();
 
 
-                                                                                                                            
-           CreateMap<Instructor, InstructorReadDto>().ReverseMap();
+            CreateMap<IstrurctorUpdateDto, InstructorReadDto>().ReverseMap();
+
+            CreateMap<Instructor, InstructorReadDto>().ReverseMap();
            CreateMap<Instructor, InstructorAddDto>().ReverseMap();
            CreateMap<Instructor, IstrurctorUpdateDto>().ReverseMap();
            CreateMap<Instructor, InstructorStatusDto>().ReverseMap();

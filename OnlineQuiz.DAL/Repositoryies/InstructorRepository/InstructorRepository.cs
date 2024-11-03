@@ -4,6 +4,7 @@ using OnlineQuiz.DAL.Data.DBHelper;
 using OnlineQuiz.DAL.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -72,14 +73,21 @@ namespace OnlineQuiz.DAL.Repositoryies.InstructorRepository
 
         public Instructor GetInstructorById(string id)
         {
-           return _context.Instructors.FirstOrDefault(x => x.Id == id);
+            return _context.Instructors.FirstOrDefault(x => x.Id == id);
         }
+
+        public Instructor GetInsById(string id)
+        {
+            return _context.Instructors.FirstOrDefault(Key => Key.Id == id.ToString());
+        }
+
 
         public void UpdateInstructorProfile(Instructor Instructor)
         {
             _context.Instructors.Update(Instructor);
             savechanges();
         }
+
 
 
 

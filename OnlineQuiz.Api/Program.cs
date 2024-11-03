@@ -155,11 +155,22 @@ namespace OnlineQuiz.Api
             var app = builder.Build();
             app.UseMiddleware<GlobalErrorHandlingMiddleware>();
 
-            // Call the SeedRoles method
+            // Call the SeedRoles and SeedAdminUser methods
             using (var scope = app.Services.CreateScope())
             {
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<CustomRole>>();
-                await SeedRolesDtocs.SeedRoles(roleManager);
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<Users>>();
+                var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+
+                try
+                {
+                    await SeedRolesDtocs.SeedRoles(roleManager, logger);
+                    await SeedAdminUserdtos.SeedAdminUser(userManager, roleManager, logger);
+                }
+                catch (Exception ex)
+                {
+                    logger.LogError($"An error occurred while seeding the database: {ex.Message}");
+                }
             }
 
 

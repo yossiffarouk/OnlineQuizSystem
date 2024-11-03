@@ -12,8 +12,9 @@ namespace OnlineQuiz.BLL.Dtos.Accounts
     {
        
          
-            [StringLength(80, ErrorMessage = "Username must be between 5 and 30 characters", MinimumLength = 5)]
+        [StringLength(80, ErrorMessage = "Username must be between 5 and 30 characters", MinimumLength = 5)]
         [Required(ErrorMessage = "Username is required")]
+        [RegularExpression(@"^[a-zA-Z0-9\s,.-]+$", ErrorMessage = "Name can only contain letters, numbers, spaces, commas, dots, and hyphens.")]
         public string UserName { get; set; }
 
             [Required(ErrorMessage = "Email is required")]
@@ -46,6 +47,7 @@ namespace OnlineQuiz.BLL.Dtos.Accounts
         public GenderType Gender { get; set; }
 
         [Required(ErrorMessage = "Address is required")]
+        [RegularExpression(@"^[a-zA-Z0-9\s,.-]+$", ErrorMessage = "Address can only contain letters, numbers, spaces, commas, dots, and hyphens.")]
         public string Address { get; set; } 
 
 

@@ -116,14 +116,15 @@
                 </div>
                 <div class="position-sticky">
                     <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Student" asp-action="Profile" >
-                                <i class="bi bi-bar-chart me-2"></i> Profile
-                            </a>
-                        </li>
+                   
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Index", "Student")">
                                 <i class="bi bi-house me-2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Student" asp-action="Profile">
+                                <i class="bi bi-bar-chart me-2"></i> Profile
                             </a>
                         </li>
                         <li class="nav-item">
@@ -136,6 +137,11 @@
                                 <i class="bi bi-file-earmark-text me-2"></i> My Instructors
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Student" asp-action="LogoutConfirmation">
+                                <i class="bi bi-file-earmark-text me-2"></i> LogOut
+                            </a>
+                        </li>
                         
                     </ul>
                 </div>
@@ -143,7 +149,7 @@
 
            <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 main-content">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">welcom @Model.Name</h1>
+                    <h1 class="h2">Welcome @Model.Name</h1>
                     <a href="/Student/AttemptQuiz">
                         <button class="btn btn-warning">
                             <i class="bi bi-play me-2"></i> Start New Quiz

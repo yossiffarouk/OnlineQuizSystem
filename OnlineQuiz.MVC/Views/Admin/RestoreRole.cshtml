@@ -83,11 +83,20 @@
 <body>
     <div class="form-container mx-auto">
         <p class="title">Restore Role</p>
+        <!-- Success Message Section -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
         <!-- Error Message Section -->
         @if (!ViewData.ModelState.IsValid)
         {
             <div class="alert alert-danger">
-                <ul>
+                <strong>There were some errors with your submission:</strong>
+                <ul class="mb-0">
                     @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
                     {
                         <li>@error.ErrorMessage</li>
@@ -96,7 +105,7 @@
             </div>
         }
 
-        <form class="form" asp-action="RestoreRole" asp-controller="Role" method="post">
+        <form class="form" asp-action="RestoreRole" asp-controller="Admin" method="post">
             <!-- Role ID Input -->
             <div class="input-group">
                 <label asp-for="@Model.RoleId">Role ID</label>

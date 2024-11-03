@@ -27,7 +27,7 @@ namespace OnlineQuiz.DAL.Repositoryies.InstructorRepository
         // method get attemmpts to show student id and score scerch by quiz
 
         IEnumerable<Attempts> showAttempts(int quiz);
-
+        Instructor GetInsById(string id);
         // save in database
         void savechanges();
     }

@@ -80,11 +80,20 @@
 <body>
     <div class="form-container mx-auto">
         <p class="title">Delete Role from User</p>
+        <!-- Success Message Section -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
 
+        <!-- Error Message Section -->
         @if (!ViewData.ModelState.IsValid)
         {
             <div class="alert alert-danger">
-                <ul>
+                <strong>There were some errors with your submission:</strong>
+                <ul class="mb-0">
                     @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
                     {
                         <li>@error.ErrorMessage</li>
@@ -93,7 +102,7 @@
             </div>
         }
 
-        <form asp-action="DeleteRoleFromUser" asp-controller="Role" method="post">
+        <form asp-action="DeleteRoleFromUser" asp-controller="Admin" method="post">
             <div class="input-group">
                 <label asp-for="@Model.UserId">User ID</label>
                 <input asp-for="@Model.UserId" placeholder="Enter User ID" required />

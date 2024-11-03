@@ -6,6 +6,7 @@ using OnlineQuiz.BLL.Dtos.Options;
 using OnlineQuiz.BLL.Dtos.Question;
 using OnlineQuiz.BLL.Dtos.Quiz;
 using OnlineQuiz.BLL.Dtos.Track;
+using OnlineQuiz.BLL.Managers.Accounts;
 using OnlineQuiz.BLL.Managers.Admin;
 using OnlineQuiz.BLL.Managers.Instructor;
 using OnlineQuiz.BLL.Managers.QuestionManager;
@@ -29,8 +30,10 @@ namespace OnlineQuiz.MVC.Controllers
         private readonly QuizContext _quizContext;
         private readonly IStudentManager _StudentManager;
         private readonly IInstructorManger _InstructorManger;
+        private readonly IAccountManager _accountManager;
 
-        public InstructorController(IAdminManger adminManger ,ITrackManager trackManager,IQuizManager quizManager,IQuestionManager questionManager ,QuizContext quizContext , IStudentManager studentManager ,IInstructorManger instructorManger)
+        public InstructorController(IAdminManger adminManger ,ITrackManager trackManager,IQuizManager quizManager,IQuestionManager questionManager ,QuizContext quizContext ,
+            IStudentManager studentManager ,IInstructorManger instructorManger , IAccountManager accountManager)
         {
             _adminManger = adminManger;
             _trackManager = trackManager;
@@ -39,7 +42,36 @@ namespace OnlineQuiz.MVC.Controllers
             _quizContext = quizContext;
             _StudentManager = studentManager;
             _InstructorManger = instructorManger;
+            _accountManager = accountManager;
         }
+
+
+
+
+
+        //LogOut
+        [Authorize(Roles = Roles.Instructor)]
+        [HttpGet]
+        public IActionResult LogoutConfirmation()
+        {
+            return View();
+        }
+        [Authorize(Roles = Roles.Instructor)]
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _accountManager.Logout();
+            return RedirectToAction("Login", "Home");
+        }
+
+        [Authorize(Roles = Roles.Instructor)]
+        [HttpPost]
+        public IActionResult CancelLogout()
+        {
+            return RedirectToAction("DashBoared", "Instructor"); // Redirect to the dashboard
+        }
+
+
         [Authorize(Roles =Roles.Instructor)]
         public IActionResult Dashboared()
         {
@@ -63,6 +95,38 @@ namespace OnlineQuiz.MVC.Controllers
 
             return View(model); 
         }
+
+
+
+        // get ins by id 
+        [HttpGet]
+        [Authorize(Roles = Roles.Instructor)]
+        public IActionResult Profile()
+        {
+
+            var instructorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(instructorId))
+            {
+                return NotFound(); // Handle missing student ID
+            }
+
+            var InsDetails = _InstructorManger.GetInsById(instructorId);
+
+            if (InsDetails == null)
+            {
+                return NotFound(); // Handle if the student is not found
+            }
+
+            return View(InsDetails); // Pass the student data to the view
+
+        }
+
+
+
+
+
+
+
         [Authorize(Roles = Roles.Instructor)]
         [HttpGet]
         public IActionResult QuizCreation(string instructorId)

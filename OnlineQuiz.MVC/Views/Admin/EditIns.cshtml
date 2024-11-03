@@ -1,4 +1,5 @@
-﻿@model OnlineQuiz.BLL.Dtos.StudentDtos.StudentUpdateDto
+﻿@model IstrurctorUpdateDto
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -84,15 +85,17 @@
                 <div class="card-header bg-transparent">
                     <h3>Edit Profile</h3>
                     <p class="text-muted">Update your profile information</p>
-                 @*    <div class="profile_img-container">
-                        <img id="profileImage" class="profile_img" src="~/images/@Model.ImgUrl" alt="Profile Image">
-                        <input type="file" id="imageUpload" name="profileImage" accept="image/*" style="display: none;" onchange="previewImage(event)">
-                        <button type="button" class="upload-btn" onclick="document.getElementById('imageUpload').click()">Edit Picture</button>
+
+                    @*    <div class="profile_img-container">
+                    <img id="profileImage" class="profile_img" src="~/images/@Model.ImgUrl" alt="Profile Image">
+                    <input type="file" id="imageUpload" name="profileImage" accept="image/*" style="display: none;" onchange="previewImage(event)">
+                    <button type="button" class="upload-btn" onclick="document.getElementById('imageUpload').click()">Edit Picture</button>
                     </div >*@
                 </div>
                 <div class="card-body">
-                    <form asp-action="Edit" asp-controller="Student" method="post">
+                    <form asp-action="EditInstructor" asp-controller="Admin" method="post">
                         <input type="hidden" asp-for="Id" />
+                      
 
                         <!-- User Name -->
                         <div class="form-group">
@@ -117,12 +120,7 @@
 
 
 
-                        <!-- Grade Level -->
-                        <div class="form-group">
-                            <label asp-for="Grade">Grade</label>
-                            <input asp-for="Grade" class="form-control" />
-                            <span asp-validation-for="Grade" class="text-danger"></span>
-                        </div>
+
 
                         <!-- Address -->
                         <div class="form-group">
@@ -151,7 +149,7 @@
         </div>
     </div>
 
-    <script>
+@*     <script>
         function previewImage(event) {
             const reader = new FileReader();
             reader.onload = function () {
@@ -159,7 +157,7 @@
             };
             reader.readAsDataURL(event.target.files[0]);
         }
-    </script>
+    </script> *@
 
 </body>
 </html>

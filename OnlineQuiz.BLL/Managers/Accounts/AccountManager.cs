@@ -86,8 +86,21 @@ namespace OnlineQuiz.BLL.Managers.Accounts
 
 
             // Determine user type
-            Users user = registerDto.UserType == UserTypeEnum.Student ? new OnlineQuiz.DAL.Data.Models.Student() :
-                    (registerDto.UserType == UserTypeEnum.Instructor ? new OnlineQuiz.DAL.Data.Models.Instructor() : new  OnlineQuiz.DAL.Data.Models.Admin());
+            //Users user = registerDto.UserType == UserTypeEnum.Student ? new OnlineQuiz.DAL.Data.Models.Student() :
+            //        (registerDto.UserType == UserTypeEnum.Instructor ? new OnlineQuiz.DAL.Data.Models.Instructor() : new  OnlineQuiz.DAL.Data.Models.Admin());
+            Users user;
+            if (registerDto.UserType == UserTypeEnum.Student)
+            {
+                user = new OnlineQuiz.DAL.Data.Models.Student();
+            }
+            else if (registerDto.UserType == UserTypeEnum.Instructor)
+            {
+                user = new OnlineQuiz.DAL.Data.Models.Instructor();
+            }
+            else
+            {
+                user = new OnlineQuiz.DAL.Data.Models.Admin();
+            }
 
 
             user.UserName = registerDto.UserName;
@@ -226,12 +239,12 @@ namespace OnlineQuiz.BLL.Managers.Accounts
                 response.Errors.Add("Your account has been banned.");
                 return response;
             }
-            if (user.Email == "yossif155farouk@gmail.com" && loginDto.Password == "ZX12zx12#") // Replace with actual admin password logic
-            {     
-                response.RedirectUrl = "/Admin/DashBoard"; // Redirect directly to Admin Dashboard
-                response.successed = true;
-                return response;
-            }
+            //if (user.Email == "yossif155farouk@gmail.com" && loginDto.Password == "ZX12zx12#") // Replace with actual admin password logic
+            //{     
+            //    response.RedirectUrl = "/Admin/DashBoard"; // Redirect directly to Admin Dashboard
+            //    response.successed = true;
+            //    return response;
+            //}
 
 
 
@@ -609,6 +622,38 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             return roles;
         }
 
+        //public async Task<RoleResponce<UserRoleInfo>> GetUsersInRole(string RoleId)
+        //{
+        //    var response = new RoleResponce<UserRoleInfo>();
+
+        //    var role = await _roleManager.FindByIdAsync(RoleId);
+        //    if (role == null)
+        //    {
+        //        response.Errors.Add("Role does not exist.");
+        //        return response;
+        //    }
+
+        //    // Get users in the specified role
+        //    var users = await _userManager.GetUsersInRoleAsync(role.Name);
+        //    var userCount = users.Count();
+
+        //    // Prepare the response data
+        //    response.Data = new UserRoleInfo
+        //    {
+        //        RoleName = role.Name,
+        //        UsersCount = userCount,
+        //        Users = users.Select(u => new UserInfo
+        //        {
+        //            UserId = u.Id,
+        //            UserName = u.UserName,
+        //            Email = u.Email
+        //        }). ToList()
+
+        //    };
+
+        //    response.successed = true;
+        //    return response;
+        //}
         public async Task<RoleResponce<UserRoleInfo>> GetUsersInRole(string RoleId)
         {
             var response = new RoleResponce<UserRoleInfo>();
@@ -634,13 +679,14 @@ namespace OnlineQuiz.BLL.Managers.Accounts
                     UserId = u.Id,
                     UserName = u.UserName,
                     Email = u.Email
-                }). ToList()
-              
+                }).ToList()
             };
 
             response.successed = true;
             return response;
-        }
+        
+    }
+
 
 
 

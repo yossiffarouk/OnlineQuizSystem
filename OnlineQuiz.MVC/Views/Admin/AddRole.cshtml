@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -76,16 +77,24 @@
         }
     </style>
 </head>
-
 @model AddRoleVm
 <body>
     <div class="form-container mx-auto">
         <p class="title">Manage Roles</p>
+        <!-- Success Message Section -->
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <div class="alert alert-success">
+                @TempData["SuccessMessage"]
+            </div>
+        }
+
         <!-- Error Message Section -->
         @if (!ViewData.ModelState.IsValid)
         {
             <div class="alert alert-danger">
-                <ul>
+                <strong>There were some errors with your submission:</strong>
+                <ul class="mb-0">
                     @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
                     {
                         <li>@error.ErrorMessage</li>
@@ -94,7 +103,7 @@
             </div>
         }
 
-        <form class="form" asp-action="AddRole" asp-controller="Role" method="post">
+        <form class="form" asp-action="AddRole" asp-controller="Admin" method="post">
             <!-- Role Name Input -->
             <div class="input-group">
                 <label asp-for="@Model.RoleName">Role Name</label>

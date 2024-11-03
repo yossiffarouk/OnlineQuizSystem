@@ -1,5 +1,7 @@
 ﻿
 using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using OnlineQuiz.BLL.Dtos.StudentDtos;
 using OnlineQuiz.BLL.Wrapper;
 using OnlineQuiz.DAL.Data.Models;
@@ -17,11 +19,59 @@ namespace OnlineQuiz.BLL.Managers.Student
     {
         private readonly IStudentRepo _studentRepo;
         private readonly IMapper _mapper;
-        public StudentManager(IStudentRepo studentRepo, IMapper mapper)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public StudentManager(IStudentRepo studentRepo, IMapper mapper , IWebHostEnvironment webHostEnvironment)
         {
             _studentRepo = studentRepo;
             _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
         }
+
+
+
+
+
+        public string  UploadProfileImageAsync(IFormFile profileImage, string userId)
+        {
+            if (profileImage == null || profileImage.Length == 0)
+            {
+                throw new ArgumentException("Please select a valid image file.");
+            }
+
+            // Define the path where the image will be saved
+            var uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images");
+            Directory.CreateDirectory(uploadsFolder); // Ensure the folder exists
+
+            var uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(profileImage.FileName);
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+            // Save the image file
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                 profileImage.CopyToAsync(fileStream);
+            }
+
+            // Update ImageUrl in the database
+            var student =  _studentRepo.GetById(userId); // Adjust if `GetByIdAsync` exists in IStudentRepo
+            if (student == null)
+            {
+                throw new Exception("Student not found.");
+            }
+
+            student.ImgUrl = "/images/" + uniqueFileName;
+            _studentRepo.Update(student);
+             _studentRepo.SaveChangesAsync(); // Ensure SaveChangesAsync is awaited
+
+            return student.ImgUrl;
+        }
+
+
+
+
+
+
+
         public IQueryable<StudentReadDto> GetAll()
         {
             return _mapper.ProjectTo<StudentReadDto>(_studentRepo.GetAll());
@@ -85,6 +135,11 @@ namespace OnlineQuiz.BLL.Managers.Student
         public IEnumerable<StudentReadDto> GetStudentsToAdd(string instructorId)
         {
             return _mapper.Map<IEnumerable<StudentReadDto>>(_studentRepo.GetStudentsToAdd(instructorId));
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _studentRepo.SaveChangesAsync();
         }
     }
 }

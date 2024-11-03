@@ -13,6 +13,7 @@ namespace OnlineQuiz.DAL.Repositoryies.StudentReposatory
         IQueryable<Student> GetStudentsByGrade(string grade);
         IEnumerable<StudentInstructor> GetStudentsWithInstructor(string InstructorId);
         public Student GetByIdWithDetails(string studentId);
-        IEnumerable<Student> GetStudentsToAdd(string instructorId); 
+        IEnumerable<Student> GetStudentsToAdd(string instructorId);
+        Task<int> SaveChangesAsync();
     }
 }

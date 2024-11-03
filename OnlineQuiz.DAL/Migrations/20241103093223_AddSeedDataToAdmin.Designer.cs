@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OnlineQuiz.DAL.Data.DBHelper;
 
@@ -11,9 +12,11 @@ using OnlineQuiz.DAL.Data.DBHelper;
 namespace OnlineQuiz.DAL.Migrations
 {
     [DbContext(typeof(QuizContext))]
-    partial class QuizContextModelSnapshot : ModelSnapshot
+    [Migration("20241103093223_AddSeedDataToAdmin")]
+    partial class AddSeedDataToAdmin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -522,6 +525,30 @@ namespace OnlineQuiz.DAL.Migrations
                     b.HasBaseType("OnlineQuiz.DAL.Data.Models.Users");
 
                     b.HasDiscriminator().HasValue("Admin");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "9e683a00-2565-4b46-8b3b-6e398e62baf2",
+                            AccessFailedCount = 0,
+                            Adress = "Mansoura",
+                            Age = 0,
+                            ConcurrencyStamp = "6be83a88-11a3-4896-b79c-2b7ba899afab",
+                            Email = "yossif155farouk@gmail.com",
+                            EmailConfirmed = true,
+                            Gender = 1,
+                            IsBanned = false,
+                            IsDeleted = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "YOSSIF155FAROUK@GMAIL.COM",
+                            NormalizedUserName = "YOSSIF FAROUK",
+                            PasswordHash = "ZX12zx12#",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "eee2bb25-ccc8-4242-bc7b-4beb72e29dd1",
+                            TwoFactorEnabled = false,
+                            UserName = "Yossif Farouk",
+                            UserType = 3
+                        });
                 });
 
             modelBuilder.Entity("OnlineQuiz.DAL.Data.Models.Instructor", b =>
