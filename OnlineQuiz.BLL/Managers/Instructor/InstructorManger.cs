@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using OnlineQuiz.BLL.Dtos.Admin.InstructorDtos;
+using OnlineQuiz.BLL.Dtos.Admin.StudentDtos;
 using OnlineQuiz.BLL.Dtos.Instructor;
 using OnlineQuiz.DAL.Data.Models;
 using OnlineQuiz.DAL.Repositoryies.InstructorRepository;
@@ -63,6 +64,12 @@ namespace OnlineQuiz.BLL.Managers.Instructor
 
             _iInstructorRepository.UpdateInstructorProfile(_mapper.Map<OnlineQuiz.DAL.Data.Models.Instructor>(UpdateInstructorrProfileDto));
             return "Instructor updated successfully";
+        }
+
+        public IEnumerable<StudentReadDto> GetStudentOfQuizAttempet(int quizId)
+        {
+            return _mapper.Map<IEnumerable<StudentReadDto>>(_iInstructorRepository.GetAllStudentForQuiz(quizId));
+            
         }
     }
 }

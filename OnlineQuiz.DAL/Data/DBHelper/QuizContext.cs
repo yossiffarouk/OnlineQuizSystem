@@ -25,7 +25,7 @@ namespace OnlineQuiz.DAL.Data.DBHelper
             base.OnConfiguring(optionsBuilder);
             optionsBuilder.UseLazyLoadingProxies(true);
         }
-        // this method hash pass for admin add by admin - note better use fazwy algrothim for hash password
+        
        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

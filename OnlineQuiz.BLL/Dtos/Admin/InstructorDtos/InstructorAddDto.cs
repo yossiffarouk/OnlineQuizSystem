@@ -18,5 +18,6 @@ namespace OnlineQuiz.BLL.Dtos.Admin.InstructorDtos
         public UserTypeEnum UserType { get; set; } = UserTypeEnum.Instructor;
         public string Adress { get; set; }
         public ApprovalStatus Status { get; set; } = ApprovalStatus.Approved;
+        public bool EmailConfirmed { get; set; } = true;
     }
 }

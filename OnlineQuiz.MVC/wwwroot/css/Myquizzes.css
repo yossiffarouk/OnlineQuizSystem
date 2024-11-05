@@ -1,0 +1,12 @@
+﻿@media (max-width: 767.98px) {
+    .sidebar {
+        padding: 0.5rem 0; /* Further reduce padding on small screens */
+    }
+
+    .brand-logo {
+        font-size: 1.2rem; /* Smaller logo text on small screens */
+    }
+
+    .sidebar .nav-link {
+        padding: 0.3rem 0.5rem; /* Smaller padding for links on small screens */
+    }

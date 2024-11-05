@@ -1,0 +1,141 @@
+﻿
+/* General styles */
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f0f0f0;
+    font-family: 'Nunito', sans-serif;
+}
+
+.header {
+    background: linear-gradient(135deg, #4e73df, #2e59d9);
+    color: white;
+    padding: 1rem 1rem;
+    border-radius: 15px;
+    text-align: center;
+    margin: 2rem 0 3rem 0;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s;
+}
+
+    .header h1 {
+        font-size: 2rem;
+        letter-spacing: 0.05em;
+        margin: 0;
+        font-weight: 700;
+        text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.4);
+    }
+
+/* Button styles */
+.btn {
+    background: hsl(var(--hue), 98%, 80%);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: black;
+    font: 600 1.2rem/1 "Nunito", sans-serif;
+    letter-spacing: 0.05em;
+    padding: 1.5em 3em;
+    position: relative;
+    text-transform: lowercase;
+    margin-bottom: 0.25%;
+    transition: background-color 0.3s;
+}
+
+    .btn:hover {
+        background: hsl(var(--hue), 98%, 70%);
+    }
+
+.btn--yellow {
+    --hue: 46;
+}
+
+.btn--green {
+    --hue: 163;
+}
+
+.btn--purple {
+    --hue: 244;
+}
+
+.btn--red {
+    --hue: 0;
+}
+
+.btn--blue {
+    --hue: 210;
+}
+
+.btn--light {
+    --hue: 60;
+}
+
+.btn--dark {
+    --hue: 90;
+}
+
+.btn__bg {
+    background: hsl(var(--hueBg), 98%, 80%);
+    border-radius: 50%;
+    display: block;
+    height: 0;
+    left: 50%;
+    margin: -50% 0 0 -50%;
+    padding-top: 100%;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    transform: scale(0);
+    transform-origin: 50% 50%;
+    transition: transform 0.175s cubic-bezier(0.5, 1, 0.89, 1);
+    z-index: 1;
+}
+
+.btn__txt {
+    position: relative;
+    z-index: 2;
+    text-transform: uppercase;
+}
+
+.btn:hover .btn__bg {
+    transform: scale(1.5);
+    transition: transform 0.35s cubic-bezier(0.11, 0, 0.5, 0);
+}
+
+/* Layout styling */
+.role-buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25%;
+    max-width: 800px;
+    margin: 0 auto;
+    padding-right: 125px;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .role-buttons {
+        grid-template-columns: 1fr; /* Stack buttons vertically */
+        padding: 0;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .header h1 {
+        font-size: 1.5rem; /* Adjust title size */
+    }
+
+    .btn {
+        font-size: 1rem; /* Smaller button text */
+        padding: 1em 2em; /* Smaller button padding */
+    }
+}
+
+
