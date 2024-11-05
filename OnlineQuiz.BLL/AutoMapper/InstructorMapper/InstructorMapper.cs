@@ -17,7 +17,8 @@ namespace OnlineQuiz.BLL.AutoMapper.InstructorMapper
         public InstructorMapper()
         {
             CreateMap<Instructor, UpdateInstructorrProfileDto>().ReverseMap();
-          
+           
+
         }
 
     }

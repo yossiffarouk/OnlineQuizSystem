@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using OnlineQuiz.BLL.Dtos.Attempt;
+using OnlineQuiz.BLL.Dtos.Instructor;
 using OnlineQuiz.DAL.Data.Models;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,8 @@ namespace OnlineQuiz.BLL.AutoMapper.Attempt
             CreateMap<Attempts, AttemptDto>();
             CreateMap<AnswerDto, Answers>().ReverseMap();
             CreateMap<Quizzes, QuizReadByIdDto>();
-            CreateMap<Student, StudentReadByIdDto>();   
+            CreateMap<Student, StudentReadByIdDto>();
+            CreateMap<Attempts, StudentAttemptDto>().ReverseMap();
         }
 
     }

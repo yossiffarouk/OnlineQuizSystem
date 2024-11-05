@@ -32,6 +32,40 @@ namespace OnlineQuiz.MVC.Controllers
             _mapper = mapper;
             _accountManager = accountManager;
         }
+
+
+        //LogOut
+
+        [Authorize(Roles = Roles.Admin)]
+        [HttpGet]
+        public IActionResult LogoutConfirmation()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = Roles.Admin)]
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _accountManager.Logout();
+            return RedirectToAction("Login", "Home");
+        }
+
+        [Authorize(Roles = Roles.Admin)]
+        [HttpPost]
+        public IActionResult CancelLogout()
+        {
+            return RedirectToAction("DashBoard", "Admin"); 
+        }
+
+
+
+
+
+
+
+
+
         // get dashbored and show static for admin
 
         [Authorize(Roles = Roles.Admin)]

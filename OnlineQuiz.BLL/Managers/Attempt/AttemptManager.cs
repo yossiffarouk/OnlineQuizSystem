@@ -190,7 +190,7 @@ namespace OnlineQuiz.BLL.Managers.Attempt
             }).ToList();
 
             _attempt.SubmitQuizAttempt(attemptId, answers);
-            _attempt.SaveChanges();
+            //_attempt.SaveChanges();
         }
 
         public void Update(AttemptDto entity)

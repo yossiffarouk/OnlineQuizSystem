@@ -30,7 +30,7 @@ namespace OnlineQuiz.DAL.Repositoryies.InstructorRepository
         Instructor GetInsById(string id);
         // save in database
 
-        public IEnumerable<Student> GetAllStudentForQuiz(int QuizId);
+        public IQueryable<Attempts> GetAllStudentForQuiz(int QuizId);
         void savechanges();
     }
 }

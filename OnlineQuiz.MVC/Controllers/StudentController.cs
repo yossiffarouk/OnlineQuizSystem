@@ -47,57 +47,7 @@ namespace OnlineQuiz.MVC.Controllers
 
 
 
-        //[HttpPost]
-        //public async Task<IActionResult> UploadProfileImage(IFormFile profileImage)
-        //{
-        //    // Validate the uploaded file
-        //    if (profileImage == null || profileImage.Length == 0)
-        //    {
-        //        ModelState.AddModelError("ImageUpload", "Please select an image file.");
-        //        return View(); // Return to the view with an error message
-        //    }
-
-        //    var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-        //    // Check if userId is not null or empty
-        //    if (string.IsNullOrEmpty(userId))
-        //    {
-        //        ModelState.AddModelError("User", "User not found. Please try logging in again.");
-        //        return View(); // Return to the view with an error message
-        //    }
-
-        //    // Define allowed file extensions
-        //    var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
-        //    var extension = Path.GetExtension(profileImage.FileName).ToLower();
-
-        //    // Validate file type
-        //    if (!allowedExtensions.Contains(extension))
-        //    {
-        //        ModelState.AddModelError("ImageUpload", "Invalid file type. Only JPG, PNG, and GIF files are allowed.");
-        //        return View(); // Return to the view with an error message
-        //    }
-
-        //    // Optimize file size (e.g., limit to 2MB)
-        //    if (profileImage.Length > 2 * 1024 * 1024)
-        //    {
-        //        ModelState.AddModelError("ImageUpload", "File size exceeds 2MB limit. Please upload a smaller image.");
-        //        return View(); // Return to the view with an error message
-        //    }
-
-        //    try
-        //    {
-        //        // Upload the profile image asynchronously
-        //        _studentManager.UploadProfileImageAsync(profileImage, userId);
-        //        TempData["SuccessMessage"] = "Profile image uploaded successfully."; // Use TempData for success message
-        //        return RedirectToAction("Profile"); // Redirect to profile page
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ModelState.AddModelError("ImageUpload", $"Error uploading image: {ex.Message}");
-        //        return View(); // Return with error if any issues occur
-        //    }
-        //}
-
+     
 
 
 
@@ -303,8 +253,8 @@ namespace OnlineQuiz.MVC.Controllers
         [Authorize(Roles = Roles.Student)]
         public IActionResult GetQuestions(StartQuizAttemptDto startQuiz)
         {
-            var StudentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            //startQuiz.StudentId = StudentId;
+          
+          
             startQuiz.StudentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             List<QuesstionDto> startquiz = _attemptManager.StartQuizAttempt(startQuiz);
             QuizReadByIdDto quiz = _attemptManager.GetQuizById(startQuiz.QuizId);

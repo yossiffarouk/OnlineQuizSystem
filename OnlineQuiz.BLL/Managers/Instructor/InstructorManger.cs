@@ -71,10 +71,24 @@ namespace OnlineQuiz.BLL.Managers.Instructor
             return "Instructor updated successfully";
         }
 
-        public IEnumerable<StudentReadDto> GetStudentOfQuizAttempet(int quizId)
+        public IEnumerable<StudentAttemptDto> GetStudentOfQuizAttempet(int quizId)
         {
-            return _mapper.Map<IEnumerable<StudentReadDto>>(_iInstructorRepository.GetAllStudentForQuiz(quizId));
-            
+            //
+            var attempts = _iInstructorRepository.GetAllStudentForQuiz(quizId).ToList();
+
+            // Manually map to StudentAttemptDto
+            var studentAttemptDtos = attempts.Select(a => new StudentAttemptDto
+            {
+                UserName = a.Student.UserName,
+                PhoneNumber = a.Student.PhoneNumber,
+                Email=a.Student.Email,
+                Age = a.Student.Age,    
+                Score = a.Score
+            });
+
+            return studentAttemptDtos;
         }
+
+      
     }
 }

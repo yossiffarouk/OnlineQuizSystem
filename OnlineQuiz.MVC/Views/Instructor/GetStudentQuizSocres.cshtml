@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OnlineQuiz.BLL.Dtos.Admin.StudentDtos.StudentReadDto>
+﻿@model IEnumerable<StudentAttemptDto>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,20 +16,20 @@
     <div id="main-content">
         <section id="instructors">
             <h2>Students Attempet</h2>
-            
-            <a class="btn-unban" href="/Instructor/Dashboared">Back To DashBoard</a>
+
+            <a class="btn-unban" href="/Instructor/QuizOfInstructor">Back To DashBoard</a>
             <br />
             <br />
             <!-- Add search box to filter instructors -->
-           
+
             <table id="instructor-table">
                 <thead>
                     <tr>
                         <th>Name</th>
-                        
+
                         <th>Phone</th>
-                        
-                        
+                        <th>Age</th>
+                        <th>Email</th>
                         <th>score</th>
                     </tr>
                 </thead>
@@ -39,9 +39,11 @@
                         <tr>
                             <td>@quiz.UserName</td>
                             <td>@quiz.PhoneNumber</td>
-                            <td>@quiz.PhoneNumber</td>
-                           
-                  
+                            <td>@quiz.Age</td>
+                            <td>@quiz.Email</td>
+                            <td>@quiz.Score</td>
+
+
                         </tr>
                     }
                 </tbody>

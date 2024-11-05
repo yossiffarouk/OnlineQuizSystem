@@ -98,14 +98,13 @@ namespace OnlineQuiz.DAL.Repositoryies.InstructorRepository
             _context.SaveChanges();
         }
 
-        public IEnumerable<Student> GetAllStudentForQuiz(int QuizId)
-        {
-            var students = _context.attempts
-             .Where(a => a.QuizId == QuizId)
-             .Select(a => a.Student)
-             .Distinct();
 
-            return students;
+   
+
+        public IQueryable<Attempts> GetAllStudentForQuiz(int QuizId)
+        {
+            return Microsoft.EntityFrameworkCore.EntityFrameworkQueryableExtensions
+                .Include(_context.attempts.Where(a => a.QuizId == QuizId), a => a.Student);
         }
     }
 }

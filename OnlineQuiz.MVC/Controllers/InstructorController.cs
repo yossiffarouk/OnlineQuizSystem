@@ -280,12 +280,13 @@ namespace OnlineQuiz.MVC.Controllers
             return RedirectToAction("Profile");
         }
 
+
         [Route("Instructor/GetStudentQuizSocres/{QuizId}")]
         public  IActionResult GetStudentQuizSocres(int QuizId)
         {
 
             var students = _InstructorManger.GetStudentOfQuizAttempet(QuizId);
-            return View("GetStudentQuizScores", students);
+            return View("GetStudentQuizSocres", students);
         }
 
 

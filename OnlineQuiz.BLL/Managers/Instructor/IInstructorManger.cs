@@ -23,7 +23,7 @@ namespace OnlineQuiz.BLL.Managers.Instructor
         IEnumerable<InstructorSeeQuizDto> ShowScoresOfQuiz(int quizId);
         InstructorReadDto GetInsById(string id);
 
-         IEnumerable<StudentReadDto> GetStudentOfQuizAttempet(int quizId); 
+        IEnumerable<StudentAttemptDto> GetStudentOfQuizAttempet(int quizId); 
 
     }
 }
