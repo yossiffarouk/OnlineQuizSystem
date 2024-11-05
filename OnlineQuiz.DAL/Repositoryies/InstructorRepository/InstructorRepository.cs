@@ -20,8 +20,8 @@ namespace OnlineQuiz.DAL.Repositoryies.InstructorRepository
             _context = context;
         }
 
-       
 
+     
 
         //---------------------------
         // Add student to instructor
@@ -98,6 +98,6 @@ namespace OnlineQuiz.DAL.Repositoryies.InstructorRepository
             _context.SaveChanges();
         }
 
-  
+       
     }
 }
