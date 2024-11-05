@@ -31,9 +31,10 @@ namespace OnlineQuiz.MVC.Controllers
         private readonly IStudentManager _StudentManager;
         private readonly IInstructorManger _InstructorManger;
         private readonly IAccountManager _accountManager;
+        private readonly QuizContext _context;
 
         public InstructorController(IAdminManger adminManger ,ITrackManager trackManager,IQuizManager quizManager,IQuestionManager questionManager ,QuizContext quizContext ,
-            IStudentManager studentManager ,IInstructorManger instructorManger , IAccountManager accountManager)
+            IStudentManager studentManager ,IInstructorManger instructorManger , IAccountManager accountManager , QuizContext context)
         {
             _adminManger = adminManger;
             _trackManager = trackManager;
@@ -43,6 +44,7 @@ namespace OnlineQuiz.MVC.Controllers
             _StudentManager = studentManager;
             _InstructorManger = instructorManger;
             _accountManager = accountManager;
+            _context = context;
         }
 
 
@@ -72,7 +74,7 @@ namespace OnlineQuiz.MVC.Controllers
         }
 
 
-        [Authorize(Roles =Roles.Instructor)]
+        [Authorize(Roles = Roles.Instructor)]
         public IActionResult Dashboared()
         {
 
@@ -248,5 +250,46 @@ namespace OnlineQuiz.MVC.Controllers
             var quizzes = _quizManager.GetQuizzesByInstructorId(instructorId);
             return View(quizzes);
         }
+
+
+
+
+         // this code to add pic of instructor profile
+        [HttpPost]
+        public async Task<IActionResult> UploadProfileImage(IFormFile profilePic)
+        {
+            if (profilePic != null && profilePic.Length > 0)
+            {
+                // Process and save the image to your desired location
+                var filePath = Path.Combine("wwwroot/Images", profilePic.FileName);
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await profilePic.CopyToAsync(stream);
+                }
+
+                // Update the instructor's profile image path (e.g., in the database)
+                var instructorId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var instructor = await _context.Instructors.FindAsync(instructorId);
+                if (instructor != null)
+                {
+                    instructor.ImgUrl = profilePic.FileName;  // Adjust path as needed
+                    await _context.SaveChangesAsync();
+                }
+            }
+
+            return RedirectToAction("Profile");
+        }
+
+        [Route("Instructor/GetStudentQuizSocres/{QuizId}")]
+        public  IActionResult GetStudentQuizSocres(int QuizId)
+        {
+
+            var students = _InstructorManger.GetStudentOfQuizAttempet(QuizId);
+            return View("GetStudentQuizScores", students);
+        }
+
+
+
+
     }
 }

@@ -1,6 +1,5 @@
 ﻿@model InstructorReadDto
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,15 +59,12 @@
             width: 150px;
             height: 150px;
             object-fit: cover;
-            border: 10px solid #ccc;
+            border: 5px solid #ccc;
             border-radius: 50%;
             margin-bottom: 10px;
         }
 
-        .btn-primary,
-        .btn-secondary {
-            margin: 0 5px;
-        }
+   
     </style>
 </head>
 
@@ -99,20 +95,19 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/Instructor/MyStudents/@Model.Id">
-                                <i class="fas fa-chart-bar me-2"></i>My Students
+                                <i class="fas fa-chart-bar me-2"></i> My Students
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/Instructor/GetStudents/@Model.Id">
-                                <i class="fas fa-users me-2"></i>Add New Student
+                                <i class="fas fa-users me-2"></i> Add New Student
                             </a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-controller="Instructor" asp-action="LogoutConfirmation">
-                                <i class="bi bi-file-earmark-text me-2"></i> LogOut
+                                <i class="bi bi-file-earmark-text me-2"></i> Log Out
                             </a>
                         </li>
-                      
                     </ul>
                 </div>
             </nav>
@@ -130,18 +125,23 @@
                                 <div class="col-lg-4">
                                     <div class="card shadow-sm">
                                         <div class="card-header bg-transparent text-center">
-                                          @*   <img id="profileImage" class="profile_img rounded-circle" src="~/images/@Model.ImgUrl" alt="student profile picture"> *@
+                                            <img id="profileImage" class="profile_img rounded-circle" src="~/images/@Model.ImgUrl" alt="" onerror="this.onerror=null; this.src='@Url.Content("~/Images/th.jpeg")';">
                                             <h3 class="mt-3">@Model.UserName</h3>
                                         </div>
                                         <div class="card-body">
-                                            <p class="mb-0"><strong>Student ID:</strong> @Model.Id</p>
-                                          
+                                            <p class="mb-0"><strong>Instructor ID:</strong> @Model.Id</p>
                                             <hr />
+                                            <!-- Form to upload new profile picture -->
+                                            <form asp-action="UploadProfileImage" method="post" enctype="multipart/form-data">
+                                                <div class="mb-3">
+                                                    <label for="profilePic" class="form-label">Upload Profile Picture</label>
+                                                    <input type="file" class="form-control" name="profilePic" id="profilePic">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">Upload</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
-
-
 
                                 <!-- General Information -->
                                 <div class="col-lg-8">
@@ -180,5 +180,4 @@
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

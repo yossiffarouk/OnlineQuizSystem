@@ -20,8 +20,8 @@ namespace OnlineQuiz.DAL.Repositoryies.InstructorRepository
             _context = context;
         }
 
+       
 
-     
 
         //---------------------------
         // Add student to instructor
@@ -98,6 +98,14 @@ namespace OnlineQuiz.DAL.Repositoryies.InstructorRepository
             _context.SaveChanges();
         }
 
-       
+        public IEnumerable<Student> GetAllStudentForQuiz(int QuizId)
+        {
+            var students = _context.attempts
+             .Where(a => a.QuizId == QuizId)
+             .Select(a => a.Student)
+             .Distinct();
+
+            return students;
+        }
     }
 }

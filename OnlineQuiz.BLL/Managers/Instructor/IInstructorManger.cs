@@ -22,5 +22,8 @@ namespace OnlineQuiz.BLL.Managers.Instructor
         // show scores
         IEnumerable<InstructorSeeQuizDto> ShowScoresOfQuiz(int quizId);
         InstructorReadDto GetInsById(string id);
+
+         IEnumerable<StudentReadDto> GetStudentOfQuizAttempet(int quizId); 
+
     }
 }

@@ -19,7 +19,7 @@ namespace OnlineQuiz.BLL.Dtos.Admin.StudentDtos
         public UserTypeEnum UserType { get; set; } = UserTypeEnum.Student;
         public string Adress { get; set; }
 
-
+        public bool EmailConfirmed { get; set; } = true;
 
     }
 }

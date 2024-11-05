@@ -165,7 +165,7 @@ namespace OnlineQuiz.BLL.Managers.Accounts
             var user = await _userManager.FindByEmailAsync(loginDto.Email);
             if (user == null || !await _userManager.IsEmailConfirmedAsync(user))
             {
-                response.Errors.Add(user == null ? "Email not found. Please make sure the email is correct." :
+                response.Errors.Add(user == null ? "Wrong Password or Email." :
                    "Email not confirmed. Please check your inbox.");
                 response.PropName = nameof(loginDto.Email);
                 return response;

@@ -161,6 +161,7 @@
                         <th>ExpireDate</th>
                         <th>IsAvailable</th>
                         <th>QuizDegree</th>
+                        <th>Degres</th>
                        
 
                     </tr>
@@ -178,6 +179,7 @@
                             <td>@quiz.ExpireDate</td>
                             <td>@quiz.IsAvailable</td>
                             <td>@quiz.QuizDegree</td>
+                            <td><a class="btn-unban" href="/Instructor/GetStudentQuizSocres/@quiz.Id">Show</a></td>
 
                       @*       <td>
                                 <form action="/Admin/DeleteQuiz/@quiz.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this Quiz?');">

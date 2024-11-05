@@ -70,5 +70,11 @@ namespace OnlineQuiz.BLL.Managers.Instructor
             _iInstructorRepository.UpdateInstructorProfile(_mapper.Map<OnlineQuiz.DAL.Data.Models.Instructor>(UpdateInstructorrProfileDto));
             return "Instructor updated successfully";
         }
+
+        public IEnumerable<StudentReadDto> GetStudentOfQuizAttempet(int quizId)
+        {
+            return _mapper.Map<IEnumerable<StudentReadDto>>(_iInstructorRepository.GetAllStudentForQuiz(quizId));
+            
+        }
     }
 }

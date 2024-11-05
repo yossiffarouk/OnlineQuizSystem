@@ -1,6 +1,4 @@
-﻿
-
-@model OnlineQuiz.BLL.Dtos.StudentDtos.StudentDetailesDto﻿
+﻿@model OnlineQuiz.BLL.Dtos.StudentDtos.StudentDetailesDto
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,6 +8,7 @@
     <title>QuizTech | Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link href="~/css/Myquizzes.css" rel="stylesheet" />
     <style>
         body {
             background-color: #f4f7fa; /* Light background for better contrast */
@@ -18,28 +17,30 @@
         .sidebar {
             background-color: #343a40; /* Dark sidebar for contrast */
             min-height: 100vh; /* Full height */
+            padding: 1rem 0; /* Reduced padding for compactness */
         }
 
-            .sidebar .nav-link {
-                color: #ffffff; /* White text for sidebar links */
-                transition: background-color 0.3s; /* Smooth background transition */
-            }
+        .sidebar .nav-link {
+            color: #ffffff; /* White text for sidebar links */
+            transition: background-color 0.3s; /* Smooth background transition */
+            padding: 0.5rem 1rem; /* Reduced padding for links */
+        }
 
-                .sidebar .nav-link:hover {
-                    background-color: #495057; /* Darker background on hover */
-                    border-radius: 8px; /* Rounded corners on hover */
-                }
+        .sidebar .nav-link:hover {
+            background-color: #495057; /* Darker background on hover */
+            border-radius: 8px; /* Rounded corners on hover */
+        }
 
-                .sidebar .nav-link.active {
-                    background-color: #495057; /* Darker background for active link */
-                    border-radius: 8px; /* Rounded corners for active link */
-                }
+        .sidebar .nav-link.active {
+            background-color: #495057; /* Darker background for active link */
+            border-radius: 8px; /* Rounded corners for active link */
+        }
 
         .brand-logo {
             font-size: 1.5rem;
             color: #ffffff;
             text-align: center;
-            padding: 1.5rem 0; /* Add padding around the logo */
+            padding: 1rem 0; /* Add padding around the logo */
         }
 
         .widget {
@@ -51,9 +52,9 @@
             padding: 1rem; /* Padding for cards */
         }
 
-            .widget:hover {
-                transform: translateY(-5px); /* Elevate card on hover */
-            }
+        .widget:hover {
+            transform: translateY(-5px); /* Elevate card on hover */
+        }
 
         .quiz-icon {
             font-size: 2rem; /* Icon size for better visibility */
@@ -84,9 +85,9 @@
             transition: transform 0.3s;
         }
 
-            .card:hover {
-                transform: translateY(-3px); /* Slight elevation on hover */
-            }
+        .card:hover {
+            transform: translateY(-3px); /* Slight elevation on hover */
+        }
 
         .card-title {
             font-size: 1.25rem;
@@ -105,6 +106,7 @@
             color: #ffffff;
         }
 
+       
     </style>
 </head>
 
@@ -117,34 +119,38 @@
                     <h2>QuizMaster</h2>
                 </div>
                 <div class="position-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link" href="@Url.Action("Index", "Student")">
-                                <i class="bi bi-house me-2"></i> Dashboard
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Student" asp-action="Profile">
-                                <i class="bi bi-bar-chart me-2"></i> Profile
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Student" asp-action="MyQuizzes">
-                                <i class="bi bi-book me-2"></i> My Quizzes
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Student" asp-action="MyInstractors">
-                                <i class="bi bi-file-earmark-text me-2"></i> My Instructors
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Student" asp-action="LogoutConfirmation">
-                                <i class="bi bi-file-earmark-text me-2"></i> LogOut
-                            </a>
-                        </li>
-                       
-                    </ul>
+                    <button class="btn btn-dark d-md-none" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-expanded="false" aria-controls="sidebarMenu">
+                        Toggle Menu
+                    </button>
+                    <div class="collapse d-md-block" id="sidebarMenu">
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index", "Student")">
+                                    <i class="bi bi-house me-2"></i> Dashboard
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Student" asp-action="Profile">
+                                    <i class="bi bi-bar-chart me-2"></i> Profile
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Student" asp-action="MyQuizzes">
+                                    <i class="bi bi-book me-2"></i> My Quizzes
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Student" asp-action="MyInstractors">
+                                    <i class="bi bi-file-earmark-text me-2"></i> My Instructors
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Student" asp-action="LogoutConfirmation">
+                                    <i class="bi bi-file-earmark-text me-2"></i> LogOut
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </nav>
 
@@ -184,13 +190,15 @@
                                 }
                                 else
                                 {
-                                    <p>No attempts found.</p>
+                                    <tr>
+                                        <td colspan="5" class="text-center">No attempts found.</td>
+                                    </tr>
                                 }
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <!---End Attemp Section-->
+                <!---End Attempt Section-->
 
             </main>
 

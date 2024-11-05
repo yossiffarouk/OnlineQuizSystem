@@ -18,6 +18,7 @@ using OnlineQuiz.BLL.Dtos.Answer;
 using OnlineQuiz.BLL.Dtos.Accounts;
 using Microsoft.AspNetCore.Authorization;
 using OnlineQuiz.BLL.Managers.Accounts;
+using OnlineQuiz.DAL.Data.DBHelper;
 
 
 namespace OnlineQuiz.MVC.Controllers
@@ -29,16 +30,18 @@ namespace OnlineQuiz.MVC.Controllers
         private readonly IStudentManager _studentManager;
         private readonly IMapper _mapper;
         private readonly IAccountManager _accountManager;
+        private readonly QuizContext _context;
         private readonly IAnswersManager _AnswersManager;
 
         public StudentController(IAnswersManager AnswersManager, IQuizManager quizManager,IAttemptManager attemptManager,IStudentManager studentManager,IMapper mapper ,
-            IAccountManager accountManager)
+            IAccountManager accountManager , QuizContext context)
         {
             _quizManager = quizManager;
             _attemptManager = attemptManager;
             _studentManager = studentManager;
             _mapper = mapper;
             _accountManager = accountManager;
+            _context = context;
             _AnswersManager = AnswersManager;
         }
 
@@ -325,6 +328,34 @@ namespace OnlineQuiz.MVC.Controllers
             GetResultAttemptDto score = _attemptManager.GetResults(attemptid);
             ResultDto result = _AnswersManager.GetResult(answers, quiz, score);
             return View("GetResult", result);
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> UploadProfilePicture(IFormFile ProfilePicture)
+        {
+            if (ProfilePicture != null && ProfilePicture.Length > 0)
+            {
+                var fileName = Path.GetFileName(ProfilePicture.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/Images", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await ProfilePicture.CopyToAsync(stream);
+                }
+
+                // Here, update the student's profile image URL in the database to save the image path.
+                var studentId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                var student = await _context.Students.FindAsync(studentId); // Adjust this as per your user fetching logic
+                student.ImgUrl = $"images/{fileName}";
+                await _context.SaveChangesAsync();
+
+                // After saving the new profile image path, redirect back to the profile page.
+                return RedirectToAction("Profile");
+            }
+
+            return View("Error"); // You can replace this with an error message if the upload fails
         }
 
     }

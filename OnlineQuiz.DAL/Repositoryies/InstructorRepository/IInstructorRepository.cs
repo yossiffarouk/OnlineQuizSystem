@@ -29,6 +29,8 @@ namespace OnlineQuiz.DAL.Repositoryies.InstructorRepository
         IEnumerable<Attempts> showAttempts(int quiz);
         Instructor GetInsById(string id);
         // save in database
+
+        public IEnumerable<Student> GetAllStudentForQuiz(int QuizId);
         void savechanges();
     }
 }

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<OnlineQuiz.BLL.Dtos.Quiz.QuizDto>;
+﻿@model IEnumerable<OnlineQuiz.BLL.Dtos.Admin.StudentDtos.StudentReadDto>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,48 +15,33 @@
     <!-- Main content area -->
     <div id="main-content">
         <section id="instructors">
-            <h2>All Quizzes</h2>
-
-            <a class="btn-unban" href="/Admin/DashBoard">Back To DashBoard</a>
+            <h2>Students Attempet</h2>
+            
+            <a class="btn-unban" href="/Instructor/Dashboared">Back To DashBoard</a>
             <br />
             <br />
             <!-- Add search box to filter instructors -->
-            <input type="text" id="searchInput" placeholder="Search by quiz name..." onkeyup="filterInstructors()" style="width: 40%; padding: 10px; margin-bottom: 20px;">
+           
             <table id="instructor-table">
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th>ExamTime</th>
-                        <th>CreatedDate</th>
-                        <th>ExpireDate</th>
-                        <th>IsAvailable</th>
-                        <th>QuizDegree</th>
-                        <th>Delete</th>
-
+                        <th>Name</th>
+                        
+                        <th>Phone</th>
+                        
+                        
+                        <th>score</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var quiz in Model)
                     {
                         <tr>
-                            
-                            <td>@quiz.Tittle</td>
-                            <td>@quiz.Description</td>
-                            <td>@quiz.ExamTime</td>
-                            <td>@quiz.CreatedDate</td>
-
-                            <td>@quiz.ExpireDate</td>
-                            <td>@quiz.IsAvailable</td>
-                            <td>@quiz.QuizDegree</td>
+                            <td>@quiz.UserName</td>
+                            <td>@quiz.PhoneNumber</td>
+                            <td>@quiz.PhoneNumber</td>
                            
-                            <td>
-                                <form action="/Admin/DeleteQuiz/@quiz.Id" method="post" onsubmit="return confirm('Are you sure you want to delete this Quiz?');">
-                                    <input type="hidden" name="_method" value="DELETE" />
-                                    <button type="submit" class="btn-ban">Delete</button>
-                                </form>
-                            </td>
-                           
+                  
                         </tr>
                     }
                 </tbody>
