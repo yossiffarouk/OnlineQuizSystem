@@ -30,45 +30,45 @@ namespace OnlineQuiz.DAL.Data.DBHelper
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-    
-            modelBuilder.Entity<Tracks>().HasData(
-                         new Tracks
-                         {
-                             Id = 2,
-                             Name = "Bio",
-                             IsDeleted = false
-                         },
-                         new Tracks
-                         {
-                             Id = 3,
-                             Name = "Math",
-                             IsDeleted = false
-                         },
-                         new Tracks
-                         {
-                             Id = 4,
-                             Name = "Chemistry", // Corrected spelling of "Chemistry"
-                             IsDeleted = false
-                         },
-                         new Tracks
-                         {
-                             Id = 5,
-                             Name = "Programming", // Corrected spelling of "Programming"
-                             IsDeleted = false
-                         },
-                         new Tracks
-                         {
-                             Id = 6,
-                             Name = "Statics",
-                             IsDeleted = false
-                         },
-                         new Tracks
-                         {
-                             Id = 7,
-                             Name = "Arabic", // Corrected spelling of "Arabic"
-                             IsDeleted = false
-                         }
-                     );
+
+            //modelBuilder.Entity<Tracks>().HasData(
+            //             new Tracks
+            //             {
+            //                 Id = 4,
+            //                 Name = "Bio",
+            //                 IsDeleted = false
+            //             },
+            //             new Tracks
+            //             {
+            //                 Id = 5,
+            //                 Name = "Math",
+            //                 IsDeleted = false
+            //             },
+            //             new Tracks
+            //             {
+            //                 Id = 6,
+            //                 Name = "Chemistry", // Corrected spelling of "Chemistry"
+            //                 IsDeleted = false
+            //             },
+            //             new Tracks
+            //             {
+            //                 Id = 7,
+            //                 Name = "Programming", // Corrected spelling of "Programming"
+            //                 IsDeleted = false
+            //             },
+            //             new Tracks
+            //             {
+            //                 Id = 8,
+            //                 Name = "Statics",
+            //                 IsDeleted = false
+            //             },
+            //             new Tracks
+            //             {
+            //                 Id = 9,
+            //                 Name = "Arabic", // Corrected spelling of "Arabic"
+            //                 IsDeleted = false
+            //             }
+            //         ) ;
 
             //var adminUserId = Guid.NewGuid().ToString();
             //modelBuilder.Entity<Admin>().HasData(

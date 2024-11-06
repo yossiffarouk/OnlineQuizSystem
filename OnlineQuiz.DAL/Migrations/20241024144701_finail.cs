@@ -27,12 +27,12 @@ namespace OnlineQuiz.DAL.Migrations
                 columns: new[] { "Id", "IsDeleted", "Name" },
                 values: new object[,]
                 {
-                    { 2, false, "Bio" },
-                    { 3, false, "Math" },
-                    { 4, false, "Chemistry" },
-                    { 5, false, "Programming" },
-                    { 6, false, "Statics" },
-                    { 7, false, "Arabic" }
+                    { 4, false, "Bio" },
+                    { 5, false, "Math" },
+                    { 6, false, "Chemistry" },
+                    { 7, false, "Programming" },
+                    { 8, false, "Statics" },
+                    { 9, false, "Arabic" }
                 });
         }
 

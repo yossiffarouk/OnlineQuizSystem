@@ -87,6 +87,7 @@ namespace OnlineQuiz.DAL.Repositoryies.AttemptRepository
             
 
             attempt.EndTime = DateTime.Now;
+            _context.SaveChanges();
         }
 
         public void SaveChanges()
