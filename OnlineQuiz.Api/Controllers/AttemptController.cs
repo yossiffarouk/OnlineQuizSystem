@@ -36,7 +36,7 @@ namespace OnlineQuiz.Api.Controllers
             }
         }
 
-        [HttpPost("SubmitQuizAttempt")]
+        [HttpPut("SubmitQuizAttempt")]
         public IActionResult SubmitQuizAttempt(int attemptId, List<AnswerDto> submittedAnswers)
         {
 
