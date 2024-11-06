@@ -267,7 +267,7 @@ namespace OnlineQuiz.MVC.Controllers
             return View(startquiz); // Pass the student data to the view
         }
 
-        [HttpPost]
+        [HttpPut]
         [Authorize(Roles = Roles.Student)]
         public IActionResult SaveChanges(int attemptid, List<AnswerDto> answers)
         {
