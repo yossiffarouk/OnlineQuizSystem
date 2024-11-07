@@ -110,7 +110,7 @@
                         </div>
                         <h2 id="question-number" class="text-center">Question 1 of @Model.Count</h2>
                     </div>
-                    <form id="quiz-form" asp-action="SaveChanges" asp-controller="Student" asp-route-attemptid="@Model.First().attemptid" method="put">
+                    <form id="quiz-form" asp-action="SaveChanges" asp-controller="Student" asp-route-attemptid="@Model.First().attemptid" method="post">
                         <input type="hidden" name="attemptid" value="@ViewBag.attemptid" />
 
                         @for (int i = 0; i < Model.Count; i++)

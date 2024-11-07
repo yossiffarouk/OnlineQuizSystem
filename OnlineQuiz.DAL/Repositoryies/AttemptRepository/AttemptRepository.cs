@@ -92,7 +92,7 @@ namespace OnlineQuiz.DAL.Repositoryies.AttemptRepository
 
         public void SaveChanges()
         {
-          //  _context.SaveChanges();
+            _context.SaveChanges();
         }
 
         public Attempts GetResults(int Id)

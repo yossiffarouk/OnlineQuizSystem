@@ -26,7 +26,7 @@ namespace OnlineQuiz.BLL.Dtos.Accounts
 
             [DataType(DataType.Password)]
             [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{5,}$",
-            ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, and one number.")]
+            ErrorMessage = "Password must contain at least one uppercase letter, one lowercase letter, and one number , and one special symbol.")]
            [StringLength(100, ErrorMessage = "Password must be at least 6 characters long", MinimumLength = 6)]
            [Required(ErrorMessage = "Password is required")]
              public string Password { get; set; }

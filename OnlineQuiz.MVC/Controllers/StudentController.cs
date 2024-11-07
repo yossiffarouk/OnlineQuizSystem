@@ -267,7 +267,7 @@ namespace OnlineQuiz.MVC.Controllers
             return View(startquiz); // Pass the student data to the view
         }
 
-        [HttpPut]
+        [HttpPost]
         [Authorize(Roles = Roles.Student)]
         public IActionResult SaveChanges(int attemptid, List<AnswerDto> answers)
         {
@@ -283,6 +283,7 @@ namespace OnlineQuiz.MVC.Controllers
 
 
         [HttpPost]
+        [Authorize(Roles = Roles.Student)]
         public async Task<IActionResult> UploadProfilePicture(IFormFile ProfilePicture)
         {
             if (ProfilePicture != null && ProfilePicture.Length > 0)
